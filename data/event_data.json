@@ -5,7 +5,7 @@
     "name": "MicroTAS 2026 - International Conference",
     "logo": "./eventos_guardados/microtas-2026/uploads/Clipboard06-removebg-preview.png",
     "created_at": "2026-10-14T10:44:00Z",
-    "updated_at": "2026-10-15T22:13:14.465666",
+    "updated_at": "2026-10-15T22:13:37.629862",
     "dates": {
       "start": "2026-10-16",
       "end": "2026-10-22"
@@ -41,8 +41,8 @@
     "branch": "main",
     "html_url": "https://github.com/VisualXet/MicroTAS",
     "pages_url": "https://visualxet.github.io/MicroTAS/",
-    "last_commit_sha": "3a9bf413866dc2fee1ff04c1f2fa788ceb966db8",
-    "last_synced_at": "2026-10-15T22:13:14.465546",
+    "last_commit_sha": "4b945e796f6bf8eef7d4d99e29657c9ffaaa15b5",
+    "last_synced_at": "2026-10-15T22:13:37.629684",
     "has_unpushed_changes": false
   },
   "theme": {
