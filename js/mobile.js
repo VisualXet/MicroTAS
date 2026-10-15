@@ -373,6 +373,17 @@ function formatDayButtonTitle(d, idx) {
     }
   }
 
+  // Días Especiales de Montaje o Desmontaje
+  if (d.is_special) {
+    var isMontaje = (d.special_type === 'montaje');
+    var tag = isMontaje ? 'Montaje' : 'Desmontaje';
+    var prefix = isMontaje ? '🛠️ ' : '📦 ';
+    if (dayNum && weekday) {
+      return prefix + dayNum + ' ' + weekday + ' (' + tag + ')';
+    }
+    return prefix + (weekday || 'Día') + ' (' + tag + ')';
+  }
+
   // Si la etiqueta ya contiene número (ej: "25 Domingo" o "Domingo 25"), respetarla
   if (weekday && /^\d{1,2}\s+[a-záéíóúñ]+$/i.test(weekday)) {
     return weekday;
@@ -383,7 +394,7 @@ function formatDayButtonTitle(d, idx) {
     weekday = weekday.replace(/^\d{1,2}\s+/, '');
   }
 
-  // Formato: "25 Domingo"
+  // Formato: "18 Domingo"
   if (dayNum && weekday) {
     return dayNum + ' ' + weekday;
   }
@@ -412,17 +423,46 @@ function renderDaysSelector() {
     var isSelected = (selectedDayIdx === idx);
     var label = formatDayButtonTitle(d, idx);
     var sessionCount = (d.sessions || []).length;
+    var isSpecial = !!d.is_special;
+    var isMontaje = (d.special_type === 'montaje');
+
+    var btnClass = '';
+    var titleClass = '';
+    var subClass = '';
+
+    if (isSpecial) {
+      if (isSelected) {
+        btnClass = isMontaje 
+          ? 'bg-amber-600 text-white border-amber-600 shadow-md ring-2 ring-amber-400/50 font-bold' 
+          : 'bg-indigo-700 text-white border-indigo-700 shadow-md ring-2 ring-indigo-400/50 font-bold';
+        titleClass = 'text-white';
+        subClass = 'text-amber-100';
+      } else {
+        btnClass = isMontaje 
+          ? 'bg-amber-50 text-amber-950 border-amber-300 hover:border-amber-400 font-bold' 
+          : 'bg-indigo-50 text-indigo-950 border-indigo-300 hover:border-indigo-400 font-bold';
+        titleClass = isMontaje ? 'text-amber-900' : 'text-indigo-900';
+        subClass = isMontaje ? 'text-amber-700 font-semibold' : 'text-indigo-700 font-semibold';
+      }
+    } else {
+      if (isSelected) {
+        btnClass = 'bg-teal-800 text-white border-teal-800 shadow-md ring-2 ring-teal-500/40 font-bold';
+        titleClass = 'text-amber-300';
+        subClass = 'text-teal-100 font-semibold';
+      } else {
+        btnClass = 'bg-white text-slate-700 border-slate-200 hover:border-teal-300';
+        titleClass = 'text-teal-900';
+        subClass = 'text-slate-500 font-semibold';
+      }
+    }
 
     html += '<button onclick="selectDayByIndex(' + idx + ')" ' +
-      'class="p-2 sm:p-2.5 rounded-xl border text-center transition cursor-pointer flex flex-col items-center justify-center active:scale-95 ' +
-      (isSelected 
-        ? 'bg-teal-800 text-white border-teal-800 shadow-md ring-2 ring-teal-500/40 font-bold' 
-        : 'bg-white text-slate-700 border-slate-200 hover:border-teal-300') + '">' +
-      '<span class="text-xs sm:text-sm font-black ' + (isSelected ? 'text-amber-300' : 'text-teal-900') + '">' +
+      'class="p-2 sm:p-2.5 rounded-xl border text-center transition cursor-pointer flex flex-col items-center justify-center active:scale-95 ' + btnClass + '">' +
+      '<span class="text-xs sm:text-sm font-black ' + titleClass + '">' +
         escapeHtml(label) +
       '</span>' +
-      '<span class="text-[10px] ' + (isSelected ? 'text-teal-100' : 'text-slate-500') + ' mt-0.5 font-semibold">' +
-        sessionCount + ' ' + (sessionCount === 1 ? 'sesión' : 'sesiones') +
+      '<span class="text-[10px] ' + subClass + ' mt-0.5">' +
+        (isSpecial ? (isMontaje ? 'Montaje Técnico AV' : 'Desmontaje y Carga') : (sessionCount + ' ' + (sessionCount === 1 ? 'sesión' : 'sesiones'))) +
       '</span>' +
     '</button>';
   });
@@ -1243,9 +1283,30 @@ function renderCardListView(output, sessions, currentDay) {
     groupedByTime[timeSlot].push(s);
   });
 
-  timesList.sort();
+  var specialBanner = '';
+  if (currentDay && currentDay.is_special) {
+    var isMontaje = (currentDay.special_type === 'montaje');
+    specialBanner = '<div class="mb-3 p-3 rounded-2xl border flex items-center justify-between gap-3 flex-wrap ' +
+      (isMontaje ? 'bg-amber-500/10 border-amber-400/40 text-amber-200' : 'bg-indigo-500/10 border-indigo-400/40 text-indigo-200') + '">' +
+      '<div class="flex items-center gap-2.5">' +
+        '<div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-lg ' + (isMontaje ? 'bg-amber-400 text-slate-950' : 'bg-indigo-400 text-slate-950') + '">' +
+          (isMontaje ? '<i class="fa-solid fa-wrench"></i>' : '<i class="fa-solid fa-boxes-packing"></i>') +
+        '</div>' +
+        '<div>' +
+          '<h3 class="text-xs sm:text-sm font-black ' + (isMontaje ? 'text-amber-300' : 'text-indigo-300') + '">' + 
+            (isMontaje ? 'Jornada Técnica de Montaje y Pruebas AV' : 'Jornada de Desmontaje, Inventario y Cierre') + 
+          '</h3>' +
+          '<p class="text-[11px] text-slate-400">' + 
+            (isMontaje ? 'Día previo al programa. Realiza el conexionado y completa el checklist de cada sala.' : 'Día posterior al programa. Realiza desconexión, recogida y embalaje en flightcases.') + 
+          '</p>' +
+        '</div>' +
+      '</div>' +
+      (isMontaje ? '<button onclick="toggleMobileDrawer()" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow cursor-pointer transition flex items-center gap-1.5"><i class="fa-solid fa-clipboard-check"></i> Abrir Checklist Salas</button>' : '') +
+    '</div>';
+  }
 
-  var html = '<div class="mb-3 pb-2 border-b border-slate-200 flex justify-between items-center">' +
+  var html = specialBanner +
+  '<div class="mb-3 pb-2 border-b border-slate-200 flex justify-between items-center">' +
     '<div>' +
       '<h2 class="text-sm sm:text-base font-black text-slate-900 flex items-center gap-2 uppercase tracking-wide">' +
         '<span>' + escapeHtml(formatDayButtonTitle(currentDay, selectedDayIdx)) + '</span>' +
@@ -1433,7 +1494,30 @@ function renderCardListView(output, sessions, currentDay) {
 function renderGridView(output, sessions, currentDay) {
   var isSingleRoom = (selectedRooms.length === 1);
 
+  var specialBanner = '';
+  if (currentDay && currentDay.is_special) {
+    var isMontaje = (currentDay.special_type === 'montaje');
+    specialBanner = '<div class="mb-3 p-3 rounded-2xl border flex items-center justify-between gap-3 flex-wrap ' +
+      (isMontaje ? 'bg-amber-500/10 border-amber-400/40 text-amber-200' : 'bg-indigo-500/10 border-indigo-400/40 text-indigo-200') + '">' +
+      '<div class="flex items-center gap-2.5">' +
+        '<div class="w-9 h-9 rounded-xl flex items-center justify-center font-black text-lg ' + (isMontaje ? 'bg-amber-400 text-slate-950' : 'bg-indigo-400 text-slate-950') + '">' +
+          (isMontaje ? '<i class="fa-solid fa-wrench"></i>' : '<i class="fa-solid fa-boxes-packing"></i>') +
+        '</div>' +
+        '<div>' +
+          '<h3 class="text-xs sm:text-sm font-black ' + (isMontaje ? 'text-amber-300' : 'text-indigo-300') + '">' + 
+            (isMontaje ? 'Jornada Técnica de Montaje y Pruebas AV' : 'Jornada de Desmontaje, Inventario y Cierre') + 
+          '</h3>' +
+          '<p class="text-[11px] text-slate-400">' + 
+            (isMontaje ? 'Día previo al programa. Realiza el conexionado y completa el checklist de cada sala.' : 'Día posterior al programa. Realiza desconexión, recogida y embalaje en flightcases.') + 
+          '</p>' +
+        '</div>' +
+      '</div>' +
+      (isMontaje ? '<button onclick="toggleMobileDrawer()" class="px-3 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow cursor-pointer transition flex items-center gap-1.5"><i class="fa-solid fa-clipboard-check"></i> Abrir Checklist Salas</button>' : '') +
+    '</div>';
+  }
+
   var html = '<div class="w-full">' +
+    specialBanner +
     '<div class="mb-3 pb-2 border-b border-slate-700/60 flex justify-between items-center">' +
       '<div>' +
         '<h2 class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">' +
