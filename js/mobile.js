@@ -124,7 +124,17 @@ function initApp() {
 
   var datesEl = document.getElementById('header-event-dates');
   if (datesEl && metadata.dates) {
-    datesEl.textContent = (metadata.dates.start || '') + ' al ' + (metadata.dates.end || '');
+    var formatEuroDate = function(d) {
+      if (!d) return '';
+      var parts = String(d).trim().split('-');
+      if (parts.length === 3 && parts[0].length === 4) {
+        return parts[2] + '-' + parts[1] + '-' + parts[0];
+      }
+      return String(d).trim();
+    };
+    var startD = formatEuroDate(metadata.dates.start);
+    var endD = formatEuroDate(metadata.dates.end);
+    datesEl.textContent = (startD && endD) ? (startD + ' al ' + endD) : (startD || endD || '');
   }
 
   var btnSos = document.getElementById('btn-sos-header');
