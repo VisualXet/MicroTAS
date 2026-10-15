@@ -5,9 +5,9 @@
     "name": "MicroTAS 2026 - International Conference",
     "logo": "./eventos_guardados/microtas-2026/uploads/Clipboard06-removebg-preview.png",
     "created_at": "2026-10-14T10:44:00Z",
-    "updated_at": "2026-10-15T18:58:31.818997",
+    "updated_at": "2026-10-15T19:20:51.980352",
     "dates": {
-      "start": "2026-10-16",
+      "start": "2026-10-18",
       "end": "2026-10-22"
     },
     "timezone": "Europe/Madrid"
@@ -60,7 +60,7 @@
     ],
     "days": [
       {
-        "date": "2026-10-25",
+        "date": "2026-10-18",
         "label": "Domingo",
         "sessions": [
           {
@@ -321,7 +321,7 @@
         ]
       },
       {
-        "date": "2026-10-26",
+        "date": "2026-10-19",
         "label": "Lunes",
         "sessions": [
           {
@@ -957,7 +957,7 @@
         ]
       },
       {
-        "date": "2026-10-27",
+        "date": "2026-10-20",
         "label": "Martes",
         "sessions": [
           {
@@ -1672,7 +1672,7 @@
         ]
       },
       {
-        "date": "2026-10-28",
+        "date": "2026-10-21",
         "label": "Miércoles",
         "sessions": [
           {
@@ -2335,7 +2335,7 @@
         ]
       },
       {
-        "date": "2026-10-29",
+        "date": "2026-10-22",
         "label": "Jueves",
         "sessions": [
           {

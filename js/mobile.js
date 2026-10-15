@@ -449,14 +449,14 @@ function renderVenueButtons() {
   }
   container.classList.remove('hidden');
 
-  var html = '<div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs overflow-x-auto custom-scrollbar w-full mb-1">';
+  var html = '<div class="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs w-full mb-1">';
   keys.forEach(function(key) {
     var v = venuesMap[key];
     var isActive = (currentVenue === key);
     var count = v.rooms.length;
 
     html += '<button onclick="filterByVenue(\'' + key + '\')" ' +
-      'class="px-2.5 py-1 rounded-lg font-bold transition cursor-pointer text-xs whitespace-nowrap ' +
+      'class="px-2.5 py-1 rounded-lg font-bold transition cursor-pointer text-xs ' +
       (isActive ? 'bg-teal-800 text-white shadow-sm' : 'text-slate-600 hover:bg-white/80') + '">' +
       escapeHtml(v.name) + ' (' + count + ')' +
     '</button>';
@@ -639,7 +639,7 @@ function deleteChecklistItem(itemId) {
   renderChecklistModalContent();
 }
 
-// SELECTOR ÚNICO Y LIMPIO DE SALAS (CON CHECKLIST Y SIN CAJAS REDUNDANTES)
+// SELECTOR ÚNICO Y LIMPIO DE SALAS EN LÍNEA (NO EN CAJAS, APROVECHANDO EL ESPACIO VERTICAL)
 function renderRoomCards() {
   var container = document.getElementById('rooms-grid');
   if (!container) return;
@@ -653,46 +653,45 @@ function renderRoomCards() {
     var checkedCount = items.filter(function(it) { return it.checked; }).length;
     var isChkDone = (items.length > 0 && checkedCount === items.length);
 
-    html += '<div class="p-2.5 rounded-xl border transition cursor-pointer select-none space-y-2 ' +
+    html += '<div class="room-row-item flex items-center justify-between p-2 sm:p-2.5 rounded-xl border transition cursor-pointer select-none gap-2 ' +
       (isSelected 
-        ? 'bg-teal-50 border-teal-400 text-teal-950 shadow-sm ring-1 ring-teal-500/20' 
+        ? 'bg-teal-50 border-teal-400 text-teal-950 shadow-sm ring-1 ring-teal-500/20 is-selected' 
         : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50') + '" ' +
       'onclick="toggleRoomSelection(\'' + escapeJsString(room) + '\')">' +
       
-      '<div class="flex items-center justify-between gap-2">' +
-        '<div class="flex items-center gap-2 min-w-0 flex-1">' +
-          '<i class="fa-solid ' + (isSelected ? 'fa-door-open text-teal-600' : 'fa-door-closed text-slate-400') + ' text-sm shrink-0"></i>' +
-          '<span class="text-xs font-bold truncate leading-tight ' + (isSelected ? 'text-teal-950 font-black' : 'text-slate-800') + '">' +
-            escapeHtml(room) +
-          '</span>' +
-        '</div>' +
-
-        '<div class="flex items-center gap-1.5 shrink-0">' +
-          '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\'); event.stopPropagation();" title="Ver únicamente esta sala" ' +
-            'class="text-[10px] font-black uppercase px-2 py-0.5 rounded-lg transition ' +
-            (isOnlyThis 
-              ? 'bg-amber-400 text-slate-950 shadow-sm' 
-              : 'bg-slate-100 hover:bg-teal-600 hover:text-white text-slate-600') + '">' +
-            (isOnlyThis ? '★ Mi Sala' : 'Solo') +
-          '</button>' +
-          '<div class="w-5 h-5 rounded-md flex items-center justify-center ' + 
-            (isSelected ? 'bg-teal-600 text-white' : 'border border-slate-300') + '">' +
-            (isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '') +
-          '</div>' +
-        '</div>' +
+      // Lado izquierdo: Icono de sala y Nombre Completo sin cortar
+      '<div class="flex items-center gap-2 min-w-0 flex-1">' +
+        '<i class="fa-solid ' + (isSelected ? 'fa-door-open text-teal-600' : 'fa-door-closed text-slate-400') + ' text-sm shrink-0"></i>' +
+        '<span class="text-xs sm:text-sm font-bold text-slate-900 room-title truncate leading-tight ' + (isSelected ? 'font-black text-teal-950' : '') + '">' +
+          escapeHtml(room) +
+        '</span>' +
       '</div>' +
 
-      // Fila de estado de Checklist de Montaje Técnico
-      '<div class="flex items-center justify-between pt-1 border-t border-slate-200/80 text-[10.5px]">' +
-        '<button onclick="openRoomChecklistModal(\'' + escapeJsString(room) + '\'); event.stopPropagation();" class="inline-flex items-center gap-1.5 font-bold transition px-2 py-0.5 rounded-lg ' +
+      // Lado derecho: Acciones compactas en línea (Checklist + Solo + Checkbox)
+      '<div class="flex items-center gap-1.5 shrink-0">' +
+        // Botón Checklist compacto
+        '<button onclick="openRoomChecklistModal(\'' + escapeJsString(room) + '\'); event.stopPropagation();" class="inline-flex items-center gap-1 font-bold text-[10.5px] px-2 py-1 rounded-lg border transition cursor-pointer ' +
           (isChkDone 
-            ? 'bg-emerald-100 text-emerald-900 border border-emerald-300 hover:bg-emerald-200' 
-            : 'bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200') + '" title="Abrir checklist de montaje técnico AV">' +
+            ? 'bg-emerald-100 text-emerald-900 border-emerald-300 hover:bg-emerald-200' 
+            : 'bg-amber-100 text-amber-900 border-amber-300 hover:bg-amber-200') + '" title="Checklist Equipamiento AV">' +
           '<i class="fa-solid ' + (isChkDone ? 'fa-circle-check text-emerald-600' : 'fa-clock text-amber-600') + ' text-[10px]"></i>' +
           '<span>' + (isChkDone ? 'Montaje OK' : 'Checklist (' + checkedCount + '/' + items.length + ')') + '</span>' +
-          '<i class="fa-solid fa-pen text-[8px] opacity-60 ml-0.5"></i>' +
         '</button>' +
-        '<span class="text-[9.5px] text-slate-400 font-medium">Equipamiento AV</span>' +
+
+        // Botón Solo / Mi Sala
+        '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\'); event.stopPropagation();" title="Ver únicamente esta sala" ' +
+          'class="text-[10.5px] font-black uppercase px-2 py-1 rounded-lg transition cursor-pointer ' +
+          (isOnlyThis 
+            ? 'bg-amber-400 text-slate-950 shadow-sm ring-1 ring-amber-500 font-black' 
+            : 'bg-slate-100 hover:bg-teal-600 hover:text-white text-slate-600 border border-slate-200') + '">' +
+          (isOnlyThis ? '★ Mi Sala' : 'Solo') +
+        '</button>' +
+
+        // Checkbox visual de selección
+        '<div class="w-5 h-5 rounded-md flex items-center justify-center transition ' + 
+          (isSelected ? 'bg-teal-600 text-white shadow-sm' : 'border border-slate-300 bg-white') + '">' +
+          (isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '') +
+        '</div>' +
       '</div>' +
 
     '</div>';

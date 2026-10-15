@@ -190,6 +190,23 @@
       color: #ffffff !important;
     }
 
+    /* Estilos de Salas en Línea (Compactas y Flexibles) */
+    .room-row-item {
+      min-height: 40px;
+    }
+    body.dark-mode .room-row-item {
+      background-color: #0f172a !important;
+      border-color: #1e293b !important;
+      color: #e2e8f0 !important;
+    }
+    body.dark-mode .room-row-item.is-selected {
+      background-color: #042f2e !important;
+      border-color: #14b8a6 !important;
+    }
+    body.dark-mode .room-row-item .room-title {
+      color: #f8fafc !important;
+    }
+
     /* Indicador EN VIVO */
     .session-is-live {
       border: 2px solid #ef4444 !important;
@@ -218,7 +235,7 @@
             <span class="hidden sm:inline-block bg-amber-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded shadow-sm shrink-0">Panel Técnico</span>
           </h1>
           <p class="text-[10px] sm:text-xs text-teal-200 truncate flex items-center gap-1">
-            <span id="header-event-dates" class="truncate">16-10-2026 al 22-10-2026</span>
+            <span id="header-event-dates" class="truncate">18-10-2026 al 22-10-2026</span>
             <span class="text-teal-400">&bull;</span>
             <span id="clock-display" class="font-mono font-bold text-amber-300 shrink-0">00:00:00</span>
           </p>
@@ -271,19 +288,19 @@
     </section>
 
     <!-- PANEL DE FILTROS: SEDES, BUSCADOR Y SELECCIÓN RÁPIDA "SOLO MI SALA" -->
-    <section id="filter-drawer" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden md:static md:bg-transparent md:z-auto md:block transition-opacity">
-      <div class="bg-white h-full md:h-auto rounded-t-2xl md:rounded-2xl shadow-xl md:shadow-sm border border-slate-200 p-3 sm:p-4 flex flex-col justify-between mt-10 md:mt-0 max-w-3xl mx-auto md:max-w-none">
+    <section id="filter-drawer" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 hidden md:static md:bg-transparent md:z-auto md:block transition-opacity flex flex-col justify-end md:justify-start">
+      <div class="bg-white w-full max-h-[92vh] md:max-h-none rounded-t-3xl md:rounded-2xl shadow-2xl md:shadow-sm border border-slate-200 p-3 sm:p-4 flex flex-col gap-2.5 max-w-3xl mx-auto md:max-w-none overflow-hidden">
         
-        <div class="flex items-center justify-between pb-2 border-b border-slate-100 md:hidden">
-          <h3 class="text-sm font-bold text-slate-800 flex items-center gap-2">
-            <i class="fa-solid fa-door-open text-teal-600"></i> Selector de Sala Técnica
+        <div class="flex items-center justify-between pb-1.5 border-b border-slate-100 md:hidden shrink-0">
+          <h3 class="text-sm font-black text-slate-800 flex items-center gap-2">
+            <i class="fa-solid fa-door-open text-teal-600"></i> Selector de Salas del Congreso
           </h3>
-          <button onclick="toggleMobileDrawer()" class="text-slate-500 hover:text-slate-800 p-2 text-lg">
+          <button onclick="toggleMobileDrawer()" class="text-slate-400 hover:text-slate-800 p-1.5 text-base rounded-lg hover:bg-slate-100 transition cursor-pointer">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
 
-        <div class="space-y-3 my-1 overflow-y-auto ios-touch-scroll custom-scrollbar max-h-[70vh] md:max-h-none">
+        <div class="space-y-2.5 overflow-y-auto ios-touch-scroll custom-scrollbar flex-grow pr-0.5">
           
           <!-- Buscador en Tiempo Real -->
           <div class="relative w-full">
@@ -310,11 +327,11 @@
             </div>
           </div>
 
-          <!-- Selector de Sedes (si hay varias sedes) -->
+          <!-- Selector de Sedes (con flex-wrap automático, sin scroll horizontal) -->
           <div id="venues-buttons-container" class="empty:hidden"></div>
 
-          <!-- PANEL ÚNICO Y LIMPIO DE SALAS (SIN CAJAS REDUNDANTES) -->
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2.5">
+          <!-- PANEL ÚNICO Y LIMPIO DE SALAS EN LÍNEA -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 sm:p-3 space-y-2">
             <div class="flex items-center justify-between flex-wrap gap-2">
               <div class="flex items-center gap-2">
                 <label class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
@@ -335,8 +352,8 @@
               </div>
             </div>
 
-            <!-- Listado único de salas interactivas (2 columnas optimizadas para móvil sin scroll horizontal) -->
-            <div id="rooms-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full p-0.5">
+            <!-- Listado único de salas interactivas EN LÍNEA (1 col en móvil, 2 cols en desktop) -->
+            <div id="rooms-grid" class="flex flex-col md:grid md:grid-cols-2 gap-1.5 w-full p-0.5 max-h-[50vh] md:max-h-none overflow-y-auto ios-touch-scroll custom-scrollbar">
               <!-- Generado dinámicamente con JS -->
             </div>
 
