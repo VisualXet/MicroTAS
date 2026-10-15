@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#090d16">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="MicroTAS 2026 - Herramienta de Gestión y Notas Técnicas para Técnicos de Sala. Programa completo, moderadores, ponentes, salas y horarios.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>">
+  <title>MicroTAS 2026 | Técnico de Sala & Gestión de Sesiones</title>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top App Header (SEMERGEN 2026 Technical Panel Style) -->
+  <header class="app-header">
+    <div class="header-main-row">
+      <div class="brand-container">
+        <div class="brand-app-icon" aria-hidden="true">
+          <span>💻</span>
+        </div>
+        <div class="brand-info">
+          <div class="brand-title-wrap">
+            <h1 class="brand-title">MicroTAS 2026</h1>
+            <span class="badge-tech-official">Panel Técnico Oficial</span>
+          </div>
+          <div class="brand-subtitle">
+            Palacio de Congresos de Granada • Granada, España
+          </div>
+        </div>
+      </div>
+
+      <div class="header-quick-pills">
+        <!-- Notes Quick Pill -->
+        <button class="top-pill teal" id="topNotesBtn" title="Ver registro de notas técnicas">
+          <span class="pill-icon">📋</span>
+          <span class="pill-label">Notas</span>
+          <span class="pill-badge" id="topNotesCount">0</span>
+        </button>
+
+        <!-- Version & PDF Info Gear -->
+        <button class="top-pill-icon" id="dataVersionBtn" title="Fecha de incorporación de datos y actualización de PDF">
+          <span>⚙️</span>
+        </button>
+
+        <!-- Room Filter Trigger -->
+        <button class="top-pill teal" id="topRoomsBtn" title="Filtrar por Salas">
+          <span class="pill-icon">🎛️</span>
+          <span class="pill-label">Salas</span>
+          <span class="pill-badge orange" id="topRoomsCount">6</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Scrollable App Content -->
+  <div class="app-content-wrapper">
+    
+    <!-- Day Selector Section (2-Column Grid as in SEMERGEN) -->
+    <section class="section-day-selector" id="daySelectorSection">
+      <div class="day-selector-header">
+        <div class="day-selector-label">
+          <span>📅</span> <strong>DÍA DEL CONGRESO:</strong>
+        </div>
+        <div class="day-selector-stats" id="totalSessionsStats">
+          65 sesiones oficiales cargadas
+        </div>
+      </div>
+
+      <!-- 2-Column Day Grid (Injected dynamically) -->
+      <div class="day-cards-grid" id="dayCardsGrid" role="tablist" aria-label="Días del congreso">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- Active Selection Headline Banner -->
+    <section class="active-day-banner" id="activeDayBanner">
+      <h2 class="active-day-title" id="activeDayTitle">LUNES 19 DE OCTUBRE DE 2026</h2>
+      <div class="active-day-subtitle" id="activeDaySubtitle">
+        13 sesiones disponibles en todas las salas
+      </div>
+    </section>
+
+    <!-- Search Input -->
+    <div class="search-bar-container">
+      <div class="search-box-wrapper">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Buscar charla, ponente, moderador, sala o nota..." 
+          autocomplete="off" 
+          spellcheck="false"
+        >
+        <button id="searchClearBtn" class="search-clear" title="Borrar búsqueda">✕</button>
+      </div>
+    </div>
+
+    <!-- Quick info bar -->
+    <div class="stats-summary" id="statsCount" style="padding: 0 16px 8px 16px; font-size: 12px; color: var(--text-muted);">
+      Mostrando sesiones...
+    </div>
+
+    <!-- Printable Document Table Wrapper (Guarantees header repeats on EVERY printed page across all browsers) -->
+    <table class="print-doc-table" id="printDocTable">
+      <thead class="print-doc-thead">
+        <tr>
+          <td class="print-doc-header-cell">
+            <header class="print-header" id="printHeader" aria-hidden="true">
+              <!-- Generated dynamically by app.js before printing -->
+            </header>
+          </td>
+        </tr>
+      </thead>
+      <tbody class="print-doc-tbody">
+        <tr>
+          <td class="print-doc-body-cell">
+            <!-- Main Conference Content Stream -->
+            <main class="main-container" id="contentArea" role="main">
+              <!-- Sessions rendered dynamically by app.js -->
+            </main>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- FIXED BOTTOM NAVIGATION BAR ("BOTONES DE ÚTILES ABAJO") -->
+  <nav class="bottom-nav-bar" id="bottomNavBar" role="navigation" aria-label="Barra de herramientas inferior">
+    <!-- 1. Días -->
+    <button class="nav-item" id="navDaysBtn" title="Ir a Selección de Días">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">Días</span>
+    </button>
+
+    <!-- 2. Salas -->
+    <button class="nav-item" id="navRoomsBtn" title="Filtrar por Salas">
+      <span class="nav-icon-wrap">
+        <span class="nav-icon">🎛️</span>
+        <span class="nav-badge" id="navRoomBadge">6</span>
+      </span>
+      <span class="nav-label">Salas</span>
+    </button>
+
+    <!-- 3. Notas -->
+    <button class="nav-item" id="navNotesBtn" title="Ver Notas Técnicas">
+      <span class="nav-icon-wrap">
+        <span class="nav-icon">📝</span>
+        <span class="nav-badge note" id="navNotesBadge" style="display:none;">0</span>
+      </span>
+      <span class="nav-label">Notas</span>
+    </button>
+
+    <!-- 4. Luz (Theme Toggle) -->
+    <button class="nav-item" id="navThemeBtn" title="Cambiar Tema (Modo Sala Oscura / Modo Claro)">
+      <span class="nav-icon" id="navThemeIcon">☀️</span>
+      <span class="nav-label" id="navThemeLabel">Luz</span>
+    </button>
+
+    <!-- 5. Compacto / Detallado -->
+    <button class="nav-item" id="navCompactBtn" title="Alternar Modo Comprimido / Detallado">
+      <span class="nav-icon" id="navCompactIcon">⚡</span>
+      <span class="nav-label" id="navCompactLabel">Compacto</span>
+    </button>
+
+    <!-- 6. Estados (Ocultar / Mostrar) -->
+    <button class="nav-item" id="navStatusBtn" title="Ocultar o Mostrar Estados y Notas en las charlas">
+      <span class="nav-icon" id="navStatusIcon">👁️</span>
+      <span class="nav-label" id="navStatusLabel">Estados</span>
+    </button>
+
+    <!-- 7. Imprimir DIN-A4 -->
+    <button class="nav-item" id="navPrintBtn" title="Imprimir Selección Actual en DIN-A4">
+      <span class="nav-icon">🖨️</span>
+      <span class="nav-label">Imprimir</span>
+    </button>
+  </nav>
+
+  <!-- Rooms Selection Modal Sheet -->
+  <div class="modal-overlay" id="roomsModal" role="dialog" aria-modal="true" aria-labelledby="roomsModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="roomsModalTitle">
+          <span>🎛️</span> Seleccionar Sala del Congreso
+        </h2>
+        <button class="btn-icon" id="closeRoomsModalBtn" aria-label="Cerrar modal">✕</button>
+      </div>
+      
+      <div class="modal-body" id="roomsModalBody">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+      
+      <div class="modal-footer">
+        <div style="font-size: 11px; color: var(--text-muted);">
+          Filtra instantáneamente el programa por auditorio o espacio.
+        </div>
+        <button class="btn-pill active" id="closeRoomsModalFooterBtn">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Version & PDF Update Modal -->
+  <div class="modal-overlay" id="versionModal" role="dialog" aria-modal="true" aria-labelledby="versionModalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="versionModalTitle">
+          <span>📅</span> Versión de Datos y Actualización del Programa
+        </h2>
+        <button class="btn-icon" id="closeVersionModalBtn" aria-label="Cerrar modal">✕</button>
+      </div>
+      
+      <div class="modal-body" id="versionModalBody">
+        <!-- Injected dynamically by app.js -->
+      </div>
+      
+      <div class="modal-footer">
+        <div style="font-size: 11px; color: var(--text-muted);">
+          Tus notas y estados se conservan automáticamente en tu dispositivo (LocalStorage).
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button class="btn-pill" id="copyUpdateCmdBtn" title="Copiar comando de actualización para terminal">
+            📋 Copiar Instrucción
+          </button>
+          <button class="btn-pill active" id="closeVersionModalFooterBtn">
+            Entendido
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Technician Notes Summary Modal -->
+  <div class="modal-overlay" id="notesModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle">
+          <span>📋</span> Registro de Notas Técnicas del Técnico de Sala
+        </h2>
+        <button class="btn-icon" id="closeNotesModalBtn" aria-label="Cerrar modal">✕</button>
+      </div>
+      
+      <div class="modal-body" id="notesModalBody">
+        <!-- Injected notes -->
+      </div>
+      
+      <div class="modal-footer">
+        <div style="font-size: 11px; color: var(--text-muted);">
+          Las notas se guardan automáticamente en tu dispositivo (LocalStorage).
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="file" id="importNotesFileInput" accept=".json" style="display: none;">
+          <button class="btn-pill" id="importNotesBtn" title="Restaurar notas desde archivo JSON">
+            📥 Importar
+          </button>
+          <button class="btn-pill active" id="exportNotesBtn" title="Exportar todas las notas a un archivo JSON de respaldo">
+            💾 Exportar Respaldo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Message -->
+  <aside class="toast-msg" id="toastMessage" aria-live="polite"></aside>
+
+  <!-- Load Extracted Conference Database and App Script -->
+  <script src="congreso_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
