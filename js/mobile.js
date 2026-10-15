@@ -1003,8 +1003,6 @@ function closeSessionDetailModal() {
   var modal = document.getElementById('session-detail-modal');
   if (modal) modal.classList.add('hidden');
 }
-  output.innerHTML = html;
-}
 
 // EVALUACIÓN DE SESIÓN EN VIVO / PRÓXIMA
 function evaluateLiveSessions() {
