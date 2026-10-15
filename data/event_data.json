@@ -3,9 +3,9 @@
   "metadata": {
     "id": "microtas-2026",
     "name": "MicroTAS 2026 - International Conference",
-    "logo": "",
+    "logo": "./eventos_guardados/microtas-2026/uploads/Clipboard06-removebg-preview.png",
     "created_at": "2026-10-14T10:44:00Z",
-    "updated_at": "2026-10-15T16:47:50.585666",
+    "updated_at": "2026-10-15T17:39:30.539276",
     "dates": {
       "start": "2026-10-25",
       "end": "2026-10-29"
@@ -15,11 +15,11 @@
   "config": {
     "export_dir": "./eventos_guardados/microtas-2026/dist",
     "tech_support": {
-      "contact_name": "Jefe Técnico AV - Control Principal",
-      "phone_whatsapp": "+34 612 345 678",
+      "contact_name": "Fran Jefe Técnico AV",
+      "phone_whatsapp": "+34 609442342",
       "channel_radio": "Canal 2 (Audio/Video)"
     },
-    "production_notes": "Wi-Fi Técnicos: MicroTAS_Tech / Pass: AV_Prod2026!\nControl Central: Sala Trasera Auditorio\nPresentaciones: Formato 16:9 HDMI / Clicker en atril de cada sala.",
+    "production_notes": "Wi-Fi Staff       :SSID: IceIceBaby / Pass:VanillaIce!@\nWi-Fi Publico:SSID: uTAS-CBMS / Pass:microtas26\nControl Central: Zaguan Sala Falla",
     "warning_lead_time_minutes": 10
   },
   "github": {
@@ -29,8 +29,8 @@
     "branch": "main",
     "html_url": "https://github.com/VisualXet/MicroTAS",
     "pages_url": "https://visualxet.github.io/MicroTAS/",
-    "last_commit_sha": "d922cb2005637440de702e13f1c5838f996e6517",
-    "last_synced_at": "2026-10-15T16:47:50.585612",
+    "last_commit_sha": "dc77ea6e4913ce831478d038b053f853906af533",
+    "last_synced_at": "2026-10-15T17:12:30.337742",
     "has_unpushed_changes": false
   },
   "theme": {
