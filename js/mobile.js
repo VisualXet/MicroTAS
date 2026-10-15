@@ -139,13 +139,7 @@ function initApp() {
 
   var btnSos = document.getElementById('btn-sos-header');
   if (btnSos) {
-    if (support.phone_whatsapp) {
-      var cleanPhone = support.phone_whatsapp.replace(/[^0-9+]/g, '');
-      var msg = encodeURIComponent('Hola soporte técnico, necesito asistencia en la sala:');
-      btnSos.href = 'https://wa.me/' + cleanPhone.replace('+', '') + '?text=' + msg;
-    } else {
-      btnSos.style.display = 'none';
-    }
+    btnSos.style.display = 'flex';
   }
 
   // Cargar salas y sedes
@@ -154,17 +148,129 @@ function initApp() {
   // Cargar días
   renderDaysSelector();
 
-  // Renderizar filtros de sedes y salas
+  // Renderizar filtros de sedes y salas unificadas
   renderVenueButtons();
-  renderQuickTechButtons();
-  renderRoomCheckboxes();
+  renderRoomCards();
 
   // Actualizar badges
   updateGlobalNotesBadge();
   updateBadges();
 
+  // Sincronizar controles de navegación móvil
+  updateNavControls();
+
   // Renderizar contenido
   renderSchedule();
+}
+
+// GESTIÓN DE SOS TÉCNICO Y LLAMADA DIRECTA
+function openSosModal() {
+  var modal = document.getElementById('sos-modal');
+  if (!modal) return;
+
+  var config = (eventData && eventData.config) || {};
+  var support = config.tech_support || {};
+  var phone = (support.phone_whatsapp || '').trim();
+  var contactName = support.contact_name || 'Jefe Técnico AV';
+
+  // Información del contacto de soporte
+  var infoEl = document.getElementById('sos-support-contact-info');
+  if (infoEl) {
+    infoEl.textContent = contactName + (phone ? ' • ' + phone : '');
+  }
+
+  // Información del canal de radio si está disponible
+  var radioBox = document.getElementById('sos-radio-info');
+  var radioText = document.getElementById('sos-radio-text');
+  if (radioBox && radioText) {
+    if (support.channel_radio) {
+      radioBox.classList.remove('hidden');
+      radioText.textContent = 'Canal de Radio AV: ' + support.channel_radio;
+    } else {
+      radioBox.classList.add('hidden');
+    }
+  }
+
+  // Botón de llamada directa por teléfono (tel:)
+  var callBtn = document.getElementById('sos-phone-call-btn');
+  var callLbl = document.getElementById('sos-phone-call-label');
+  if (callBtn) {
+    if (phone) {
+      var cleanPhone = phone.replace(/[^0-9+]/g, '');
+      callBtn.href = 'tel:' + cleanPhone;
+      callBtn.classList.remove('hidden');
+      if (callLbl) callLbl.textContent = 'Llamar a ' + contactName + ' (' + phone + ')';
+    } else {
+      callBtn.classList.add('hidden');
+    }
+  }
+
+  // Poblar selector de salas con la sala actualmente seleccionada
+  var select = document.getElementById('sos-room-select');
+  if (select) {
+    select.innerHTML = '';
+    allRoomsList.forEach(function(r) {
+      var opt = document.createElement('option');
+      opt.value = r;
+      opt.textContent = r;
+      if (selectedRooms.length === 1 && selectedRooms[0] === r) {
+        opt.selected = true;
+      }
+      select.appendChild(opt);
+    });
+    if (selectedRooms.length > 0 && (!select.value || selectedRooms.includes(selectedRooms[0]))) {
+      select.value = selectedRooms[0];
+    }
+  }
+
+  // Resetear campo de descripción
+  var textInput = document.getElementById('sos-issue-text');
+  if (textInput) textInput.value = '';
+
+  modal.classList.remove('hidden');
+}
+
+function closeSosModal() {
+  var modal = document.getElementById('sos-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function sendSosMessage(type) {
+  var config = (eventData && eventData.config) || {};
+  var support = config.tech_support || {};
+  var phone = (support.phone_whatsapp || '').trim();
+
+  var select = document.getElementById('sos-room-select');
+  var room = select ? select.value : (selectedRooms[0] || 'Mi Sala');
+  var problemInput = document.getElementById('sos-issue-text');
+  var problem = problemInput ? problemInput.value.trim() : '';
+
+  var now = new Date();
+  var timeStr = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+  var msg = '🚨 *SOS SOPORTE TÉCNICO*\n' +
+            '📍 *Sala:* ' + room + '\n' +
+            '⏱️ *Hora:* ' + timeStr + '\n';
+
+  if (problem) {
+    msg += '⚠️ *Incidencia:* ' + problem;
+  } else {
+    msg += '⚠️ *Incidencia:* Solicitud de asistencia técnica urgente en sala.';
+  }
+
+  if (phone) {
+    var cleanPhone = phone.replace(/[^0-9+]/g, '').replace('+', '');
+    var url = 'https://wa.me/' + cleanPhone + '?text=' + encodeURIComponent(msg);
+    window.open(url, '_blank');
+    closeSosModal();
+    showToast('Abriendo WhatsApp con mensaje de SOS...', 'fa-paper-plane text-emerald-400');
+  } else {
+    try {
+      navigator.clipboard.writeText(msg);
+      showToast('Mensaje SOS copiado (sin teléfono configurado)', 'fa-copy text-amber-400');
+    } catch(e) {}
+    closeSosModal();
+  }
 }
 
 // ORGANIZACIÓN DE SALAS Y SEDES
@@ -314,28 +420,32 @@ function selectDayByIndex(idx) {
   renderSchedule();
 }
 
-// BOTONES DE SEDES
+// BOTONES DE SEDES (SOLO SI HAY MÚLTIPLES)
 function renderVenueButtons() {
   var container = document.getElementById('venues-buttons-container');
   if (!container) return;
 
   var keys = Object.keys(venuesMap);
-  var html = '';
+  if (keys.length <= 1) {
+    container.innerHTML = '';
+    container.classList.add('hidden');
+    return;
+  }
+  container.classList.remove('hidden');
 
+  var html = '<div class="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl text-xs overflow-x-auto custom-scrollbar w-full mb-1">';
   keys.forEach(function(key) {
     var v = venuesMap[key];
     var isActive = (currentVenue === key);
     var count = v.rooms.length;
 
     html += '<button onclick="filterByVenue(\'' + key + '\')" ' +
-      'class="px-2 py-0.5 rounded-lg font-bold transition cursor-pointer text-[11px] ' +
-      (isActive ? 'bg-white text-slate-900 shadow-sm' : 'text-teal-800 hover:bg-white/70') + '">' +
+      'class="px-2.5 py-1 rounded-lg font-bold transition cursor-pointer text-xs whitespace-nowrap ' +
+      (isActive ? 'bg-teal-800 text-white shadow-sm' : 'text-slate-600 hover:bg-white/80') + '">' +
       escapeHtml(v.name) + ' (' + count + ')' +
     '</button>';
   });
-
-  html += '<button onclick="selectAllRooms(false)" class="px-1.5 py-0.5 rounded-lg font-medium text-rose-600 hover:underline cursor-pointer ml-1 text-[11px]">Limpiar</button>';
-
+  html += '</div>';
   container.innerHTML = html;
 }
 
@@ -348,41 +458,73 @@ function filterByVenue(venueKey) {
   }
   safeSet('event_selected_rooms_v1', selectedRooms);
   renderVenueButtons();
-  renderQuickTechButtons();
-  renderRoomCheckboxes();
+  renderRoomCards();
   renderSchedule();
 }
 
-// BOTONES RÁPIDOS "SOLO MI SALA" (1 CLIC)
-function renderQuickTechButtons() {
-  var container = document.getElementById('quick-tech-buttons');
+// SELECTOR ÚNICO Y LIMPIO DE SALAS (SIN DUPLICADOS NI CAJAS REDUNDANTES)
+function renderRoomCards() {
+  var container = document.getElementById('rooms-grid');
   if (!container) return;
 
-  var html = '<div class="flex flex-wrap gap-1 max-h-28 overflow-y-auto custom-scrollbar p-0.5">';
-
+  var html = '';
   allRoomsList.forEach(function(room) {
+    var isSelected = selectedRooms.includes(room);
     var isOnlyThis = (selectedRooms.length === 1 && selectedRooms[0] === room);
 
-    html += '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\')" ' +
-      'class="px-2 py-1 rounded-lg text-[10.5px] font-bold border transition active:scale-95 cursor-pointer ' +
-      (isOnlyThis 
-        ? 'bg-teal-800 text-white border-teal-900 ring-2 ring-teal-400 shadow-sm' 
-        : 'bg-white text-slate-800 border-slate-200 hover:bg-teal-50') + '">' +
-      '<i class="fa-solid fa-door-closed mr-1 ' + (isOnlyThis ? 'text-amber-300' : 'text-teal-600') + '"></i>' +
-      escapeHtml(room) +
-    '</button>';
+    html += '<div class="flex items-center justify-between p-2 rounded-xl border transition cursor-pointer select-none ' +
+      (isSelected 
+        ? 'bg-teal-50 border-teal-400 text-teal-950 shadow-sm ring-1 ring-teal-500/20' 
+        : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50') + '" ' +
+      'onclick="toggleRoomSelection(\'' + escapeJsString(room) + '\')">' +
+      
+      '<div class="flex items-center gap-2 min-w-0 flex-1 mr-2">' +
+        '<i class="fa-solid ' + (isSelected ? 'fa-door-open text-teal-600' : 'fa-door-closed text-slate-400') + ' text-sm shrink-0"></i>' +
+        '<span class="text-xs font-bold truncate leading-tight ' + (isSelected ? 'text-teal-950 font-black' : 'text-slate-800') + '">' +
+          escapeHtml(room) +
+        '</span>' +
+      '</div>' +
+
+      '<div class="flex items-center gap-1.5 shrink-0">' +
+        '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\'); event.stopPropagation();" title="Ver únicamente esta sala" ' +
+          'class="text-[10px] font-black uppercase px-2 py-0.5 rounded-lg transition ' +
+          (isOnlyThis 
+            ? 'bg-amber-400 text-slate-950 shadow-sm' 
+            : 'bg-slate-100 hover:bg-teal-600 hover:text-white text-slate-600') + '">' +
+          (isOnlyThis ? '★ Mi Sala' : 'Solo') +
+        '</button>' +
+        '<div class="w-5 h-5 rounded-md flex items-center justify-center ' + 
+          (isSelected ? 'bg-teal-600 text-white' : 'border border-slate-300') + '">' +
+          (isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '') +
+        '</div>' +
+      '</div>' +
+
+    '</div>';
   });
 
-  html += '</div>';
   container.innerHTML = html;
+  updateBadges();
+}
+
+// Aliases para máxima compatibilidad
+function renderQuickTechButtons() { renderRoomCards(); }
+function renderRoomCheckboxes() { renderRoomCards(); }
+
+function toggleRoomSelection(room) {
+  if (selectedRooms.includes(room)) {
+    selectedRooms = selectedRooms.filter(function(r) { return r !== room; });
+  } else {
+    selectedRooms.push(room);
+  }
+  safeSet('event_selected_rooms_v1', selectedRooms);
+  renderRoomCards();
+  renderSchedule();
 }
 
 function selectSingleRoom(roomName) {
   selectedRooms = [roomName];
   safeSet('event_selected_rooms_v1', selectedRooms);
-  renderQuickTechButtons();
-  renderRoomCheckboxes();
-  updateBadges();
+  renderRoomCards();
   renderSchedule();
   showToast('Modo exclusivo: ' + roomName, 'fa-door-open text-teal-400');
 }
@@ -390,42 +532,9 @@ function selectSingleRoom(roomName) {
 function selectAllRooms(state) {
   selectedRooms = state ? [...allRoomsList] : [];
   safeSet('event_selected_rooms_v1', selectedRooms);
-  renderQuickTechButtons();
-  renderRoomCheckboxes();
-  updateBadges();
+  renderRoomCards();
   renderSchedule();
-}
-
-function renderRoomCheckboxes() {
-  var container = document.getElementById('rooms-grid');
-  if (!container) return;
-
-  var html = '';
-  allRoomsList.forEach(function(room) {
-    var isChecked = selectedRooms.includes(room);
-
-    html += '<label class="flex items-center gap-1.5 p-1 rounded-lg border text-xs cursor-pointer select-none transition ' +
-      (isChecked ? 'bg-teal-50 border-teal-300 text-teal-950 font-semibold' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50') + '">' +
-      '<input type="checkbox" ' + (isChecked ? 'checked' : '') + ' onchange="toggleRoomCheckbox(\'' + escapeJsString(room) + '\', this.checked)" class="rounded w-3.5 h-3.5 text-teal-600 focus:ring-teal-500">' +
-      '<span class="truncate text-[10.5px] leading-tight" title="' + escapeHtml(room) + '">' +
-        escapeHtml(room) +
-      '</span>' +
-    '</label>';
-  });
-
-  container.innerHTML = html;
-}
-
-function toggleRoomCheckbox(room, isChecked) {
-  if (isChecked) {
-    if (!selectedRooms.includes(room)) selectedRooms.push(room);
-  } else {
-    selectedRooms = selectedRooms.filter(function(r) { return r !== room; });
-  }
-  safeSet('event_selected_rooms_v1', selectedRooms);
-  renderQuickTechButtons();
-  updateBadges();
-  renderSchedule();
+  showToast(state ? 'Mostrando todas las salas' : 'Filtro limpiado (0 salas)', 'fa-layer-group text-teal-400');
 }
 
 function updateBadges() {
@@ -462,21 +571,31 @@ function setViewMode(mode) {
       btnList.className = 'px-2.5 py-1 rounded-md font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer';
     }
   }
+  updateNavControls();
   renderSchedule();
+}
+
+function toggleViewModeMobile() {
+  var nextMode = (currentViewMode === 'list') ? 'grid' : 'list';
+  setViewMode(nextMode);
+  showToast(nextMode === 'grid' ? 'Vista Parrilla activada' : 'Vista Tarjetas activada', 'fa-table-columns text-teal-400');
 }
 
 function toggleCompactMode() {
   isCompactView = !isCompactView;
   safeSet('event_compact_view_v1', isCompactView);
-  // Limpiar estados individuales para que todas las tarjetas se contraigan limpiamente
   visibleSpeakersMap = {};
   var btnTxt = document.getElementById('txt-compact');
   var btnIcon = document.getElementById('icon-compact');
-  var mobLabel = document.getElementById('mobile-compact-label');
   if (btnTxt) btnTxt.textContent = isCompactView ? 'Modo Compacto' : 'Vista Detallada';
   if (btnIcon) btnIcon.className = isCompactView ? 'fa-solid fa-compress text-amber-600' : 'fa-solid fa-expand text-slate-600';
-  if (mobLabel) mobLabel.textContent = isCompactView ? 'Compacto' : 'Detallada';
+  updateNavControls();
   renderSchedule();
+}
+
+function toggleCompactModeMobile() {
+  toggleCompactMode();
+  showToast(isCompactView ? 'Modo Compacto activado' : 'Modo Detallado activado', 'fa-compress text-amber-400');
 }
 
 function toggleAllSpeakers() {
@@ -484,7 +603,63 @@ function toggleAllSpeakers() {
   visibleSpeakersMap = {};
   var txt = document.getElementById('txt-toggle-speakers');
   if (txt) txt.textContent = globalShowSpeakers ? 'Ocultar Ponentes' : 'Ver Ponentes';
+  updateNavControls();
   renderSchedule();
+}
+
+function toggleAllSpeakersMobile() {
+  toggleAllSpeakers();
+  showToast(globalShowSpeakers ? 'Mostrando ponentes' : 'Ponentes ocultados', 'fa-user-tie text-teal-400');
+}
+
+function updateNavControls() {
+  // 1. Vista en barra inferior (Parrilla / Tarjetas)
+  var viewIcon = document.getElementById('mobile-icon-view');
+  var viewLabel = document.getElementById('mobile-label-view');
+  var viewBtn = document.getElementById('mobile-btn-view');
+  if (viewIcon && viewLabel) {
+    if (currentViewMode === 'grid') {
+      viewIcon.className = 'fa-solid fa-list text-base text-teal-600';
+      viewLabel.textContent = 'Tarjetas';
+      if (viewBtn) viewBtn.classList.add('text-teal-600');
+    } else {
+      viewIcon.className = 'fa-solid fa-table-columns text-base';
+      viewLabel.textContent = 'Parrilla';
+      if (viewBtn) viewBtn.classList.remove('text-teal-600');
+    }
+  }
+
+  // 2. Ponentes en barra inferior
+  var spkIcon = document.getElementById('mobile-icon-speakers');
+  var spkLabel = document.getElementById('mobile-label-speakers');
+  var spkBtn = document.getElementById('mobile-btn-speakers');
+  if (spkIcon && spkLabel) {
+    if (globalShowSpeakers) {
+      spkIcon.className = 'fa-solid fa-user-tie text-base text-teal-600';
+      spkLabel.textContent = 'Ponentes';
+      if (spkBtn) spkBtn.classList.add('text-teal-600');
+    } else {
+      spkIcon.className = 'fa-solid fa-user-slash text-base text-slate-400';
+      spkLabel.textContent = 'Ocultos';
+      if (spkBtn) spkBtn.classList.remove('text-teal-600');
+    }
+  }
+
+  // 3. Compacto en barra inferior
+  var compIcon = document.getElementById('mobile-icon-compact');
+  var compLabel = document.getElementById('mobile-compact-label');
+  var compBtn = document.getElementById('mobile-btn-compact');
+  if (compIcon && compLabel) {
+    if (isCompactView) {
+      compIcon.className = 'fa-solid fa-compress text-base text-amber-500';
+      compLabel.textContent = 'Compacto';
+      if (compBtn) compBtn.classList.add('text-amber-500');
+    } else {
+      compIcon.className = 'fa-solid fa-expand text-base text-slate-600';
+      compLabel.textContent = 'Detallada';
+      if (compBtn) compBtn.classList.remove('text-amber-500');
+    }
+  }
 }
 
 function toggleSessionSpeakers(sessionId) {

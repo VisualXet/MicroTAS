@@ -234,24 +234,17 @@
           <span id="global-notes-count-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
         </button>
 
-        <!-- Modo Sala Oscura (visible en pantallas medianas+, en móvil está en la barra inferior) -->
-        <button id="btn-dark-mode" onclick="toggleDarkMode()" class="hidden md:flex bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-amber-300 font-bold px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition items-center gap-1.5 text-xs cursor-pointer border border-teal-700" title="Activar/desactivar Modo Sala Oscura">
-          <i id="theme-toggle-icon" class="fa-solid fa-moon text-amber-300"></i>
-          <span id="theme-toggle-text">Modo Sala</span>
+        <!-- Modo Sala Oscura (visible en móvil y desktop) -->
+        <button id="btn-dark-mode" onclick="toggleDarkMode()" class="flex bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-amber-300 font-bold px-2 py-1.5 sm:px-2.5 sm:py-1.5 rounded-lg shadow transition items-center gap-1.5 text-xs cursor-pointer border border-teal-700 shrink-0" title="Activar/desactivar Modo Sala Oscura">
+          <i id="theme-toggle-icon" class="fa-solid fa-moon text-amber-300 text-sm"></i>
+          <span id="theme-toggle-text" class="hidden sm:inline">Modo Sala</span>
         </button>
 
-        <!-- Botón Salas para móvil si se requiere abrir modal de filtros -->
-        <button onclick="toggleMobileDrawer()" class="hidden sm:flex md:hidden bg-teal-800 active:bg-teal-700 text-white px-2 py-1.5 rounded-lg shadow transition items-center gap-1 text-xs font-bold cursor-pointer border border-teal-700">
-          <i class="fa-solid fa-sliders text-amber-400"></i>
-          <span>Salas</span>
-          <span id="mobile-filter-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1 py-0.2 rounded-full font-black">0</span>
-        </button>
-
-        <!-- BOTÓN SOS: SIEMPRE VISIBLE EN PANTALLA SIN DESPLAZAMIENTO HORIZONTAL -->
-        <a id="btn-sos-header" href="#" target="_blank" class="bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-black px-2.5 sm:px-3 py-1.5 rounded-lg shadow-md transition flex items-center gap-1.5 text-xs cursor-pointer shrink-0 border border-rose-500/50" title="SOS Soporte Técnico de Sala">
+        <!-- BOTÓN SOS: ABRE DIÁLOGO DE ASISTENCIA TÉCNICA Y LLAMADA DIRECTA -->
+        <button id="btn-sos-header" onclick="openSosModal()" class="bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-black px-2.5 sm:px-3 py-1.5 rounded-lg shadow-md transition flex items-center gap-1.5 text-xs cursor-pointer shrink-0 border border-rose-500/50" title="SOS Soporte Técnico de Sala">
           <i class="fa-solid fa-triangle-exclamation text-amber-300 animate-pulse"></i>
           <span class="font-black tracking-wider">SOS</span>
-        </a>
+        </button>
       </div>
     </div>
   </header>
@@ -286,52 +279,41 @@
 
         <div class="space-y-3 my-1 overflow-y-auto ios-touch-scroll custom-scrollbar max-h-[70vh] md:max-h-none">
           
-          <!-- Buscador en Tiempo Real y Selector de Sedes -->
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <div class="relative flex-grow">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-              <input type="text" id="session-search-input" onkeyup="filterBySearch()" placeholder="Buscar por ponente, título de sesión, palabra clave o sala..." 
-                class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/50">
-            </div>
-            
-            <!-- Botones de Sedes -->
-            <div id="venues-buttons-container" class="flex items-center gap-1 text-[11px] bg-slate-100 p-1 rounded-xl justify-center flex-wrap sm:flex-nowrap">
-              <!-- Botones de sedes generados dinámicamente -->
-            </div>
+          <!-- Buscador en Tiempo Real -->
+          <div class="relative w-full">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
+            <input type="text" id="session-search-input" onkeyup="filterBySearch()" placeholder="Buscar por ponente, título de sesión, palabra clave o sala..." 
+              class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/50">
           </div>
 
-          <!-- BOTONES RÁPIDOS "SOLO MI SALA" (1 Clic) -->
-          <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 space-y-2">
-            <div class="flex items-center justify-between">
-              <label class="text-[11px] font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-1">
-                <i class="fa-solid fa-hand-pointer text-teal-700"></i> Selección Rápida Técnico ("Solo Mi Sala" - 1 Clic):
-              </label>
-              <button onclick="selectAllRooms(true)" class="text-[10px] font-bold text-teal-700 hover:underline">
-                Ver Todas las Salas
-              </button>
-            </div>
-            <div id="quick-tech-buttons" class="space-y-1.5">
-              <!-- Botones de sala por sede generados dinámicamente -->
-            </div>
-          </div>
+          <!-- Selector de Sedes (si hay varias sedes) -->
+          <div id="venues-buttons-container" class="empty:hidden"></div>
 
-          <!-- Lista de Checkboxes de Salas -->
-          <div>
-            <div class="flex items-center justify-between mb-1.5">
-              <label class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center">
-                <i class="fa-solid fa-list-check text-teal-600 mr-1.5"></i> Filtrado manual de salas:
-                <span id="selected-rooms-badge" class="ml-2 bg-teal-100 text-teal-800 text-[11px] px-2 py-0.5 rounded-full font-bold">
+          <!-- PANEL ÚNICO Y LIMPIO DE SALAS (SIN CAJAS REDUNDANTES) -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 space-y-2.5">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div class="flex items-center gap-2">
+                <label class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                  <i class="fa-solid fa-door-open text-teal-600"></i> Salas del Congreso:
+                </label>
+                <span id="selected-rooms-badge" class="bg-teal-100 text-teal-800 text-[10px] px-2 py-0.5 rounded-full font-bold">
                   0 salas seleccionadas
                 </span>
-              </label>
-              <div class="flex items-center gap-2">
-                <button onclick="selectAllRooms(true)" class="text-teal-700 font-bold text-[11px] hover:underline">Todas</button>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-bold">
+                <button onclick="selectAllRooms(true)" class="text-teal-700 hover:text-teal-900 hover:underline cursor-pointer">
+                  Ver Todas
+                </button>
                 <span class="text-slate-300">|</span>
-                <button onclick="selectAllRooms(false)" class="text-rose-600 font-medium text-[11px] hover:underline">Limpiar</button>
+                <button onclick="selectAllRooms(false)" class="text-rose-600 hover:text-rose-800 hover:underline cursor-pointer">
+                  Limpiar
+                </button>
               </div>
             </div>
-            <div id="rooms-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1.5 max-h-40 overflow-y-auto ios-touch-scroll p-2 bg-slate-50 border border-slate-200 rounded-xl custom-scrollbar">
-              <!-- Checkboxes generados dinámicamente -->
+
+            <!-- Listado único de salas interactivas -->
+            <div id="rooms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 max-h-56 overflow-y-auto ios-touch-scroll custom-scrollbar p-0.5">
+              <!-- Generado dinámicamente con JS -->
             </div>
           </div>
         </div>
@@ -484,28 +466,33 @@
   </div>
 
   <!-- NAVEGACIÓN INFERIOR MÓVIL (STICKY BOTTOM NAV PARA ANDROID / IPHONE) -->
-  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1 px-2 flex justify-around items-center z-40 md:hidden no-print shadow-lg pb-safe">
-    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1">
-      <i class="fa-solid fa-calendar-day text-base"></i>
-      <span class="text-[9px] font-bold mt-0.5">Días</span>
-    </button>
-    <button onclick="toggleMobileDrawer()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 relative">
+  <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1 px-1 flex justify-around items-center z-40 md:hidden no-print shadow-lg pb-safe">
+    <!-- 1. SALAS -->
+    <button onclick="toggleMobileDrawer()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 relative flex-1" title="Selector de Salas">
       <i class="fa-solid fa-door-open text-base"></i>
       <span class="text-[9px] font-bold mt-0.5">Salas</span>
-      <span id="mobile-nav-badge" class="absolute top-0 right-1 bg-amber-500 text-slate-900 text-[9px] font-extrabold px-1 rounded-full">0</span>
+      <span id="mobile-nav-badge" class="absolute top-0 right-2 bg-amber-500 text-slate-900 text-[9px] font-extrabold px-1 rounded-full">0</span>
     </button>
-    <button onclick="openGlobalNotesModal()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 relative">
+    <!-- 2. VISTA (TARJETAS / PARRILLA) -->
+    <button id="mobile-btn-view" onclick="toggleViewModeMobile()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 flex-1" title="Cambiar Vista Tarjetas / Parrilla">
+      <i id="mobile-icon-view" class="fa-solid fa-table-columns text-base"></i>
+      <span id="mobile-label-view" class="text-[9px] font-bold mt-0.5">Parrilla</span>
+    </button>
+    <!-- 3. VER PONENTES -->
+    <button id="mobile-btn-speakers" onclick="toggleAllSpeakersMobile()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 flex-1" title="Mostrar u Ocultar Ponentes">
+      <i id="mobile-icon-speakers" class="fa-solid fa-user-tie text-base"></i>
+      <span id="mobile-label-speakers" class="text-[9px] font-bold mt-0.5">Ponentes</span>
+    </button>
+    <!-- 4. MODO COMPACTO -->
+    <button id="mobile-btn-compact" onclick="toggleCompactModeMobile()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 flex-1" title="Modo Compacto">
+      <i id="mobile-icon-compact" class="fa-solid fa-compress text-base"></i>
+      <span id="mobile-compact-label" class="text-[9px] font-bold mt-0.5">Compacto</span>
+    </button>
+    <!-- 5. NOTAS TÉCNICAS -->
+    <button onclick="openGlobalNotesModal()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1 relative flex-1" title="Registro de Notas Técnicas">
       <i class="fa-solid fa-clipboard-list text-base text-amber-500"></i>
       <span class="text-[9px] font-bold mt-0.5">Notas</span>
-      <span id="mobile-nav-notes-badge" class="absolute top-0 right-1 bg-amber-500 text-slate-900 text-[8px] font-black px-1 rounded-full hidden">0</span>
-    </button>
-    <button id="mobile-theme-toggle" onclick="toggleDarkMode()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1">
-      <i id="mobile-theme-icon" class="fa-solid fa-moon text-base text-amber-500"></i>
-      <span class="text-[9px] font-bold mt-0.5" id="mobile-theme-text">Modo Sala</span>
-    </button>
-    <button onclick="toggleCompactMode()" class="flex flex-col items-center text-slate-700 active:text-teal-700 p-1">
-      <i id="mobile-icon-compact" class="fa-solid fa-compress text-base"></i>
-      <span class="text-[9px] font-bold mt-0.5" id="mobile-compact-label">Compacto</span>
+      <span id="mobile-nav-notes-badge" class="absolute top-0 right-2 bg-amber-500 text-slate-900 text-[8px] font-black px-1 rounded-full hidden">0</span>
     </button>
   </nav>
 
@@ -575,6 +562,80 @@
             Cerrar
           </button>
         </div>
+      </div>
+    </div>
+  <!-- MODAL SOS SOPORTE TÉCNICO (MENSAJE O LLAMADA CON SALA SELECCIONADA) -->
+  <div id="sos-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-rose-500/40 max-w-md w-full overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Cabecera de Alerta SOS -->
+      <div class="bg-gradient-to-r from-rose-700 via-rose-600 to-rose-700 text-white p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="bg-white/20 p-2 rounded-xl">
+            <i class="fa-solid fa-triangle-exclamation text-amber-300 text-xl animate-pulse"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-black leading-tight tracking-wide">SOS SOPORTE TÉCNICO</h3>
+            <p class="text-[11px] text-rose-100" id="sos-support-contact-info">Asistencia técnica inmediata de sala</p>
+          </div>
+        </div>
+        <button onclick="closeSosModal()" class="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/20 transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Contenido SOS -->
+      <div class="p-4 space-y-3.5 overflow-y-auto ios-touch-scroll custom-scrollbar">
+        
+        <!-- Sala donde se necesita soporte -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+          <label for="sos-room-select" class="text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-1.5 mb-1.5">
+            <i class="fa-solid fa-door-open text-rose-600"></i> Sala donde se necesita soporte:
+          </label>
+          <select id="sos-room-select" class="w-full p-2.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <!-- Rellenado dinámicamente con las salas -->
+          </select>
+          <p class="text-[10px] text-slate-500 mt-1">
+            Se preselecciona automáticamente tu sala de trabajo actual.
+          </p>
+        </div>
+
+        <!-- Caja de texto para el problema -->
+        <div>
+          <label for="sos-issue-text" class="text-xs font-bold text-slate-700 flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-comment-dots text-teal-600"></i> Describe el problema o necesidad:
+          </label>
+          <textarea id="sos-issue-text" rows="3" placeholder="Ej: No funciona el micrófono inalámbrico, proyector sin señal, falta adaptador HDMI, puntero sin pilas..." class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-rose-500 font-medium"></textarea>
+        </div>
+
+        <!-- Canal de radio si existe -->
+        <div id="sos-radio-info" class="hidden p-2 rounded-lg bg-amber-50 border border-amber-200 text-[11px] text-amber-900 flex items-center gap-2">
+          <i class="fa-solid fa-walkie-talkie text-amber-600"></i>
+          <span id="sos-radio-text">Canal de Radio</span>
+        </div>
+
+        <!-- Botones de Acción: Enviar Mensaje WhatsApp o Llamar por Teléfono -->
+        <div class="space-y-2 pt-1">
+          <!-- Opción 1: Enviar Mensaje (WhatsApp) -->
+          <button onclick="sendSosMessage('whatsapp')" class="w-full bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-black py-2.5 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer border border-emerald-500">
+            <i class="fa-brands fa-whatsapp text-lg"></i>
+            <span>Enviar Mensaje por WhatsApp</span>
+          </button>
+
+          <!-- Opción 2: Llamar por Teléfono Directo -->
+          <a id="sos-phone-call-btn" href="#" class="w-full bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-black py-2.5 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-xs sm:text-sm cursor-pointer border border-rose-500">
+            <i class="fa-solid fa-phone text-base animate-bounce"></i>
+            <span id="sos-phone-call-label">Llamar por Teléfono</span>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Pie modal -->
+      <div class="bg-slate-50 p-2.5 border-t border-slate-200 flex justify-end">
+        <button onclick="closeSosModal()" class="px-4 py-1.5 rounded-xl text-slate-600 hover:bg-slate-200 font-bold text-xs cursor-pointer transition">
+          Cancelar
+        </button>
       </div>
     </div>
   </div>
