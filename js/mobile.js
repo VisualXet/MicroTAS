@@ -721,13 +721,19 @@ function renderCardListView(output, sessions, currentDay) {
             (subtalks.length > 0 ?
               '<div class="text-[9px] font-black uppercase text-teal-400 flex items-center justify-between">' +
                 '<span>' + subtalks.length + ' ' + (subtalks.length === 1 ? 'Ponencia' : 'Ponencias') + ':</span>' +
+                (subtalks.length > 2 ? '<button onclick="openSessionDetailModal(\'' + s.id + '\')" class="text-amber-400 hover:underline font-bold text-[9px] cursor-pointer">Ver todas (' + subtalks.length + ') &rsaquo;</button>' : '') +
               '</div>' +
-              subtalks.map(function(talk) {
-                return '<div class="subtalk-box text-[10.5px] p-2 rounded-lg border border-slate-700/60 bg-slate-800/80 text-slate-200">' +
+              subtalks.slice(0, 2).map(function(talk) {
+                return '<div onclick="openSessionDetailModal(\'' + s.id + '\')" class="subtalk-box text-[10.5px] p-2 rounded-lg border border-slate-700/60 bg-slate-800/80 text-slate-200 cursor-pointer hover:border-teal-500/50 transition">' +
                   '<div class="font-bold text-slate-100">' + escapeHtml(talk.title || 'Presentación de Ponencia') + '</div>' +
                   (talk.speaker ? '<div class="text-[9.5px] text-slate-400 mt-1 flex items-start gap-1.5"><i class="fa-solid fa-user-tie text-teal-400 mt-0.5 shrink-0"></i><span>' + escapeHtml(talk.speaker) + '</span></div>' : '') +
                 '</div>';
-              }).join('') : '') +
+              }).join('') +
+              (subtalks.length > 2 ? 
+                '<button onclick="openSessionDetailModal(\'' + s.id + '\')" class="w-full text-center py-1 px-2 rounded-lg bg-slate-800/70 hover:bg-slate-700 text-teal-300 text-[10px] font-bold border border-slate-700 transition cursor-pointer flex items-center justify-center gap-1.5">' +
+                  '<i class="fa-solid fa-window-maximize text-[9px] text-teal-400"></i>' +
+                  '<span>Ver ' + subtalks.length + ' ponencias en ventana de detalle</span>' +
+                '</button>' : '') : '') +
 
             ((modNames.length > 0 || (speakerNames.length > 0 && subtalks.length === 0)) ?
               '<div class="subtalk-box text-[10.5px] p-2 rounded-lg border border-slate-700/60 bg-slate-800/80 text-slate-200 space-y-1">' +
@@ -742,7 +748,7 @@ function renderCardListView(output, sessions, currentDay) {
             (hasPeopleOrTalks ? 
               '<button onclick="toggleSessionSpeakers(\'' + s.id + '\')" class="text-teal-400 hover:text-teal-300 font-extrabold cursor-pointer p-0.5 flex items-center gap-1 text-[10px] underline">' +
                 '<i class="fa-solid ' + (isSpeakerVisible ? 'fa-chevron-up' : 'fa-chevron-down') + ' text-[9px]"></i>' +
-                '<span>' + (isSpeakerVisible ? 'Ocultar Ponentes' : ('Ver Ponentes' + (subtalks.length ? ' (' + subtalks.length + ')' : (speakerNames.length ? ' (' + speakerNames.length + ')' : '')))) + '</span>' +
+                '<span>' + (isSpeakerVisible ? 'Ocultar' : ('Ver Ponentes' + (subtalks.length ? ' (' + subtalks.length + ')' : (speakerNames.length ? ' (' + speakerNames.length + ')' : '')))) + '</span>' +
               '</button>' : 
               '<span class="text-[10px] font-semibold text-slate-400 truncate max-w-[170px] sm:max-w-[220px] inline-flex items-center gap-1" title="' + escapeHtml(s.title) + '">' +
                 '<i class="fa-solid fa-calendar-check text-teal-400/80 text-[9px]"></i>' +
@@ -750,6 +756,10 @@ function renderCardListView(output, sessions, currentDay) {
               '</span>') +
           '</div>' +
           '<div class="flex items-center gap-1">' +
+            '<button onclick="openSessionDetailModal(\'' + s.id + '\')" title="Ver ficha completa en ventana" class="tech-action-btn cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">' +
+              '<i class="fa-solid fa-up-right-from-square text-[9px] text-teal-400"></i>' +
+              '<span>Detalle</span>' +
+            '</button>' +
             '<button onclick="openSessionNoteModal(\'' + s.id + '\')" title="Ver / Añadir nota técnica" class="tech-action-btn cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">' + 
               '<i class="fa-solid fa-note-sticky ' + (hasNote ? 'text-amber-400' : 'text-slate-400') + '"></i>' +
               '<span>Nota</span>' +
@@ -772,21 +782,22 @@ function renderCardListView(output, sessions, currentDay) {
   output.innerHTML = html;
 }
 
-// VISTA PARRILLA (TABLA RESUMEN)
+// VISTA PARRILLA (LISTA / TABLA RESUMEN RESPONSIVE SIN SCROLL HORIZONTAL)
 function renderGridView(output, sessions, currentDay) {
-  var html = '<div class="overflow-x-auto ios-touch-scroll">' +
-    '<table class="w-full text-left text-xs border border-slate-200 rounded-xl overflow-hidden">' +
-      '<thead class="bg-teal-900 text-white">' +
-        '<tr>' +
-          '<th class="p-2.5 font-bold">Horario</th>' +
-          '<th class="p-2.5 font-bold">Sala</th>' +
-          '<th class="p-2.5 font-bold">Sesión</th>' +
-          '<th class="p-2.5 font-bold">Moderadores / Ponentes</th>' +
-          '<th class="p-2.5 font-bold text-center">Estado</th>' +
-          '<th class="p-2.5 font-bold text-center">Acciones</th>' +
-        '</tr>' +
-      '</thead>' +
-      '<tbody class="divide-y divide-slate-200">';
+  var isSingleRoom = (selectedRooms.length === 1);
+
+  var html = '<div class="w-full">' +
+    '<div class="mb-3 pb-2 border-b border-slate-700/60 flex justify-between items-center">' +
+      '<div>' +
+        '<h2 class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">' +
+          '<span>' + escapeHtml(currentDay.label || currentDay.date || 'Jornada') + '</span>' +
+          (isSingleRoom ? '<span class="text-[9px] font-black text-teal-300 bg-teal-950/80 border border-teal-800 px-2 py-0.5 rounded uppercase">Sala: ' + escapeHtml(selectedRooms[0]) + '</span>' : '') +
+        '</h2>' +
+        '<p class="text-[10px] text-slate-400 font-medium">' + sessions.length + ' sesiones &bull; Toca cualquier sesión para ver ventana completa</p>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="space-y-1.5 w-full select-none">';
 
   sessions.forEach(function(s) {
     var isFinished = isSessionFinished(s.id);
@@ -806,49 +817,192 @@ function renderGridView(output, sessions, currentDay) {
     });
     speakerNames = Array.from(new Set(speakerNames));
 
-    var modNames = [];
-    if (s.moderators) {
-      if (Array.isArray(s.moderators)) {
-        s.moderators.forEach(function(m) { if (m && m.trim()) modNames.push(m.trim()); });
-      } else if (typeof s.moderators === 'string' && s.moderators.trim()) {
-        modNames.push(s.moderators.trim());
-      }
-    }
-    modNames = Array.from(new Set(modNames));
+    html += '<div onclick="openSessionDetailModal(\'' + s.id + '\')" class="grid-row-item p-2.5 rounded-xl border transition flex items-center justify-between gap-2 cursor-pointer ' +
+      (isFinished 
+        ? 'bg-emerald-950/20 border-emerald-500/40 hover:bg-emerald-950/30' 
+        : 'bg-slate-900 border-slate-800 hover:bg-slate-800/60 active:bg-slate-800') + '">' +
 
-    html += '<tr class="' + (isFinished ? 'bg-emerald-50/50' : 'hover:bg-slate-50') + '">' +
-      '<td class="p-2.5 whitespace-nowrap">' +
-        '<span class="card-time-badge inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono font-black text-xs">' +
-          '<i class="fa-regular fa-clock text-amber-400 text-[10px]"></i>' +
+      // Columna 1: Horario
+      '<div class="shrink-0">' +
+        '<span class="card-time-badge inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono font-black text-[10px]">' +
+          '<i class="fa-regular fa-clock text-amber-400 text-[9px]"></i>' +
           '<span>' + s.time_start + ' - ' + s.time_end + '</span>' +
         '</span>' +
-      '</td>' +
-      '<td class="p-2.5 font-bold text-slate-700 whitespace-nowrap">' + escapeHtml(s.room) + '</td>' +
-      '<td class="p-2.5">' +
-        '<div class="font-bold text-slate-900">' + escapeHtml(s.title) + '</div>' +
-        (s.type ? '<span class="text-[9px] font-black uppercase text-teal-700 bg-teal-50 px-1 py-0.2 rounded border border-teal-200">' + escapeHtml(s.type) + '</span>' : '') +
-      '</td>' +
-      '<td class="p-2.5 text-[11px] text-slate-600">' +
-        (modNames.length ? '<div><strong>Mod:</strong> ' + escapeHtml(modNames.join(', ')) + '</div>' : '') +
-        (speakerNames.length ? '<div><strong>Pon:</strong> ' + escapeHtml(speakerNames.join('; ')) + '</div>' : '') +
-        (!modNames.length && !speakerNames.length && subtalks.length ? '<div class="text-slate-500 font-medium">' + subtalks.length + ' ponencias</div>' : '') +
-        (!modNames.length && !speakerNames.length && !subtalks.length ? '<span class="text-slate-400 text-[10px]">Sin ponentes</span>' : '') +
-      '</td>' +
-      '<td class="p-2.5 text-center">' +
-        (isFinished ? '<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">Terminada</span>' : '<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">Pendiente</span>') +
-      '</td>' +
-      '<td class="p-2.5 text-center whitespace-nowrap">' +
-        '<button onclick="openSessionNoteModal(\'' + s.id + '\')" class="p-1 text-slate-600 hover:text-amber-600 cursor-pointer mr-1" title="Notas">' +
-          '<i class="fa-solid fa-note-sticky ' + (hasNote ? 'text-amber-500' : '') + '"></i>' +
+      '</div>' +
+
+      // Columna 2 (solo visible si NO hay una única sala seleccionada)
+      (!isSingleRoom ? 
+        '<div class="shrink-0 hidden xs:block sm:block">' +
+          '<span class="room-badge text-[9.5px] font-bold px-1.5 py-0.5 rounded truncate max-w-[90px] sm:max-w-[120px] block border border-teal-800 bg-teal-950/60 text-teal-300">' +
+            escapeHtml(s.room || 'Sala') +
+          '</span>' +
+        '</div>' : '') +
+
+      // Columna 3: Título + Texto orientativo pequeño
+      '<div class="flex-1 min-w-0 px-1">' +
+        '<div class="font-bold text-slate-100 text-xs truncate leading-snug">' + escapeHtml(s.title) + '</div>' +
+        '<div class="flex items-center gap-1.5 text-[9.5px] text-slate-400 mt-0.5 truncate">' +
+          (subtalks.length > 0 ? 
+            '<span class="text-teal-400 font-bold"><i class="fa-solid fa-layer-group mr-1"></i>' + subtalks.length + ' ponencias &bull; Ver info &rsaquo;</span>' : 
+            (speakerNames.length > 0 ? 
+              '<span class="truncate"><i class="fa-solid fa-user-tie text-teal-400 mr-1"></i>' + escapeHtml(speakerNames[0]) + (speakerNames.length > 1 ? ' +' + (speakerNames.length - 1) : '') + '</span>' : 
+              '<span class="text-slate-500 font-medium">Actividad general</span>')) +
+        '</div>' +
+      '</div>' +
+
+      // Columna 4: Estado y Botones Rápidos
+      '<div class="shrink-0 flex items-center gap-1" onclick="event.stopPropagation()">' +
+        '<button onclick="openSessionNoteModal(\'' + s.id + '\')" class="p-1.5 rounded-lg text-slate-400 hover:text-amber-400 hover:bg-slate-800 cursor-pointer" title="Notas">' +
+          '<i class="fa-solid fa-note-sticky text-xs ' + (hasNote ? 'text-amber-400' : '') + '"></i>' +
         '</button>' +
-        '<button onclick="toggleSessionFinished(\'' + s.id + '\')" class="p-1 text-slate-600 hover:text-emerald-600 cursor-pointer" title="Terminar">' +
-          '<i class="fa-solid ' + (isFinished ? 'fa-circle-check text-emerald-600' : 'fa-check') + '"></i>' +
+        '<button onclick="toggleSessionFinished(\'' + s.id + '\')" class="p-1.5 rounded-lg text-xs font-bold transition cursor-pointer ' + 
+          (isFinished ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-emerald-400 hover:bg-slate-800') + '" title="Terminar">' +
+          '<i class="fa-solid fa-check"></i>' +
         '</button>' +
-      '</td>' +
-    '</tr>';
+      '</div>' +
+
+    '</div>';
   });
 
-  html += '</tbody></table></div>';
+  html += '</div></div>';
+  output.innerHTML = html;
+}
+
+// MODAL DETALLE COMPLETO DE SESIÓN (VENTANA POPUP PARA EVITAR DESPLAZAMIENTOS INFINITOS)
+function openSessionDetailModal(sessionId) {
+  if (!eventData || !eventData.schedule) return;
+  var sessionObj = null;
+  (eventData.schedule.days || []).forEach(function(d) {
+    (d.sessions || []).forEach(function(s) {
+      if (s.id === sessionId) sessionObj = s;
+    });
+  });
+  if (!sessionObj) return;
+
+  var modal = document.getElementById('session-detail-modal');
+  if (!modal) return;
+
+  var timeEl = document.getElementById('detail-modal-time');
+  var typeEl = document.getElementById('detail-modal-type');
+  var roomEl = document.getElementById('detail-modal-room');
+  var titleEl = document.getElementById('detail-modal-title');
+  var detailsEl = document.getElementById('detail-modal-details');
+  var modsBox = document.getElementById('detail-modal-moderators-box');
+  var modsText = document.getElementById('detail-modal-moderators-text');
+  var spkBox = document.getElementById('detail-modal-speakers-box');
+  var spkText = document.getElementById('detail-modal-speakers-text');
+  var talksContainer = document.getElementById('detail-modal-talks-container');
+  var talksHeader = document.getElementById('detail-modal-talks-header');
+  var talksList = document.getElementById('detail-modal-talks-list');
+  var noteBox = document.getElementById('detail-modal-note-box');
+  var noteText = document.getElementById('detail-modal-note-text');
+  var noteBtn = document.getElementById('detail-modal-note-btn');
+  var finishBtn = document.getElementById('detail-modal-finish-btn');
+
+  // Horario, Tipo, Sala
+  if (timeEl) timeEl.textContent = (sessionObj.time_start || '') + ' - ' + (sessionObj.time_end || '') + ' hs';
+  if (typeEl) {
+    typeEl.className = 'text-[9px] font-black px-1.5 py-0.5 rounded uppercase ' + getTypeBadgeClass(sessionObj.title, sessionObj.type);
+    typeEl.textContent = getTypeBadgeLabel(sessionObj.title, sessionObj.type);
+  }
+  if (roomEl) roomEl.textContent = sessionObj.room || 'Sala General';
+  if (titleEl) titleEl.textContent = sessionObj.title || 'Sesión';
+
+  if (detailsEl) {
+    if (sessionObj.details) {
+      detailsEl.textContent = sessionObj.details;
+      detailsEl.classList.remove('hidden');
+    } else {
+      detailsEl.classList.add('hidden');
+    }
+  }
+
+  // Moderadores
+  var mods = [];
+  if (sessionObj.moderators) {
+    if (Array.isArray(sessionObj.moderators)) mods = sessionObj.moderators.filter(Boolean);
+    else if (typeof sessionObj.moderators === 'string' && sessionObj.moderators.trim()) mods = [sessionObj.moderators.trim()];
+  }
+  if (modsBox && modsText) {
+    if (mods.length > 0) {
+      modsText.textContent = mods.join(', ');
+      modsBox.classList.remove('hidden');
+    } else {
+      modsBox.classList.add('hidden');
+    }
+  }
+
+  // Sub-ponencias
+  var subtalks = sessionObj.sub_talks || [];
+  if (talksContainer && talksList) {
+    if (subtalks.length > 0) {
+      talksContainer.classList.remove('hidden');
+      if (talksHeader) talksHeader.textContent = subtalks.length + ' Ponencias Registradas:';
+      var htmlTalks = '';
+      subtalks.forEach(function(talk, i) {
+        htmlTalks += '<div class="p-2.5 rounded-xl bg-slate-800/90 border border-slate-700/80 space-y-1">' +
+          '<div class="flex items-start justify-between gap-2">' +
+            '<h4 class="font-bold text-slate-100 text-xs leading-snug flex-1">' + (i + 1) + '. ' + escapeHtml(talk.title || 'Ponencia') + '</h4>' +
+            (talk.time_start ? '<span class="card-time-badge font-mono text-[9px] px-1.5 py-0.5 rounded shrink-0">' + talk.time_start + (talk.time_end ? ' - ' + talk.time_end : '') + '</span>' : '') +
+          '</div>' +
+          (talk.speaker ? '<div class="text-[10px] text-teal-300 flex items-start gap-1.5"><i class="fa-solid fa-user-tie text-teal-400 mt-0.5 shrink-0"></i><span>' + escapeHtml(talk.speaker) + '</span></div>' : '') +
+          (talk.affiliation ? '<div class="text-[9.5px] text-slate-400 italic">' + escapeHtml(talk.affiliation) + '</div>' : '') +
+          (talk.abstract ? '<div class="text-[10px] text-slate-300 mt-1 leading-normal bg-slate-900/60 p-2 rounded-lg border border-slate-800">' + escapeHtml(talk.abstract) + '</div>' : '') +
+        '</div>';
+      });
+      talksList.innerHTML = htmlTalks;
+    } else {
+      talksContainer.classList.add('hidden');
+    }
+  }
+
+  // Ponentes raíz (si no hay sub-ponencias)
+  if (spkBox && spkText) {
+    if (subtalks.length === 0 && sessionObj.speakers) {
+      spkText.textContent = Array.isArray(sessionObj.speakers) ? sessionObj.speakers.join(', ') : sessionObj.speakers;
+      spkBox.classList.remove('hidden');
+    } else {
+      spkBox.classList.add('hidden');
+    }
+  }
+
+  // Nota técnica
+  var noteObj = getSessionNote(sessionId);
+  if (noteBox && noteText) {
+    if (noteObj && noteObj.text && noteObj.text.trim()) {
+      noteText.textContent = noteObj.text;
+      noteBox.classList.remove('hidden');
+    } else {
+      noteBox.classList.add('hidden');
+    }
+  }
+
+  if (noteBtn) {
+    noteBtn.onclick = function() {
+      closeSessionDetailModal();
+      openSessionNoteModal(sessionId);
+    };
+  }
+
+  // Botón Terminar
+  if (finishBtn) {
+    var isFin = isSessionFinished(sessionId);
+    finishBtn.className = 'px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer ' + 
+      (isFin ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-800 text-slate-300 hover:bg-emerald-900/40 hover:text-emerald-300 border border-slate-700');
+    finishBtn.innerHTML = '<i class="fa-solid ' + (isFin ? 'fa-rotate-left' : 'fa-check') + '"></i><span>' + (isFin ? 'Reabrir Sesión' : 'Marcar Terminada') + '</span>';
+    finishBtn.onclick = function() {
+      toggleSessionFinished(sessionId);
+      openSessionDetailModal(sessionId);
+    };
+  }
+
+  modal.classList.remove('hidden');
+}
+
+function closeSessionDetailModal() {
+  var modal = document.getElementById('session-detail-modal');
+  if (modal) modal.classList.add('hidden');
+}
   output.innerHTML = html;
 }
 

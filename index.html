@@ -31,15 +31,19 @@
             
 
     * {
-      -webkit-tap-highlight-color: transparent;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      -webkit-tap-highlight-color: transparent !important;
+      outline: none !important;
     }
 
     html, body {
       overflow-x: hidden;
       max-width: 100vw;
+    }
+
+    /* Prevenir selecciones molestas en blanco al pulsar en pantallas táctiles */
+    tr, td, button, .session-card, .grid-row-item {
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-touch-callout: none;
     }
 
     body {
@@ -505,8 +509,78 @@
     </button>
   </nav>
 
-  <!-- SCRIPTS AUTÓNOMOS -->
-  <script src="data/event_data.js"></script>
-  <script src="js/mobile.js"></script>
+  <!-- MODAL DETALLE COMPLETO DE SESIÓN (VENTANA POPUP PARA EVITAR DESPLAZAMIENTOS INFINITOS) -->
+  <div id="session-detail-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-2.5 sm:p-4">
+    <div class="bg-slate-900 text-slate-100 rounded-2xl shadow-2xl border border-slate-700 max-w-xl w-full overflow-hidden flex flex-col max-h-[92vh]">
+      <!-- Cabecera modal -->
+      <div class="bg-slate-950 px-3.5 py-3 border-b border-slate-800 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 flex-wrap min-w-0">
+          <span id="detail-modal-time" class="franja-time-badge inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono font-bold text-xs"></span>
+          <span id="detail-modal-type" class="text-[9px] font-black px-1.5 py-0.5 rounded uppercase"></span>
+          <span id="detail-modal-room" class="room-badge text-[10px] font-bold px-1.5 py-0.5 rounded"></span>
+        </div>
+        <button onclick="closeSessionDetailModal()" class="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-slate-800 transition cursor-pointer shrink-0">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Cuerpo modal con scroll táctil -->
+      <div class="p-3.5 sm:p-4 overflow-y-auto ios-touch-scroll custom-scrollbar space-y-3 flex-grow">
+        <div>
+          <h2 id="detail-modal-title" class="text-sm sm:text-base font-extrabold text-white leading-snug"></h2>
+          <p id="detail-modal-details" class="text-xs text-slate-400 mt-1 leading-normal hidden"></p>
+        </div>
+
+        <!-- Moderadores -->
+        <div id="detail-modal-moderators-box" class="hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs text-slate-200">
+          <strong class="text-teal-400 flex items-center gap-1.5 mb-0.5"><i class="fa-solid fa-microphone-lines"></i> Moderador(es):</strong>
+          <span id="detail-modal-moderators-text" class="text-slate-300"></span>
+        </div>
+
+        <!-- Ponentes generales (si no hay sub-ponencias) -->
+        <div id="detail-modal-speakers-box" class="hidden p-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-xs text-slate-200">
+          <strong class="text-teal-400 flex items-center gap-1.5 mb-0.5"><i class="fa-solid fa-user-tie"></i> Ponente(s):</strong>
+          <span id="detail-modal-speakers-text" class="text-slate-300"></span>
+        </div>
+
+        <!-- Listado completo de ponencias -->
+        <div id="detail-modal-talks-container" class="space-y-2">
+          <div class="text-[10px] font-black uppercase text-teal-400 tracking-wider flex items-center justify-between" id="detail-modal-talks-header">
+            <span>Ponencias del Bloque:</span>
+          </div>
+          <div id="detail-modal-talks-list" class="space-y-2"></div>
+        </div>
+
+        <!-- Nota técnica asignada -->
+        <div id="detail-modal-note-box" class="p-2.5 rounded-xl bg-amber-950/30 border border-amber-500/30 text-xs text-amber-200 hidden">
+          <div class="font-bold text-amber-400 flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-note-sticky"></i> Nota Técnica Registrada:
+          </div>
+          <p id="detail-modal-note-text" class="text-slate-200 font-medium"></p>
+        </div>
+      </div>
+
+      <!-- Pie del modal -->
+      <div class="bg-slate-950 p-3 border-t border-slate-800 flex items-center justify-between gap-2">
+        <button id="detail-modal-note-btn" onclick="" class="tech-action-btn px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+          <i class="fa-solid fa-note-sticky text-amber-400"></i>
+          <span>Editar Nota</span>
+        </button>
+        <div class="flex items-center gap-2">
+          <button id="detail-modal-finish-btn" onclick="" class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 cursor-pointer">
+            <i class="fa-solid fa-check"></i>
+            <span>Terminar</span>
+          </button>
+          <button onclick="closeSessionDetailModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs cursor-pointer transition">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS AUTÓNOMOS CON BUST DE CACHÉ PARA SMARTPHONES -->
+  <script src="data/event_data.js?v=20261015_4"></script>
+  <script src="js/mobile.js?v=20261015_4"></script>
 </body>
 </html>
