@@ -1244,6 +1244,15 @@ function renderSchedule() {
     return true;
   });
 
+  // Ordenar siempre cronológicamente por hora de inicio antes de renderizar
+  filtered.sort(function(a, b) {
+    var ta = String(a.time_start || '00:00').trim();
+    var tb = String(b.time_start || '00:00').trim();
+    var comp = ta.localeCompare(tb);
+    if (comp !== 0) return comp;
+    return String(a.room || '').localeCompare(String(b.room || ''));
+  });
+
   if (filtered.length === 0) {
     output.innerHTML = '<div class="text-center py-12 px-4">' +
       '<i class="fa-solid fa-calendar-xmark text-4xl text-slate-300 mb-3 block"></i>' +
@@ -1281,6 +1290,11 @@ function renderCardListView(output, sessions, currentDay) {
       timesList.push(timeSlot);
     }
     groupedByTime[timeSlot].push(s);
+  });
+
+  // Asegurar ordenación cronológica de las franjas horarias
+  timesList.sort(function(a, b) {
+    return a.localeCompare(b);
   });
 
   var specialBanner = '';

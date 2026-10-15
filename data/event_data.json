@@ -5,7 +5,7 @@
     "name": "MicroTAS 2026 - International Conference",
     "logo": "./eventos_guardados/microtas-2026/uploads/Clipboard06-removebg-preview.png",
     "created_at": "2026-10-14T10:44:00Z",
-    "updated_at": "2026-10-15T20:26:32.087690",
+    "updated_at": "2026-10-15T20:27:11.350129",
     "dates": {
       "start": "2026-10-16",
       "end": "2026-10-22"
@@ -20,7 +20,19 @@
       "channel_radio": "Canal 2 (Audio/Video)"
     },
     "production_notes": "Wi-Fi Staff       :SSID: IceIceBaby / Pass:VanillaIce!@\nWi-Fi Publico:SSID: uTAS-CBMS / Pass:microtas26\nControl Central: Zaguan Sala Falla",
-    "warning_lead_time_minutes": 10
+    "warning_lead_time_minutes": 10,
+    "dates": {
+      "start": "2026-10-18",
+      "end": "2026-10-22"
+    },
+    "rooms": [
+      "Auditorio García Lorca",
+      "Hall Principal / Registro",
+      "Machuca",
+      "Manuel de Falla",
+      "Picasso / Albéniz",
+      "Salas de Talleres"
+    ]
   },
   "github": {
     "linked": true,
@@ -29,8 +41,8 @@
     "branch": "main",
     "html_url": "https://github.com/VisualXet/MicroTAS",
     "pages_url": "https://visualxet.github.io/MicroTAS/",
-    "last_commit_sha": "ec326a0d4986e09dd1f09d7e0b4c9da0ecb79f7b",
-    "last_synced_at": "2026-10-15T17:44:20.338933",
+    "last_commit_sha": "4588c19de65fe93b1e4e7f032c8dba8094e550af",
+    "last_synced_at": "2026-10-15T20:27:11.349961",
     "has_unpushed_changes": false
   },
   "theme": {
@@ -54,9 +66,11 @@
   "schedule": {
     "rooms": [
       "Auditorio García Lorca",
-      "Machuca / Albéniz",
+      "Hall Principal / Registro",
+      "Machuca",
       "Manuel de Falla",
-      "Zona de Pósters"
+      "Picasso / Albéniz",
+      "Salas de Talleres"
     ],
     "days": [
       {
@@ -201,18 +215,18 @@
         "sessions": [
           {
             "id": "sess-001",
-            "room": "Auditorio García Lorca",
-            "time_start": "11:10",
-            "time_end": "11:25",
-            "title": "Session 1B2: Wearables and",
+            "room": "Hall Principal / Registro",
+            "time_start": "08:15",
+            "time_end": "19:00",
+            "title": "08:15 - 19:00 Conference Registration and Check-In",
             "moderators": [],
             "sub_talks": [
               {
                 "id": "sess-1-t1",
-                "time_start": "11:10",
-                "time_end": "11:25",
-                "title": "- 11:40 TRANSISTORS PLATFORM FOR RAPID AND PARALLEL DETECTION OF MULTIPLE PATHOGENS BY MULTIPLEXED BIOLOGICAL TSPL ACTIVATION",
-                "speaker": "Elisa Riedo New York University, New York, USA",
+                "time_start": "08:15",
+                "time_end": "08:30",
+                "title": "Presentación de Ponencia",
+                "speaker": "- 19:00 Conference Registration and Check-In",
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
@@ -221,19 +235,19 @@
           },
           {
             "id": "sess-002",
-            "room": "Auditorio García Lorca",
-            "time_start": "17:00",
-            "time_end": "17:15",
-            "title": "Session 1B4: Wearables and",
+            "room": "Picasso / Albéniz",
+            "time_start": "09:00",
+            "time_end": "12:00",
+            "title": "09:00 - 12:00 Morning Workshops (Break at 10:30)",
             "moderators": [],
             "sub_talks": [
               {
                 "id": "sess-2-t1",
-                "time_start": "17:00",
-                "time_end": "17:15",
-                "title": "- 17:30 FROM BIOELECTRONICS TO NEUROPROSTHETIC INTERVENTIONS",
-                "speaker": "Stanisa Raspopovic Medical University of Vienna, AUSTRIA TUESDAY, 20 OCTOBER",
-                "affiliation": "",
+                "time_start": "09:00",
+                "time_end": "09:15",
+                "title": "Presentación de Ponencia",
+                "speaker": "- 12:00 Morning Workshops (Break at 10:30) WORKSHOP 1 STREAMLINING THE MICROFLUIDIC PROTOTYPING AND MANUFACTURING PROCESSES: DESIGN, FABRICATION, AND (FLOW) SIMULATIONS Darwin Reyes1, Derrick Butler2, Karina Torres Castro3, Robert Wille4, Joshua Loessberg-Zahi5, Anisha Chowdhury4, Bruno Charléty6, Holger Becker7, and Joris Kaal5 1National Institute of Standards and Technology (NIST), USA, 2CNRS, FRANCE, 3Stony Brook University, USA, 4Technical University of Munich (TUM), GERMANY,",
+                "affiliation": "5University of Twente, NETHERLANDS, 6Fluigent, FRANCE, and 7microfluidic ChipShop GmbH, DENMARK WORKSHOP 2 (MICROFLUIDIC) PAPER-BASED ANALYTICAL DEVICES - (μ)PADS: FROM BASICS TO APPLICATIONS Daniel Citterio Keio University, JAPAN WORKSHOP 3 MICRO-ENGINEERED ORGANOTYPIC IN VITRO SYSTEMS FOR PHARMACOKINETICS AND IMMUNE - METABOLIC DISEASE MODELING Qasem Ramadan Alfaisal University, SAUDI ARABIA WORKSHOP 4 PUBLISHING MICROFLUIDICS RESEARCH IN THE AGE OF AI: AN EDITORIAL PANEL PERSPECTIVE Alberto Escarpa1, Alice Smallwood2, Jelena Romcevic3, and Martin Rosillo-López4 1Universidad de Alcalá de Henares, SPAIN, 2Royal Society of Chemistry, UK, 3Micromachines - MDPI, SWITZERLAND, and 4AIP Publishing, UK WORKSHOP 5 SMART MATERIALS WITHIN MICROFLUIDIC DEVICES FOR SENSING AND ACTUATION Enrique Azuaje Hualde and Pablo Enrique Guevara Pantoja Universidad del País Vasco/Euskal Herriko Unibertsitatea EHU, SPAIN WORKSHOP 6 OPTICAL SPECTROSCOPY IN MICROFLUIDICS Huabing Yin1, Sadao Ota2, and Julia Gaia de Pablo3 1University of Glasgow, UK, 2University of Tokyo, JAPAN, and 3University of Leeds, UK WORKSHOP 7 NOVEL CONCEPTS SENSORS AND ACTUATORS IN ORGAN-ON-CHIP TECHNOLOGY Mathias Busek1,2, Caroline Culp1, Michael Mierzejewski3, and Pedro Duarte Menezes4 1Eberhard Karls University of Tübingen, GERMANY, 2University of Oslo, NORWAY, 3NMI Natural and Medical Sciences Institute, Reutlingen, GERMANY, and 4Leibniz University Hannover, GERMANY 11 SUNDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Oral"
               }
@@ -241,19 +255,19 @@
           },
           {
             "id": "sess-003",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:20",
-            "time_end": "09:35",
-            "title": "Session 2C1: Microfluidics as",
+            "room": "Salas de Talleres",
+            "time_start": "14:00",
+            "time_end": "17:00",
+            "title": "14:00 - 17:00 Afternoon Workshops (Break at 15:30)",
             "moderators": [],
             "sub_talks": [
               {
                 "id": "sess-3-t1",
-                "time_start": "09:20",
-                "time_end": "09:35",
-                "title": "- 09:50 FROM PACKAGING TO PERSON: NEXT-GEN PORTABLE MICROFLUIDICS FOR FOOD AND ENVIRONMENTAL SENSING",
-                "speaker": "Nadnudda Rodthongkum Chulalongkorn University, THAILAND",
-                "affiliation": "",
+                "time_start": "14:00",
+                "time_end": "14:15",
+                "title": "Presentación de Ponencia",
+                "speaker": "- 17:00 Afternoon Workshops (Break at 15:30) WORKSHOP 8 PHOTOPOLYMERIZATION 3D PRINTING FOR MICROFABRICATION David Junker1, Houda Shafique1, Yonatan Morocz1, Yuksel Temiz2, Paul Delrot3, Paul Courdray4, Flore-Anne Poujade5, Vahid Karamzadeh6, and Stjepan Perak8 1McGill University, CANADA, 2Microqubic AG, SWITZERLAND,",
+                "affiliation": "3Readily3D SA, SWITZERLAND, 4Kloé, FRANCE, 5Cellink, SWEDEN, 6VascuBio, CANADA, and 7UpNano GmbH, AUSTRIA WORKSHOP 9 RAPID PROTOTYPING, SURFACE CONTROL, ACTIVE/PASSIVE OPERATIONS, AND APPLICATIONS FOR LIFE SCIENCES Slawomir Jakela1, Piotr M. Korczyk2, and Slawomir Blonski2 1Warsaw University of Life Sciences, POLAND and 2Institute of Fundamental Technological Research, Polish Academy of Sciences, POLAND WORKSHOP 10 ARTIFICIAL INTELLIGENCE FOR SINGLE-CELL ANALYSIS Reza Nosrati and Jun Kikuchi Monash University, CANADA WORKSHOP 11 CHIPS, CASH & CUSTOMERS: LESSONS FROM THE COMMERCIALIZATION JOURNEY Holger Becker1, Liubov Bakhchova2, Frauke Greve3, Claudia Gärtner1, and Elfi Töpfer1 1microfluidic ChipShop GmbH, DENMARK, 2TU Braunschweig, GERMANY, and 3Insphero AG, SWITZERLAND WORKSHOP 12 IMPLEMENTATION OF COMPACT ELECTROCHEMICAL SENSOR DEVICES AT THE POINT OF NEED César Fernández-Sánchez1, Mar Puyol Bosch2, Marco Henares Arjona1, Laia Garrido Carretero2, and Antonio Calvo López2 1Instituto de Microelectrónica de Barcelona, IMB-CNM (CSIC), SPAIN and 2Universitat Autònoma de Barcelona (UAB), SPAIN WORKSHOP 13 ORGAN-ON-CHIP SYSTEMS: ENGINEERING, BIOLOGY, AND TRANSLATION Jose Yeste Lozano1, Rosa Monge2, Stéphanie Descroix3, and Darwin R. Reyes4 1Institute of Microelectronics of Barcelona, IMB-CNM (CSIC), SPAIN, 2BEONCHIP S.L., SPAIN, 3Institut Curie / CNRS, FRANCE, and 4National Institute of Standards and Technology (NIST), USA 12 SUNDAY PROGRAM WORKSHOP 14 FROM PATIENT TO CHIP AND BACK: MICROFLUIDIC WORKFLOWS FOR CLINICAL TRANSLATION Co-Leader: Sara Abaide-Cela1 Co-Leader: Miguel Xavier1 Lorena Diéguez2, Valery Taly3, and Nicolo Lazaro4 1International Iberian Nanotechnology Laboratory, PORTUGAL, 2RUBYnanomed, PORTUGAL, 3Paris Descartes University, FRANCE, and 4Fondazione Bruno Kessler, ITALY WORKSHOP 15 CELLS BY DESIGN: MICRO/NANO-TECHNOLOGIES FOR DESIGNED CELL-CELL COMMUNICATION Co-Leader: Yoko Yamanishi1 Co-Leader: Yoshitaka Shirasaki2 Niko Kimura3, Makoto Saito1, Takeshi Hayakawa4, Takashi Kamatani5, Shinya Sakuma1, and Dino Di Carlo6 1Kyushu University, JAPAN, 2University of Tokyo, JAPAN, 3Tokyo University of Agriculture and Technology, JAPAN, 4Chuo University, JAPAN, 5Japanese Foundation for Cancer Research, JAPAN, 6University of California, Los Angeles, USA, and 7University of Tokyo, JAPAN",
                 "abstract": "",
                 "tech_requirements": "Oral"
               }
@@ -262,188 +276,13 @@
           {
             "id": "sess-004",
             "room": "Auditorio García Lorca",
-            "time_start": "11:20",
-            "time_end": "11:35",
-            "title": "Session 2B2: Photonics I:",
+            "time_start": "18:00",
+            "time_end": "20:00",
+            "title": "17:00 - 19:00 Wine and Cheese Welcome Reception",
             "moderators": [],
             "sub_talks": [
               {
                 "id": "sess-4-t1",
-                "time_start": "11:20",
-                "time_end": "11:35",
-                "title": "- 11:50 BRINGING SERS TO THE CLINIC: MICROFLUIDIC PLATFORMS FOR QUANTITATIVE DRUG MONITORING",
-                "speaker": "Anja Boisen Technical University, Denmark (DTU), DENMARK",
-                "affiliation": "",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-005",
-            "room": "Auditorio García Lorca",
-            "time_start": "17:50",
-            "time_end": "18:05",
-            "title": "Session 2A4: Microphysiological Systems,",
-            "moderators": [],
-            "sub_talks": [
-              {
-                "id": "sess-5-t1",
-                "time_start": "17:50",
-                "time_end": "18:05",
-                "title": "- 18:20 HYDROGEL-BASED MICROPHYSIOLOGICAL SYSTEMS FOR MODELING TISSUE FUNCTION AND DISEASE",
-                "speaker": "Elena Martinez Fraiz Fraunhofer Center for Applied Theragnostics (Fraunhofer CAT), SPAIN 5 HOT TOPIC KEYNOTE SPEAKERS WEDNESDAY, 21 OCTOBER",
-                "affiliation": "",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-006",
-            "room": "Auditorio García Lorca",
-            "time_start": "10:50",
-            "time_end": "11:05",
-            "title": "Session 3B2: Optical Manipulation and Pho­",
-            "moderators": [],
-            "sub_talks": [
-              {
-                "id": "sess-6-t1",
-                "time_start": "10:50",
-                "time_end": "11:05",
-                "title": "- 11:20 NANOBIOSENSING WITH PHOTONIC CRYSTAL METASURFACES",
-                "speaker": "Thomas Krauss University of York, UK",
-                "affiliation": "",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-007",
-            "room": "Auditorio García Lorca",
-            "time_start": "16:40",
-            "time_end": "16:55",
-            "title": "Session 3A4: Microphysiological",
-            "moderators": [],
-            "sub_talks": [
-              {
-                "id": "sess-7-t1",
-                "time_start": "16:40",
-                "time_end": "16:55",
-                "title": "- 17:10 ORGANS-ON-CHIP WITH INTEGRATED OPTICAL SENSORS: ADVANCED MODELS FOR EVALUATION OF POTENTIAL THERAPIES",
-                "speaker": "Javier Rámon Azcón1,2",
-                "affiliation": "1Institute of Bioengineering, Catalonia (IBEC), SPAIN and 2ICREA - Institució Catalana de Recerca i Estudis Avançats, SPAIN THURSDAY, 22 OCTOBER",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-008",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:20",
-            "time_end": "09:35",
-            "title": "Session 4A1: Microfluidics as",
-            "moderators": [],
-            "sub_talks": [
-              {
-                "id": "sess-8-t1",
-                "time_start": "09:20",
-                "time_end": "09:35",
-                "title": "- 09:50 TRIBOELECTRIFICATION AT SOLID-LIQUID INTERFACES: SURFACE CHEMISTRY-DRIVEN CHARGE TRANSFER FOR SELF-POWERED NANOSENSING",
-                "speaker": "Zong-Hong Lin National Taiwan University, TAIWAN Detail of a door and ornament - Granada, Spain. (©Image by A.Ruiz; AdobeStock) 6 PLENARY SPEAKERS MONDAY, 19 OCTOBER - 08:40 - 09:25",
-                "affiliation": "",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-009",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
-            "title": "Plenary Presentation I",
-            "moderators": [],
-            "sub_talks": []
-          },
-          {
-            "id": "sess-010",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
-            "title": "Plenary Presentation II",
-            "moderators": [],
-            "sub_talks": []
-          },
-          {
-            "id": "sess-011",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
-            "title": "Plenary Presentation III",
-            "moderators": [],
-            "sub_talks": []
-          },
-          {
-            "id": "sess-012",
-            "room": "Machuca / Albéniz",
-            "time_start": "09:00",
-            "time_end": "10:30",
-            "title": "Plenary Presentation IV",
-            "moderators": [],
-            "sub_talks": []
-          },
-          {
-            "id": "sess-013",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
-            "title": "Plenary Presentation V",
-            "moderators": [],
-            "sub_talks": []
-          },
-          {
-            "id": "sess-014",
-            "room": "Auditorio García Lorca",
-            "time_start": "08:15",
-            "time_end": "17:15",
-            "title": "Plenary Presentation VI",
-            "moderators": [],
-            "sub_talks": [
-              {
-                "id": "sess-14-t1",
-                "time_start": "08:15",
-                "time_end": "09:00",
-                "title": "Presentación de Ponencia",
-                "speaker": "- 19:00 Conference Registration and Check-In",
-                "affiliation": "",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              },
-              {
-                "id": "sess-14-t2",
-                "time_start": "09:00",
-                "time_end": "14:00",
-                "title": "Presentación de Ponencia",
-                "speaker": "- 12:00 Morning Workshops (Break at 10:30) WORKSHOP 1 STREAMLINING THE MICROFLUIDIC PROTOTYPING AND MANUFACTURING PROCESSES: DESIGN, FABRICATION, AND (FLOW) SIMULATIONS Darwin Reyes1, Derrick Butler2, Karina Torres Castro3, Robert Wille4, Joshua Loessberg-Zahi5, Anisha Chowdhury4, Bruno Charléty6, Holger Becker7, and Joris Kaal5 1National Institute of Standards and Technology (NIST), USA, 2CNRS, FRANCE, 3Stony Brook University, USA, 4Technical University of Munich (TUM), GERMANY,",
-                "affiliation": "5University of Twente, NETHERLANDS, 6Fluigent, FRANCE, and 7microfluidic ChipShop GmbH, DENMARK WORKSHOP 2 (MICROFLUIDIC) PAPER-BASED ANALYTICAL DEVICES - (μ)PADS: FROM BASICS TO APPLICATIONS Daniel Citterio Keio University, JAPAN WORKSHOP 3 MICRO-ENGINEERED ORGANOTYPIC IN VITRO SYSTEMS FOR PHARMACOKINETICS AND IMMUNE - METABOLIC DISEASE MODELING Qasem Ramadan Alfaisal University, SAUDI ARABIA WORKSHOP 4 PUBLISHING MICROFLUIDICS RESEARCH IN THE AGE OF AI: AN EDITORIAL PANEL PERSPECTIVE Alberto Escarpa1, Alice Smallwood2, Jelena Romcevic3, and Martin Rosillo-López4 1Universidad de Alcalá de Henares, SPAIN, 2Royal Society of Chemistry, UK, 3Micromachines - MDPI, SWITZERLAND, and 4AIP Publishing, UK WORKSHOP 5 SMART MATERIALS WITHIN MICROFLUIDIC DEVICES FOR SENSING AND ACTUATION Enrique Azuaje Hualde and Pablo Enrique Guevara Pantoja Universidad del País Vasco/Euskal Herriko Unibertsitatea EHU, SPAIN WORKSHOP 6 OPTICAL SPECTROSCOPY IN MICROFLUIDICS Huabing Yin1, Sadao Ota2, and Julia Gaia de Pablo3 1University of Glasgow, UK, 2University of Tokyo, JAPAN, and 3University of Leeds, UK WORKSHOP 7 NOVEL CONCEPTS SENSORS AND ACTUATORS IN ORGAN-ON-CHIP TECHNOLOGY Mathias Busek1,2, Caroline Culp1, Michael Mierzejewski3, and Pedro Duarte Menezes4 1Eberhard Karls University of Tübingen, GERMANY, 2University of Oslo, NORWAY, 3NMI Natural and Medical Sciences Institute, Reutlingen, GERMANY, and 4Leibniz University Hannover, GERMANY 11 SUNDAY PROGRAM",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              },
-              {
-                "id": "sess-14-t3",
-                "time_start": "14:00",
-                "time_end": "17:00",
-                "title": "Presentación de Ponencia",
-                "speaker": "- 17:00 Afternoon Workshops (Break at 15:30) WORKSHOP 8 PHOTOPOLYMERIZATION 3D PRINTING FOR MICROFABRICATION David Junker1, Houda Shafique1, Yonatan Morocz1, Yuksel Temiz2, Paul Delrot3, Paul Courdray4, Flore-Anne Poujade5, Vahid Karamzadeh6, and Stjepan Perak8 1McGill University, CANADA, 2Microqubic AG, SWITZERLAND,",
-                "affiliation": "3Readily3D SA, SWITZERLAND, 4Kloé, FRANCE, 5Cellink, SWEDEN, 6VascuBio, CANADA, and 7UpNano GmbH, AUSTRIA WORKSHOP 9 RAPID PROTOTYPING, SURFACE CONTROL, ACTIVE/PASSIVE OPERATIONS, AND APPLICATIONS FOR LIFE SCIENCES Slawomir Jakela1, Piotr M. Korczyk2, and Slawomir Blonski2 1Warsaw University of Life Sciences, POLAND and 2Institute of Fundamental Technological Research, Polish Academy of Sciences, POLAND WORKSHOP 10 ARTIFICIAL INTELLIGENCE FOR SINGLE-CELL ANALYSIS Reza Nosrati and Jun Kikuchi Monash University, CANADA WORKSHOP 11 CHIPS, CASH & CUSTOMERS: LESSONS FROM THE COMMERCIALIZATION JOURNEY Holger Becker1, Liubov Bakhchova2, Frauke Greve3, Claudia Gärtner1, and Elfi Töpfer1 1microfluidic ChipShop GmbH, DENMARK, 2TU Braunschweig, GERMANY, and 3Insphero AG, SWITZERLAND WORKSHOP 12 IMPLEMENTATION OF COMPACT ELECTROCHEMICAL SENSOR DEVICES AT THE POINT OF NEED César Fernández-Sánchez1, Mar Puyol Bosch2, Marco Henares Arjona1, Laia Garrido Carretero2, and Antonio Calvo López2 1Instituto de Microelectrónica de Barcelona, IMB-CNM (CSIC), SPAIN and 2Universitat Autònoma de Barcelona (UAB), SPAIN WORKSHOP 13 ORGAN-ON-CHIP SYSTEMS: ENGINEERING, BIOLOGY, AND TRANSLATION Jose Yeste Lozano1, Rosa Monge2, Stéphanie Descroix3, and Darwin R. Reyes4 1Institute of Microelectronics of Barcelona, IMB-CNM (CSIC), SPAIN, 2BEONCHIP S.L., SPAIN, 3Institut Curie / CNRS, FRANCE, and 4National Institute of Standards and Technology (NIST), USA 12 SUNDAY PROGRAM WORKSHOP 14 FROM PATIENT TO CHIP AND BACK: MICROFLUIDIC WORKFLOWS FOR CLINICAL TRANSLATION Co-Leader: Sara Abaide-Cela1 Co-Leader: Miguel Xavier1 Lorena Diéguez2, Valery Taly3, and Nicolo Lazaro4 1International Iberian Nanotechnology Laboratory, PORTUGAL, 2RUBYnanomed, PORTUGAL, 3Paris Descartes University, FRANCE, and 4Fondazione Bruno Kessler, ITALY WORKSHOP 15 CELLS BY DESIGN: MICRO/NANO-TECHNOLOGIES FOR DESIGNED CELL-CELL COMMUNICATION Co-Leader: Yoko Yamanishi1 Co-Leader: Yoshitaka Shirasaki2 Niko Kimura3, Makoto Saito1, Takeshi Hayakawa4, Takashi Kamatani5, Shinya Sakuma1, and Dino Di Carlo6 1Kyushu University, JAPAN, 2University of Tokyo, JAPAN, 3Tokyo University of Agriculture and Technology, JAPAN, 4Chuo University, JAPAN, 5Japanese Foundation for Cancer Research, JAPAN, 6University of California, Los Angeles, USA, and 7University of Tokyo, JAPAN",
-                "abstract": "",
-                "tech_requirements": "Oral"
-              },
-              {
-                "id": "sess-14-t4",
                 "time_start": "17:00",
                 "time_end": "17:15",
                 "title": "Presentación de Ponencia",
@@ -461,17 +300,17 @@
         "label": "Lunes",
         "sessions": [
           {
-            "id": "sess-015",
+            "id": "sess-005",
             "room": "Auditorio García Lorca",
             "time_start": "08:00",
-            "time_end": "08:15",
+            "time_end": "08:40",
             "title": "Opening Remarks",
             "moderators": [
               "Yoon-Kyoung Cho,\n Ulsan National Institute of Science and Technology (UNIST), KOREA"
             ],
             "sub_talks": [
               {
-                "id": "sess-15-t1",
+                "id": "sess-5-t1",
                 "time_start": "08:00",
                 "time_end": "08:15",
                 "title": "Presentación de Ponencia",
@@ -483,16 +322,16 @@
             ]
           },
           {
-            "id": "sess-016",
+            "id": "sess-006",
             "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
+            "time_start": "08:40",
+            "time_end": "09:25",
             "title": "Plenary Presentation I - 08:40",
             "moderators": [],
             "sub_talks": []
           },
           {
-            "id": "sess-017",
+            "id": "sess-007",
             "room": "Auditorio García Lorca",
             "time_start": "09:40",
             "time_end": "10:35",
@@ -502,7 +341,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-17-t1",
+                "id": "sess-7-t1",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "MICROFLUIDIC SIEVE AND DETECTOR FOR RAPID, AMPLIFICATION-FREE MICRORNA DETECTION WITH A SENSITIVITY SUPERIOR TO PCR",
@@ -512,7 +351,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-17-t2",
+                "id": "sess-7-t2",
                 "time_start": "10:00",
                 "time_end": "10:20",
                 "title": "T7-INTEGRATED LAMP-CRISPR ENABLES TRANSCRIPTION- COUPLED PROTON-TO-ELECTRICAL TRANSDUCTION ON A LABEL-FREE EGFET PLATFORM",
@@ -522,7 +361,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-17-t3",
+                "id": "sess-7-t3",
                 "time_start": "10:20",
                 "time_end": "10:35",
                 "title": "DIRECT REPORTER DNA IMMOBILIZATION ON PAPER DISCS ENABLING MINIATURIZED AND VERSATILE CRISPR/CAS12A DNA SENSING",
@@ -534,7 +373,7 @@
             ]
           },
           {
-            "id": "sess-018",
+            "id": "sess-008",
             "room": "Manuel de Falla",
             "time_start": "09:40",
             "time_end": "10:35",
@@ -544,7 +383,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-18-t1",
+                "id": "sess-8-t1",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "ROLL-TO-ROLL FABRICATION OF FLEXIBLE DIGITAL MICROFLUIDIC DEVICES FOR POINT-OF-CARE DIAGNOSTICS",
@@ -554,7 +393,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-18-t2",
+                "id": "sess-8-t2",
                 "time_start": "10:00",
                 "time_end": "10:20",
                 "title": "FABRICATION OF FREE-STANDING HYDROGEL CHANNEL USING 3D-PRINTED POLYVINYL ALCOHOL (PVA) TEMPLATE",
@@ -564,7 +403,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-18-t3",
+                "id": "sess-8-t3",
                 "time_start": "10:20",
                 "time_end": "10:35",
                 "title": "LAB ON A CAPILLARY: INSTRUMENT-FREE COMPARTMENTALIZATION USING PHOTOPATTERNED HYDROGEL RINGS EMBEDDED INSIDE A GLASS CAPILLARY FOR AMPLIFIED BIOASSAY",
@@ -576,8 +415,8 @@
             ]
           },
           {
-            "id": "sess-019",
-            "room": "Machuca / Albéniz",
+            "id": "sess-009",
+            "room": "Machuca",
             "time_start": "09:40",
             "time_end": "10:35",
             "title": "Session 1C1: Microfluidics as Facilitating Technology I:",
@@ -586,7 +425,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-19-t1",
+                "id": "sess-9-t1",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "PUMP-FREE HIGH-THROUGHPUT DROPLET GENERATION PLATFORM WITH OPTICAL FIBER READOUT FOR DIGITAL CRISPR",
@@ -596,7 +435,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-19-t2",
+                "id": "sess-9-t2",
                 "time_start": "10:00",
                 "time_end": "10:20",
                 "title": "PRECISELY TIMED ON-DEMAND DROPLET EJECTION AND COLLISION IN FREE SPACE FOR PRECISE REACTION INITIATION",
@@ -606,7 +445,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-19-t3",
+                "id": "sess-9-t3",
                 "time_start": "10:20",
                 "time_end": "10:35",
                 "title": "SPATIALXPRESS: DROPLET MICROFLUIDIC PLATFORM FOR CHARACTERIZING RARE CELL POPULATIONS IN HETEROGENEOUS CANCER TISSUES",
@@ -618,7 +457,7 @@
             ]
           },
           {
-            "id": "sess-020",
+            "id": "sess-010",
             "room": "Auditorio García Lorca",
             "time_start": "11:10",
             "time_end": "12:35",
@@ -628,7 +467,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-20-t1",
+                "id": "sess-10-t1",
                 "time_start": "11:10",
                 "time_end": "11:15",
                 "title": "T034.K - GEOMETRICAL CONTROL OF ACTIVATION ORIGIN LOCALIZATION AND PROPAGATION DELAYS IN CARDIOMYOCYTES",
@@ -638,7 +477,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-20-t2",
+                "id": "sess-10-t2",
                 "time_start": "11:15",
                 "time_end": "11:20",
                 "title": "M004.K - A HUMAN COLON-ON-CHIP WITH TUNABLE MATRIX STIFFNESS FOR EPITHELIAL PHYSIOLOGY AND DISEASE MODELING",
@@ -648,7 +487,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-20-t3",
+                "id": "sess-10-t3",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "AN ISO 22916-COMPLIANT MULTILAYER FLUIDIC CIRCUIT BOARD PLATFORM WITH INTEGRATED PNEUMATIC ACTUATION FOR JOINT-ON-CHIP STUDIES",
@@ -658,7 +497,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-20-t4",
+                "id": "sess-10-t4",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "HYDRAULICALLY CONTROLLED CURVATURE ORGAN CHIP ARRAY REVEALS GEOMETRY-DRIVEN REMODELING OF CORNEAL STROMAL CELLS",
@@ -668,7 +507,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-20-t5",
+                "id": "sess-10-t5",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "NOVEL HIGH-THROUGHPUT PUMP-FREE ORGAN-DISC PLATFORM FOR THE STUDY OF ADAPTIVE IMMUNE RESPONSE IN LYMPHOID TISSUE MODEL",
@@ -678,7 +517,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-20-t6",
+                "id": "sess-10-t6",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "CUSTOMIZED MICROPLATES FOR ORGANOID AND SPHEROID CULTURE: TECHNOLOGY LANDSCAPE, ENGINEERING SOLUTIONS, AND INDUSTRY CASE STUDIES",
@@ -690,7 +529,7 @@
             ]
           },
           {
-            "id": "sess-021",
+            "id": "sess-011",
             "room": "Manuel de Falla",
             "time_start": "11:10",
             "time_end": "12:35",
@@ -700,7 +539,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-21-t1",
+                "id": "sess-11-t1",
                 "time_start": "11:10",
                 "time_end": "11:40",
                 "title": "TRANSISTORS PLATFORM FOR RAPID AND PARALLEL DETECTION OF MULTIPLE PATHOGENS BY MULTIPLEXED BIOLOGICAL TSPL ACTIVATION",
@@ -710,7 +549,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-21-t2",
+                "id": "sess-11-t2",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "HANDHELD SAMPLE TO ANSWER NUCLEIC ACID TEST FOR HEPATITIS C",
@@ -720,7 +559,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-21-t3",
+                "id": "sess-11-t3",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "FULLY INTEGRATED EXTRACTION-FREE MULTIPLEX PHOTOTHERMAL PCR FOR RAPID POINT-OF-CARE MOLECULAR DIAGNOSTIC APPLICATIONS",
@@ -730,7 +569,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-21-t4",
+                "id": "sess-11-t4",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "MICROFLUIDIC CHIP DEVELOPMENT AND MANUFACTURING FOR AI-ENABLED DIAGNOSTICS: CHALLENGES AND PROTOTYPING STRATEGIES",
@@ -742,17 +581,17 @@
             ]
           },
           {
-            "id": "sess-022",
-            "room": "Machuca / Albéniz",
+            "id": "sess-012",
+            "room": "Machuca",
             "time_start": "11:10",
-            "time_end": "11:25",
+            "time_end": "12:35",
             "title": "Session 1C2: Microfluidics as Facilitating Technology II:",
             "moderators": [
               "Sara Mahshid, McGill University, CANADA"
             ],
             "sub_talks": [
               {
-                "id": "sess-22-t1",
+                "id": "sess-12-t1",
                 "time_start": "11:10",
                 "time_end": "11:25",
                 "title": "M004.L - HYBRID EMULSIONS FOR THE FORMATION OF GIANT UNILAMELLAR VESICLES-BASED ARTIFICIAL CELLS",
@@ -760,21 +599,9 @@
                 "affiliation": "4University of Melbourne, AUSTRALIA 18 MONDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
-              }
-            ]
-          },
-          {
-            "id": "sess-023",
-            "room": "Auditorio García Lorca",
-            "time_start": "11:15",
-            "time_end": "12:35",
-            "title": "Session 1C2: (continued)",
-            "moderators": [
-              "Fernando Benito-López, EUNEIZ University, SPAIN"
-            ],
-            "sub_talks": [
+              },
               {
-                "id": "sess-23-t1",
+                "id": "sess-13-t1",
                 "time_start": "11:15",
                 "time_end": "11:20",
                 "title": "M038.A - NANOPARTICLE-ASSISTED DIGITAL IN-LINE HOLOGRAPHIC CYTOMETRY USING PHYSICS-BASED HOLOPY SIMULATIONS",
@@ -784,7 +611,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-23-t2",
+                "id": "sess-13-t2",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "PUMPLESS AND TUBE-FREE MICROFLUIDICS FOR HIGH-THROUGHPUT AND ON-DEMAND RNA-LIPID NANOPARTICLE FORMULATION",
@@ -794,7 +621,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-23-t3",
+                "id": "sess-13-t3",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "HIGH-THROUGHPUT MICROFLUIDIC ARRAYED METHODS FOR ENGINEERING CELLULAR THERAPIES",
@@ -804,7 +631,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-23-t4",
+                "id": "sess-13-t4",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "LAB-ON-CHIP FLUIDIC CIRCUIT BOARD: END-TO-END DROPLET-BASED SYNTHESIS OF NANOGELS FOR TARGET THERAPY APPROACH",
@@ -814,7 +641,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-23-t5",
+                "id": "sess-13-t5",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "QUASI ALL AQUEOUS METHOD FOR THE GENERATION OF ALGINATE MICROBEADS ADAPTED TO MULTICELLULAR SPHEROID CULTURE",
@@ -826,24 +653,24 @@
             ]
           },
           {
-            "id": "sess-024",
+            "id": "sess-013",
             "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
+            "time_start": "13:55",
+            "time_end": "14:40",
             "title": "Plenary Presentation II - 13:55",
             "moderators": [],
             "sub_talks": []
           },
           {
-            "id": "sess-025",
+            "id": "sess-014",
             "room": "Auditorio García Lorca",
             "time_start": "14:40",
-            "time_end": "16:45",
+            "time_end": "15:40",
             "title": "MINE Test of Time Award Presentation",
             "moderators": [],
             "sub_talks": [
               {
-                "id": "sess-25-t1",
+                "id": "sess-14-t1",
                 "time_start": "14:40",
                 "time_end": "15:00",
                 "title": "FROM QUESTION TO IDEA TO EXPERIMENT TO INNOVATION: THE LONG TIME TO HIGH PLEX IMMUNOASSAYS",
@@ -853,7 +680,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-25-t2",
+                "id": "sess-14-t2",
                 "time_start": "15:00",
                 "time_end": "16:30",
                 "title": "Presentations are listed by topic category with their assigned number starting on page 51.",
@@ -863,7 +690,7 @@
                 "tech_requirements": "Oral (- 17:00 Poster Session 1 and Exhibit Inspection)"
               },
               {
-                "id": "sess-25-t3",
+                "id": "sess-14-t3",
                 "time_start": "16:30",
                 "time_end": "16:45",
                 "title": "- 17:00 Break",
@@ -875,17 +702,17 @@
             ]
           },
           {
-            "id": "sess-026",
+            "id": "sess-015",
             "room": "Auditorio García Lorca",
             "time_start": "17:00",
-            "time_end": "17:45",
+            "time_end": "18:25",
             "title": "Session 1A4: Microphysiological Systems, Organ-on-Chip and",
             "moderators": [
               "Agnieszka Zuchowska, Warsaw University of Technolog, POLAND"
             ],
             "sub_talks": [
               {
-                "id": "sess-26-t1",
+                "id": "sess-15-t1",
                 "time_start": "17:00",
                 "time_end": "17:05",
                 "title": "M052.K - A REVERSIBLY SEALED ACIDOSIS-ON-CHIP PLATFORM VALIDATED WITH SNARF-1, PH-SENSITIVE BEADS, AND A GENETICALLY ENCODED BIOSENSOR FOR LIVE SINGLE-CELL IMAGING AND EXTRACELLULAR PH READOUT",
@@ -895,7 +722,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-26-t2",
+                "id": "sess-15-t2",
                 "time_start": "17:05",
                 "time_end": "17:10",
                 "title": "W001.D - A HIGH-THROUGHPUT MUSCLE-ON-A-CHIP PLATFORM ENABLING WIRELESS ELECTROMECHANICAL CONDITIONING FOR ENHANCED MATURATION",
@@ -905,7 +732,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 1)"
               },
               {
-                "id": "sess-26-t3",
+                "id": "sess-15-t3",
                 "time_start": "17:10",
                 "time_end": "17:30",
                 "title": "A MICROFLUIDIC PLATFORM USING PLANARIZED PATIENT-DERIVED COLON ORGANOIDS TO STUDY EPITHELIAL-IMMUNE CELL CROSSTALK IN ULCERATIVE COLITIS",
@@ -915,7 +742,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-26-t4",
+                "id": "sess-15-t4",
                 "time_start": "17:30",
                 "time_end": "17:45",
                 "title": "REAL TIME MONOCYTE RECRUITMENT IN A VASCULARISED LIVER CHIP",
@@ -923,19 +750,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-027",
-            "room": "Auditorio García Lorca",
-            "time_start": "17:50",
-            "time_end": "18:25",
-            "title": "Session 1A4: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-27-t1",
+                "id": "sess-16-t1",
                 "time_start": "17:50",
                 "time_end": "18:10",
                 "title": "AN IMMUNE COMPETENT, METABOLICALLY ACTIVE GUT-LIVER ON A CHIP VALIDATED WITH ABEMACICLIB PHARMACOKINETICS, HEPATOTOXICITY, AND DRUG-DRUG INTERACTIONS",
@@ -945,7 +762,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-27-t2",
+                "id": "sess-16-t2",
                 "time_start": "18:10",
                 "time_end": "18:25",
                 "title": "HUMAN GUT-BRAIN-AXIS-ON-CHIP WITH DIRECT NEURAL DIFFERENTIATION TO STUDY NEURODEGENERATION-RELATED INFLAMMATORY MECHANISMS",
@@ -957,8 +774,8 @@
             ]
           },
           {
-            "id": "sess-028",
-            "room": "Auditorio García Lorca",
+            "id": "sess-016",
+            "room": "Manuel de Falla",
             "time_start": "17:00",
             "time_end": "18:25",
             "title": "Session 1B4: Wearables and Hand-Held Devices II:",
@@ -967,7 +784,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-28-t1",
+                "id": "sess-16-t1",
                 "time_start": "17:00",
                 "time_end": "17:30",
                 "title": "FROM BIOELECTRONICS TO NEUROPROSTHETIC INTERVENTIONS",
@@ -977,7 +794,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-28-t2",
+                "id": "sess-16-t2",
                 "time_start": "17:30",
                 "time_end": "17:50",
                 "title": "CONFORMABLE TATTOO ELECTRODES FOR ADVANCED BIOMEDICAL APPLICATIONS",
@@ -987,7 +804,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-28-t3",
+                "id": "sess-16-t3",
                 "time_start": "17:50",
                 "time_end": "18:10",
                 "title": "SELF-DRIVEN WEARABLE MICROFLUIDICS FOR NON-INVASIVE SWEAT POTASSIUM MONITORING IN DIALYSIS PATIENTS",
@@ -997,7 +814,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-28-t4",
+                "id": "sess-16-t4",
                 "time_start": "18:10",
                 "time_end": "18:25",
                 "title": "SMART WEARABLE PHOTONIC ARRAY BIOSENSOR FOR HUMAN SWEAT ANALYSIS",
@@ -1009,8 +826,8 @@
             ]
           },
           {
-            "id": "sess-029",
-            "room": "Machuca / Albéniz",
+            "id": "sess-017",
+            "room": "Machuca",
             "time_start": "17:00",
             "time_end": "19:15",
             "title": "Session 1C4: Microfluidics as Facilitating Technology III:",
@@ -1019,7 +836,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-29-t1",
+                "id": "sess-17-t1",
                 "time_start": "17:00",
                 "time_end": "17:05",
                 "title": "W059.E - MICROFLUIDIC IMMUNE CELL SORTING TRAJECTORIES AS QUANTITATIVE BIOMARKERS OF IMMUNE STATE IN CAR T PATIENTS",
@@ -1029,7 +846,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-29-t2",
+                "id": "sess-17-t2",
                 "time_start": "17:05",
                 "time_end": "17:10",
                 "title": "W005.D - LONG-TERM RELIABLE AND SOFT MICROFLUIDIC PERIPHERAL NERVE COOLING DEVICE ENABLED BY HYBRID MICRO- TRANSFER PROCESS",
@@ -1039,7 +856,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-29-t3",
+                "id": "sess-17-t3",
                 "time_start": "17:10",
                 "time_end": "17:30",
                 "title": "DEVELOPMENT OF A MICROFLUIDIC PLATFORM FOR SAMPLE-TO-SEQUENCING-READY LIBRARY PREPARATION",
@@ -1049,7 +866,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-29-t4",
+                "id": "sess-17-t4",
                 "time_start": "17:30",
                 "time_end": "17:50",
                 "title": "COCKTAIL-INSPIRED ALL-IN-ONE MAGNETOFLUIDIC CARTRIDGE PLATFORM FOR MULTIPLEX PATHOGEN DETECTION",
@@ -1059,7 +876,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-29-t5",
+                "id": "sess-17-t5",
                 "time_start": "17:50",
                 "time_end": "18:10",
                 "title": "HIGH-DIMENSIONAL MELT CURVE ENCODING FOR HIGHLY MULTIPLEXED DIGITAL METHYLATION PROFILING IN CANCER DIAGNOTICS",
@@ -1069,7 +886,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-29-t6",
+                "id": "sess-17-t6",
                 "time_start": "18:10",
                 "time_end": "19:00",
                 "title": "A CONTINUOUS AND LOSS-FREE ADENO-ASSOCIATED VIRUS PURIFICATION IN A STABLE MICROFLUIDIC FREE-FLOW ELECTROPHORESIS PLATFORM",
@@ -1079,7 +896,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-29-t7",
+                "id": "sess-17-t7",
                 "time_start": "19:00",
                 "time_end": "19:15",
                 "title": "Presentación de Ponencia",
@@ -1097,26 +914,26 @@
         "label": "Martes",
         "sessions": [
           {
-            "id": "sess-030",
+            "id": "sess-018",
             "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
+            "time_start": "08:20",
+            "time_end": "09:05",
             "title": "Plenary Presentation III - 08:20",
             "moderators": [],
             "sub_talks": []
           },
           {
-            "id": "sess-031",
+            "id": "sess-019",
             "room": "Auditorio García Lorca",
             "time_start": "09:20",
-            "time_end": "10:05",
+            "time_end": "10:45",
             "title": "Session 2A1: Multiplexed Bioassays and Immunodiagnostics",
             "moderators": [
               "Mar Puyol, Universitat Autònoma de Barcelona, SPAIN"
             ],
             "sub_talks": [
               {
-                "id": "sess-31-t1",
+                "id": "sess-19-t1",
                 "time_start": "09:20",
                 "time_end": "09:25",
                 "title": "T044.E - MULTIPLEXED LIPID PROFILING OF SINGLE EXTRACELLULAR VESICLES",
@@ -1126,7 +943,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-31-t2",
+                "id": "sess-19-t2",
                 "time_start": "09:25",
                 "time_end": "09:30",
                 "title": "T038.E - AI-DRIVEN EXTRACELLULAR VESICLES PROFILING FOR PANCREATIC CANCER EARLY DIAGNOSIS AND FORECASTING",
@@ -1136,7 +953,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-31-t3",
+                "id": "sess-19-t3",
                 "time_start": "09:30",
                 "time_end": "09:50",
                 "title": "MULTIPLEXED, 3D-PRINTED TEST WITH VISUAL READOUT SYNCHRONIZED TO CLINICAL THRESHOLD FOR ANTI-CYTOKINE AUTOANTIBODIES",
@@ -1146,7 +963,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-31-t4",
+                "id": "sess-19-t4",
                 "time_start": "09:50",
                 "time_end": "10:05",
                 "title": "HIGH THROUGHPUT CONCENTRATION-ENHANCED MULTIPLEXED LATERAL FLOW ASSAYS FOR MULTI-OMIC IMMUNE PROFILING BASED DIAGNOSIS AND DISEASE STATE MONITORING IN TUBERCULOSIS AND VACCINE RESPONSE PROFILING",
@@ -1154,19 +971,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-032",
-            "room": "Auditorio García Lorca",
-            "time_start": "10:10",
-            "time_end": "10:45",
-            "title": "Session 2A1: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-32-t1",
+                "id": "sess-20-t1",
                 "time_start": "10:10",
                 "time_end": "10:30",
                 "title": "RAPID MULTIPLEXED SEROLOGICAL SCREENING OF LYME DISEASE, BABESIOSIS, AND ANAPLASMOSIS USING A VERTICAL FLOW ASSAY",
@@ -1176,7 +983,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-32-t2",
+                "id": "sess-20-t2",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "QUAD-CORE AMPHIPHILIC PARTICLES (QCAPS) FOR MULTIPLEXED DETECTION OF CARDIOVASCULAR BIOMARKERS",
@@ -1188,17 +995,17 @@
             ]
           },
           {
-            "id": "sess-033",
+            "id": "sess-020",
             "room": "Manuel de Falla",
             "time_start": "09:20",
-            "time_end": "09:45",
+            "time_end": "10:45",
             "title": "Session 2B1: Cell Sorting and Sample Preparation",
             "moderators": [
               "Michael Breadmore, University of Tasmania, AUSTRALIA"
             ],
             "sub_talks": [
               {
-                "id": "sess-33-t1",
+                "id": "sess-20-t1",
                 "time_start": "09:20",
                 "time_end": "09:30",
                 "title": "T003.L - VARYING PROTEIN LIGAND DENSITIES ON ARTIFICIAL CELLS VIA OLIGONUCLEOTIDES FOR MODULATION OF T-CELL PHENOYTYPE ACTIVATION",
@@ -1208,7 +1015,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2 This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-33-t2",
+                "id": "sess-20-t2",
                 "time_start": "09:30",
                 "time_end": "09:45",
                 "title": "LABEL-FREE MONOCYTES ENRICHMENT FROM PERIPHERAL BLOOD MONONUCLEAR CELLS",
@@ -1216,19 +1023,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-034",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:50",
-            "time_end": "10:45",
-            "title": "Session 2B1: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-34-t1",
+                "id": "sess-21-t1",
                 "time_start": "09:50",
                 "time_end": "10:10",
                 "title": "SELECTIVE SEPARATION OF T CELLS FROM SMALL-VOLUME WHOLE BLOOD VIA BEAD-INDUCED SIZE MODULATION IN A MICROPILLAR ARRAY",
@@ -1238,7 +1035,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-34-t2",
+                "id": "sess-21-t2",
                 "time_start": "10:10",
                 "time_end": "10:30",
                 "title": "MICROFLUIDIC DEVICE FOR ENZYMATIC ENRICHMENT OF CIRCULATING TUMOUR DNA",
@@ -1248,7 +1045,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-34-t3",
+                "id": "sess-21-t3",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "FROM CAPILLARY-DRIVEN BIOASSAYS TO 3D MICROSCOPY FOR MICROFLUIDICS",
@@ -1260,17 +1057,17 @@
             ]
           },
           {
-            "id": "sess-035",
-            "room": "Machuca / Albéniz",
+            "id": "sess-021",
+            "room": "Machuca",
             "time_start": "09:20",
-            "time_end": "10:25",
+            "time_end": "10:45",
             "title": "Session 2C1: Microfluidics as Facilitating Technology IV:",
             "moderators": [
               "Ya-Yu Chiang, University of Taiwan, TAIWAN"
             ],
             "sub_talks": [
               {
-                "id": "sess-35-t1",
+                "id": "sess-21-t1",
                 "time_start": "09:20",
                 "time_end": "09:50",
                 "title": "FROM PACKAGING TO PERSON: NEXT-GEN PORTABLE MICROFLUIDICS FOR FOOD AND ENVIRONMENTAL SENSING",
@@ -1280,7 +1077,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-35-t2",
+                "id": "sess-21-t2",
                 "time_start": "09:50",
                 "time_end": "10:10",
                 "title": "AUTONOMOUS DUAL-READOUT μPAD FOR SIMULTANEOUS DETECTION OF KETAMINE AND BENZODIAZEPINES IN BEVERAGES",
@@ -1290,7 +1087,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-35-t3",
+                "id": "sess-21-t3",
                 "time_start": "10:10",
                 "time_end": "10:25",
                 "title": "QUANTITATIVE AND MULTIPLEXED DIP-STICK ASSAYS USING A μBRICK: APPLICATION TO URINALYSIS AND QUANTITATIVE AST",
@@ -1298,19 +1095,9 @@
                 "affiliation": "1University of Bath, UK, 2University of Reading, UK, and 3University of Southampton, UK 27 TUESDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-036",
-            "room": "Zona de Pósters",
-            "time_start": "10:30",
-            "time_end": "10:45",
-            "title": "Session 2C1: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-36-t1",
+                "id": "sess-22-t1",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "AN INTEGRATED MICROFLUIDIC PLATFORM FOR RAPID ISOLATION OF PD-L1-POSITIVE SMALL EXTRACELLULAR VESICLES FROM WHOLE BLOOD",
@@ -1322,17 +1109,17 @@
             ]
           },
           {
-            "id": "sess-037",
+            "id": "sess-022",
             "room": "Auditorio García Lorca",
             "time_start": "11:20",
-            "time_end": "12:05",
+            "time_end": "13:05",
             "title": "Session 2A2: Microphysiological Systems, Organ-on-Chip and",
             "moderators": [
               "Irene Fernandez Cuesta, University of Hamburg, GERMANY"
             ],
             "sub_talks": [
               {
-                "id": "sess-37-t1",
+                "id": "sess-22-t1",
                 "time_start": "11:20",
                 "time_end": "11:25",
                 "title": "T019.K - TUMOR-STROMA-VASCULAR INTERFACE PDAC-ON-A-CHIP FOR MODELING STROMAL DYNAMICS AND ITS INFLUENCE ON VASCULAR STRUCTURES",
@@ -1342,7 +1129,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-37-t2",
+                "id": "sess-22-t2",
                 "time_start": "11:25",
                 "time_end": "11:30",
                 "title": "M037.K - BACKSIDE DRIE RELEASE OF GROOVED SU-8 CANTILEVER ARRAYS FOR LOW WARPAGE AND REPRODUCIBLE CARDIOMYOCYTE BEATING READOUT",
@@ -1352,7 +1139,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-37-t3",
+                "id": "sess-22-t3",
                 "time_start": "11:30",
                 "time_end": "11:50",
                 "title": "A HIGH-THROUGHPUT DIGITAL MICROFLUIDIC SYSTEM FOR THE RECONSTRUCTION OF PATIENT-DERIVED TUMOR-IMMUNE MICROENVIRONMENTS AND DRUG SCREENING",
@@ -1362,7 +1149,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-37-t4",
+                "id": "sess-22-t4",
                 "time_start": "11:50",
                 "time_end": "12:05",
                 "title": "A MICROPHYSIOLOGICAL TUMOR-STROMA PLATFORM REVEALS A COAGULATION-DRIVEN REGULATORY AXIS IN PANCREATIC CANCER FIBROSIS",
@@ -1370,19 +1157,9 @@
                 "affiliation": "1University of Illinois, Urbana-Champaign, USA, 2Purdue University, USA, 3Indiana University, USA, 4University of North Carolina, Chapel Hill, USA, and 5Biohub, USA 28 TUESDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-038",
-            "room": "Auditorio García Lorca",
-            "time_start": "12:10",
-            "time_end": "13:05",
-            "title": "Session 2A2: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-38-t1",
+                "id": "sess-23-t1",
                 "time_start": "12:10",
                 "time_end": "12:30",
                 "title": "ON-CHIP CELL-FREE DNA AND FRAGMENTOMICS: REAL-TIME, NON-DESTRUCTIVE PROBE OF TUMOR-ON-CHIP BEHAVIOR",
@@ -1392,7 +1169,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-38-t2",
+                "id": "sess-23-t2",
                 "time_start": "12:30",
                 "time_end": "12:50",
                 "title": "LIVER-ON-A-CHIP WITH BIOMIMETIC PORTAL CIRCULATION: INTEGRATION OF BIOPRINTING AND MICROFLUIDICS",
@@ -1402,7 +1179,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-38-t3",
+                "id": "sess-23-t3",
                 "time_start": "12:50",
                 "time_end": "13:05",
                 "title": "MECHANOBIOLOGY STUDIES WITH PRESSURE-DRIVEN MICROFLUIDICS ACROSS BIOLOGICAL SCALES: FROM SINGLE CELLS TO ORGAN-ON-CHIP SYSTEMS",
@@ -1414,7 +1191,7 @@
             ]
           },
           {
-            "id": "sess-039",
+            "id": "sess-023",
             "room": "Manuel de Falla",
             "time_start": "11:20",
             "time_end": "13:05",
@@ -1424,7 +1201,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-39-t1",
+                "id": "sess-23-t1",
                 "time_start": "11:20",
                 "time_end": "11:50",
                 "title": "BRINGING SERS TO THE CLINIC: MICROFLUIDIC PLATFORMS FOR QUANTITATIVE DRUG MONITORING",
@@ -1434,7 +1211,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-39-t2",
+                "id": "sess-23-t2",
                 "time_start": "11:50",
                 "time_end": "12:10",
                 "title": "TWO-PHOTON DIRECT LASER WRITING OF FUNCTIONAL MICROSTRUCTURES ON CELLULOSE PAPER",
@@ -1444,7 +1221,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-39-t3",
+                "id": "sess-23-t3",
                 "time_start": "12:10",
                 "time_end": "12:30",
                 "title": "DIELECTRIC LEVITATION OPTICAL TWEEZERS FOR MICROMANIPULATION",
@@ -1454,7 +1231,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-39-t4",
+                "id": "sess-23-t4",
                 "time_start": "12:30",
                 "time_end": "12:50",
                 "title": "DUAL-STIMULI RESPONSIVE HYDROGEL MICRO-ACTUATORS FOR PROGRAMMABLE MICROSCALE ACTUATION",
@@ -1464,7 +1241,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-39-t5",
+                "id": "sess-23-t5",
                 "time_start": "12:50",
                 "time_end": "13:05",
                 "title": "STRUCTURING FLOW AND FUNCTION: TWO-PHOTON POLYMERIZATION FOR MICROFLUIDICS AND MICROPHYSIOLOGICAL SYSTEMS",
@@ -1476,17 +1253,17 @@
             ]
           },
           {
-            "id": "sess-040",
-            "room": "Manuel de Falla",
+            "id": "sess-024",
+            "room": "Machuca",
             "time_start": "11:20",
-            "time_end": "12:45",
+            "time_end": "13:05",
             "title": "Session 2C2: Wearables and Hand-Held Devices III:",
             "moderators": [
               "David Juncker, McGill University, CANADA"
             ],
             "sub_talks": [
               {
-                "id": "sess-40-t1",
+                "id": "sess-24-t1",
                 "time_start": "11:20",
                 "time_end": "11:25",
                 "title": "T032.B - CHEMICALLY INTERPRETABLE OPTICAL NOSE USING MULTI-RECEPTOR PLASMONIC ARRAYS FOR DISEASE-RELEVANT ODORANT FINGERPRINTING",
@@ -1496,7 +1273,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-40-t2",
+                "id": "sess-24-t2",
                 "time_start": "11:25",
                 "time_end": "11:30",
                 "title": "T003.F - REAGENT- AND RECEPTOR-FREE OPTO-FLUIDIC WEARABLE MICRO-SYSTEM FOR CONTINUOUS GLUCOSE MONITORING",
@@ -1506,7 +1283,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-40-t3",
+                "id": "sess-24-t3",
                 "time_start": "11:30",
                 "time_end": "11:50",
                 "title": "CHARACTERISATION AND CLINICAL PILOT OF A FINGER-ACTUATED MICROFLUIDIC DEVICE FOR FIELD-READY CELL-FREE NUCLEIC ACID EXTRACTION",
@@ -1516,7 +1293,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-40-t4",
+                "id": "sess-24-t4",
                 "time_start": "11:50",
                 "time_end": "12:10",
                 "title": "ESOPHAGEAL CANCER DIAGNOSTICS DEPLOYABLE IN RESOURCE-CONSTRAINED SETTINGS THROUGH A PATIENT-TO-ANSWER PLATFORM",
@@ -1526,7 +1303,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-40-t5",
+                "id": "sess-24-t5",
                 "time_start": "12:10",
                 "time_end": "12:30",
                 "title": "DIP-AND-SCAN BARCODE-BASED ANALYTICAL DEVICE FOR POINT OF CARE TESTING (POCT)",
@@ -1536,7 +1313,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-40-t6",
+                "id": "sess-24-t6",
                 "time_start": "12:30",
                 "time_end": "12:45",
                 "title": "A LOW-COST HANDHELD PHOTOTHERMAL BIOSENSOR FOR QUANTITATIVE ENHANCEMENT OF LATERAL FLOW IMMUNOASSAYS",
@@ -1544,21 +1321,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-041",
-            "room": "Auditorio García Lorca",
-            "time_start": "12:50",
-            "time_end": "13:05",
-            "title": "Session 2C2: (continued)",
-            "moderators": [
-              "Colm Delaney, University of Dublin, IRELAND"
-            ],
-            "sub_talks": [
+              },
               {
-                "id": "sess-41-t1",
+                "id": "sess-25-t1",
                 "time_start": "12:50",
                 "time_end": "13:05",
                 "title": "INEXPENSIVE-BY-DESIGN MYKEE PLATFORM FOR POINT OF USE ISOTHERMAL AMPLIFICATION REACTIONS WITH ITS FIRST REAL-WORLD APPLICATION IN FOOD QUALITY TESTING",
@@ -1570,15 +1335,15 @@
             ]
           },
           {
-            "id": "sess-042",
+            "id": "sess-025",
             "room": "Auditorio García Lorca",
-            "time_start": "14:50",
-            "time_end": "17:05",
+            "time_start": "14:05",
+            "time_end": "14:50",
             "title": "Plenary Presentation IV - 14:05",
             "moderators": [],
             "sub_talks": [
               {
-                "id": "sess-42-t1",
+                "id": "sess-25-t1",
                 "time_start": "14:50",
                 "time_end": "16:20",
                 "title": "Presentations are listed by topic category with their assigned number starting on page 51.",
@@ -1588,7 +1353,7 @@
                 "tech_requirements": "Oral (- 16:50 Poster Session 2 and Exhibit Inspection)"
               },
               {
-                "id": "sess-42-t2",
+                "id": "sess-25-t2",
                 "time_start": "16:20",
                 "time_end": "16:50",
                 "title": "- 16:50 Break MicroTAS 30th Anniversary",
@@ -1598,7 +1363,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-42-t3",
+                "id": "sess-25-t3",
                 "time_start": "16:50",
                 "time_end": "17:05",
                 "title": "Presentación de Ponencia",
@@ -1610,17 +1375,17 @@
             ]
           },
           {
-            "id": "sess-043",
+            "id": "sess-026",
             "room": "Auditorio García Lorca",
             "time_start": "17:50",
-            "time_end": "18:35",
+            "time_end": "18:55",
             "title": "Session 2A4: Microphysiological Systems, Organ-on-Chip and",
             "moderators": [
               "Ignacio Ochoa Garrido, University of Zaragoza, SPAIN"
             ],
             "sub_talks": [
               {
-                "id": "sess-43-t1",
+                "id": "sess-26-t1",
                 "time_start": "17:50",
                 "time_end": "18:20",
                 "title": "HYDROGEL-BASED MICROPHYSIOLOGICAL SYSTEMS FOR MODELING TISSUE FUNCTION AND DISEASE",
@@ -1630,7 +1395,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-43-t2",
+                "id": "sess-26-t2",
                 "time_start": "18:20",
                 "time_end": "18:35",
                 "title": "PACINOS IN DENIRO: DYNAMIC MECHANICAL PROFILING OF HUMAN PULMONARY ACINIFORM ORGANOIDS VIA INTRALUMINAL ACCESS",
@@ -1638,19 +1403,9 @@
                 "affiliation": "1University of Tokyo, JAPAN and 2HiLung Inc., JAPAN 31 TUESDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-044",
-            "room": "Auditorio García Lorca",
-            "time_start": "18:40",
-            "time_end": "18:55",
-            "title": "Session 2A4: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-44-t1",
+                "id": "sess-27-t1",
                 "time_start": "18:40",
                 "time_end": "18:55",
                 "title": "INFLUENCE OF CULTURE ARCHITECTURE ON IPSC-DERIVED CARDIAC MODELS: FROM MONOLAYERS TO ORGANOIDS",
@@ -1662,17 +1417,17 @@
             ]
           },
           {
-            "id": "sess-045",
+            "id": "sess-027",
             "room": "Manuel de Falla",
             "time_start": "17:50",
-            "time_end": "18:35",
+            "time_end": "18:55",
             "title": "Session 2B4: Single-Cell Analysis and Multi-Omics",
             "moderators": [
               "Amy Herr, University of California, Berkeley, USA"
             ],
             "sub_talks": [
               {
-                "id": "sess-45-t1",
+                "id": "sess-27-t1",
                 "time_start": "17:50",
                 "time_end": "17:55",
                 "title": "W044.E - MULTIDIMENSIONAL PROFILING OF SINGLE EV IN AGAROSE DROPLETS",
@@ -1682,7 +1437,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-45-t2",
+                "id": "sess-27-t2",
                 "time_start": "17:55",
                 "time_end": "18:00",
                 "title": "T040.E - DIGITAL COUNTING OF SINGLE EXTRACELLULAR VESICLES USING A NANOWIRE MICROARRAY",
@@ -1692,7 +1447,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-45-t3",
+                "id": "sess-27-t3",
                 "time_start": "18:00",
                 "time_end": "18:20",
                 "title": "CODE-MULTIPLEXED MULTI-FREQUENCY IMPEDANCE CYTOMETRY WITH AI-ENABLED DEMULTIPLEXING FOR ALLERGY DIAGNOSTICS",
@@ -1702,7 +1457,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-45-t4",
+                "id": "sess-27-t4",
                 "time_start": "18:20",
                 "time_end": "18:35",
                 "title": "A NOVEL SPATIAL MULTI-OMICS PIPELINE TO UNRAVEL THE EXTRINSIC AND INTRINSIC MECHANISMS UNDERLYING HETEROTYPIC CELL-CELL COMMUNICATION IN MELANOMA",
@@ -1710,19 +1465,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-046",
-            "room": "Auditorio García Lorca",
-            "time_start": "18:40",
-            "time_end": "18:55",
-            "title": "Session 2B4: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-46-t1",
+                "id": "sess-28-t1",
                 "time_start": "18:40",
                 "time_end": "18:55",
                 "title": "IMAGE-GUIDED LIPID ANALYSIS OF SINGLE BREAST CANCER CELLS ON MICRODROPLET ARRAYS USING MASS SPECTROMETRY",
@@ -1734,8 +1479,8 @@
             ]
           },
           {
-            "id": "sess-047",
-            "room": "Auditorio García Lorca",
+            "id": "sess-028",
+            "room": "Machuca",
             "time_start": "17:50",
             "time_end": "19:45",
             "title": "Session 2C4: Microfluidic Platforms for Functional Phenotyping",
@@ -1744,7 +1489,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-47-t1",
+                "id": "sess-28-t1",
                 "time_start": "17:50",
                 "time_end": "17:55",
                 "title": "T054.K - COMMUNITY OF INDIVIDUALS: ANTIBIOTIC SUSCEPTIBILITY TESTING IN HETEROGENOUS BACTERIAL POPULATIONS",
@@ -1754,7 +1499,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-47-t2",
+                "id": "sess-28-t2",
                 "time_start": "17:55",
                 "time_end": "18:00",
                 "title": "T025.E - HIERARCHICAL MICRO/NANOSTRUCTURED POLYMER SURFACES FOR ENHANCED ANTIBODY-MEDIATED RARE CELL CAPTURE IN MICROFLUIDICS",
@@ -1764,7 +1509,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Tuesday during Poster Session 2)"
               },
               {
-                "id": "sess-47-t3",
+                "id": "sess-28-t3",
                 "time_start": "18:00",
                 "time_end": "18:20",
                 "title": "CULTUREOS: AUTOMATED ORGANOID CULTURE WITH MICROFLUIDIC WELL PLATES FOR DYNAMIC PHENOTYPING",
@@ -1774,7 +1519,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-47-t4",
+                "id": "sess-28-t4",
                 "time_start": "18:20",
                 "time_end": "18:40",
                 "title": "AUTOMATED MICROFLUIDIC CELL CULTURE PLATFORM WITH MICROBEAD-BASED IMMUNOASSAYS FOR ON-CHIP SECRETOME ANALYSIS",
@@ -1784,7 +1529,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-47-t5",
+                "id": "sess-28-t5",
                 "time_start": "18:40",
                 "time_end": "19:30",
                 "title": "A MICROFLUIDIC PLATFORM FOR FUNCTIONAL PATIENT STRATIFICATION AND PHENOTYPE-INFORMED THERAPEUTIC SCREENING",
@@ -1794,7 +1539,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-47-t6",
+                "id": "sess-28-t6",
                 "time_start": "19:30",
                 "time_end": "19:45",
                 "title": "- 22:00 Networking & Connections 33",
@@ -1812,16 +1557,16 @@
         "label": "Miércoles",
         "sessions": [
           {
-            "id": "sess-048",
+            "id": "sess-029",
             "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
+            "time_start": "08:20",
+            "time_end": "09:05",
             "title": "Plenary Presentation V - 08:20",
             "moderators": [],
             "sub_talks": []
           },
           {
-            "id": "sess-049",
+            "id": "sess-030",
             "room": "Auditorio García Lorca",
             "time_start": "09:20",
             "time_end": "10:15",
@@ -1831,7 +1576,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-49-t1",
+                "id": "sess-30-t1",
                 "time_start": "09:20",
                 "time_end": "09:40",
                 "title": "ENGINEERING MULTI COPPER OXIDASES (MCOS) WITH ENHANCED REDOX VERSATILITY USING CONFOCAL ABSORBANCE-ACTIVATED DROPLET SORTING (CAADS)",
@@ -1841,7 +1586,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-49-t2",
+                "id": "sess-30-t2",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "ANAEROBE-COMPATIBLE DROPLET MICROREACTORS FOR PARALLEL CULTURE ENRICHMENT AND FUNCTIONAL SCREENING OF GUT MICROBIAL COMMUNITIES",
@@ -1851,7 +1596,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-49-t3",
+                "id": "sess-30-t3",
                 "time_start": "10:00",
                 "time_end": "10:15",
                 "title": "EVENT-TRIGGERED DROPLET ENCAPSULATION ENABLES KHZ-RATE, HIGH-PURITY LIVE-CELL SORTING",
@@ -1863,17 +1608,17 @@
             ]
           },
           {
-            "id": "sess-050",
+            "id": "sess-031",
             "room": "Manuel de Falla",
             "time_start": "09:20",
-            "time_end": "09:35",
+            "time_end": "10:15",
             "title": "Session 3B1: Advanced Biosensing and",
             "moderators": [
               "Nuria López-Ruiz, University of Granada, SPAIN"
             ],
             "sub_talks": [
               {
-                "id": "sess-50-t1",
+                "id": "sess-31-t1",
                 "time_start": "09:20",
                 "time_end": "09:35",
                 "title": "A SMARTPHONE-CONTROLLED MICROFLUIDIC PLATFORM FOR RAPID SAMPLE-TO-ANSWER HLA-B*58:01 GENOTYPING VIA LNA-ENHANCED DUPLEX RPA",
@@ -1881,19 +1626,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-051",
-            "room": "Auditorio García Lorca",
-            "time_start": "09:40",
-            "time_end": "10:15",
-            "title": "Session 3B1: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-51-t1",
+                "id": "sess-32-t1",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "A SINGLE-TIER VERTICAL FLOW ASSAY FOR POINT-OF-CARE SERODIAGNOSIS OF EUROPEAN LYME BORRELIOSIS",
@@ -1903,7 +1638,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-51-t2",
+                "id": "sess-32-t2",
                 "time_start": "10:00",
                 "time_end": "10:15",
                 "title": "AN AUTOMATED, DIGITAL IMMUNOASSAY ON A MICROFLUIDIC CARTRIDGE FOR ON-DEMAND SUBPHENOTYPING OF PEDIATRIC ACUTE RESPIRATORY DISTRESS SYNDROME",
@@ -1915,8 +1650,8 @@
             ]
           },
           {
-            "id": "sess-052",
-            "room": "Machuca / Albéniz",
+            "id": "sess-032",
+            "room": "Machuca",
             "time_start": "09:20",
             "time_end": "10:15",
             "title": "Session 3C1: Microfluidics as Facilitating Technology V:",
@@ -1925,7 +1660,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-52-t1",
+                "id": "sess-32-t1",
                 "time_start": "09:20",
                 "time_end": "09:40",
                 "title": "BAND-STOP MICROFLUIDICS FOR VIABLE RARE-CELL ENRICHMENT AND DOWNSTREAM FUNCTIONAL SINGLE-CELL ANALYSIS",
@@ -1935,7 +1670,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-52-t2",
+                "id": "sess-32-t2",
                 "time_start": "09:40",
                 "time_end": "10:00",
                 "title": "STIFF-FCS: SINGLE-CELL STIFFNESS PROFILING WITH INTEGRATED MOLECULAR AND FUNCTIONAL ANALYSIS",
@@ -1945,7 +1680,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-52-t3",
+                "id": "sess-32-t3",
                 "time_start": "10:00",
                 "time_end": "10:15",
                 "title": "STACKED-FLOW MICROFLUIDIC PLATFORM FOR SELECTIVE ACCESS TO VERTICALLY ASSEMBLED CELLS",
@@ -1957,17 +1692,17 @@
             ]
           },
           {
-            "id": "sess-053",
+            "id": "sess-033",
             "room": "Auditorio García Lorca",
             "time_start": "10:50",
-            "time_end": "12:15",
+            "time_end": "12:35",
             "title": "Session 3A2: Microphysiological Systems, Organ-on-Chip",
             "moderators": [
               "Elżbieta Jastrzębska, Warsaw University of Technology, POLAND"
             ],
             "sub_talks": [
               {
-                "id": "sess-53-t1",
+                "id": "sess-33-t1",
                 "time_start": "10:50",
                 "time_end": "10:55",
                 "title": "W036.K - DYNAMIC MODULATION OF HYDROGEL MICROENVIRONMENT THROUGH MICROFLUIDIC CONTROL",
@@ -1977,7 +1712,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-53-t2",
+                "id": "sess-33-t2",
                 "time_start": "10:55",
                 "time_end": "11:00",
                 "title": "W029.D - HIGH-RESOLUTION SLA 3D-PRINTED COCHLEAR TWINS WITH SCALA TYMPANI AND VESTIBULI FOR ELECTRODE INSERTION FORCE ANALYSIS AND SURGICAL OPTIMIZATION",
@@ -1987,7 +1722,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-53-t3",
+                "id": "sess-33-t3",
                 "time_start": "11:00",
                 "time_end": "11:20",
                 "title": "ACOUSTIC TRAVELING WAVE INDUCED SHEAR TORSION (A-TWIST) PLATFORM IN BIOMIMETIC HYDROGELS TO PROMOTE ENDOTHELIAL CELL VASCULARIZATION",
@@ -1997,7 +1732,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-53-t4",
+                "id": "sess-33-t4",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "VASCULARIZED SKIN EQUIVALENT WITH A 3D-PRINTED LATTICE FOR MAINTAINING MICROVASCULAR NETWORK ARCHITECTURE",
@@ -2007,7 +1742,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-53-t5",
+                "id": "sess-33-t5",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "3D-PRINTED MULTI-COMPRESSION PLATFORM FOR MECHANOSENSITIVE CELLULAR RESPONSES IN A SKIN MICROPHYSIOLOGICAL SYSTEM",
@@ -2017,7 +1752,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-53-t6",
+                "id": "sess-33-t6",
                 "time_start": "12:00",
                 "time_end": "12:15",
                 "title": "EXTRACELLULAR POTENTIAL ANALYSIS OF NEUROMUSCULAR SYSTEM USING MICROCHANNEL DEVICE",
@@ -2025,19 +1760,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-054",
-            "room": "Auditorio García Lorca",
-            "time_start": "12:20",
-            "time_end": "12:35",
-            "title": "Session 3A2: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-54-t1",
+                "id": "sess-34-t1",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "BRIDGING THROUGHPUT AND PHYSIOLOGICAL RELEVANCE IN ORGAN-ON-A-CHIP",
@@ -2049,7 +1774,7 @@
             ]
           },
           {
-            "id": "sess-055",
+            "id": "sess-034",
             "room": "Manuel de Falla",
             "time_start": "10:50",
             "time_end": "12:35",
@@ -2059,7 +1784,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-55-t1",
+                "id": "sess-34-t1",
                 "time_start": "10:50",
                 "time_end": "11:20",
                 "title": "NANOBIOSENSING WITH PHOTONIC CRYSTAL METASURFACES",
@@ -2069,7 +1794,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-55-t2",
+                "id": "sess-34-t2",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "AN LSPR PLATFORM FOR SPATIOTEMPORAL MULTIPLEXED CYTOKINE MONITORING IN LIVE CELLS",
@@ -2079,7 +1804,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-55-t3",
+                "id": "sess-34-t3",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "LABEL-FREE OPTO-ELECTRICAL DETECTION OF SINGLE PARTICLES IN A NANOFLUIDIC LAB-ON-A-CHIP WITH INTEGRATED INP NANOWIRE PHOTODETECTORS",
@@ -2089,7 +1814,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-55-t4",
+                "id": "sess-34-t4",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "LED-MODULATED PLASMOPORATION FOR HIGH-THROUGHPUT INTRACELLULAR DELIVERY INTO HUMAN T CELLS",
@@ -2099,7 +1824,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-55-t5",
+                "id": "sess-34-t5",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "SINGLE-CELL ANALYSIS OF LIPID DROPLET-MITOCHONDRIA TETHERING USING ULTRAFAST WASH-FREE PROBES ON ACTIVE-MATRIX DIGITAL MICROFLUIDIC PLATFORM",
@@ -2111,8 +1836,8 @@
             ]
           },
           {
-            "id": "sess-056",
-            "room": "Auditorio García Lorca",
+            "id": "sess-035",
+            "room": "Machuca",
             "time_start": "10:50",
             "time_end": "16:25",
             "title": "Session 3C2: Microfluidics as Facilitating Technology VI:",
@@ -2121,7 +1846,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-56-t1",
+                "id": "sess-35-t1",
                 "time_start": "10:50",
                 "time_end": "10:55",
                 "title": "M025.E - EXTENDING THE LOWER SIZE LIMIT OF PARTICLE FOCUSING IN INERTIAL MICROFLUIDICS",
@@ -2131,7 +1856,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-56-t2",
+                "id": "sess-35-t2",
                 "time_start": "10:55",
                 "time_end": "11:00",
                 "title": "W010.B - PROBING THE PHOTOELECTRIC RESPONSE OF BACTERIORHODOPSIN USING A CMOS MICROARRAY OF ALTERNATING CMOS ISFET AND PHOTOPIXELS",
@@ -2141,7 +1866,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-56-t3",
+                "id": "sess-35-t3",
                 "time_start": "11:00",
                 "time_end": "11:20",
                 "title": "MICROFLUIDIC IONTRONIC COMPUTING ARCHITECTURES WITH LOGIC GATES AND MEMRISTIVE NETWORKS",
@@ -2151,7 +1876,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t4",
+                "id": "sess-35-t4",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "RECONFIGURABLE ACOUSTIC-DIELECTRIC PLATFORM FOR SELECTIVE, FREQUENCY-CONTROLLED PATTERNING OF PARTICLES AND CELLS",
@@ -2161,7 +1886,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t5",
+                "id": "sess-35-t5",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "BENCHTOP PATTERN-TO-CURVE FABRICATION OF ROUND MICROCHANNELS, MICROSTRUCTURES AND THEIR DIRECT TRANSLATION INTO FLEXDYM MICROFLUIDICS",
@@ -2171,7 +1896,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t6",
+                "id": "sess-35-t6",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "MAGNETIC RESONANCE VELOCIMETRY OF HYDRODYNAMIC CONFINEMENT",
@@ -2181,7 +1906,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t7",
+                "id": "sess-35-t7",
                 "time_start": "12:20",
                 "time_end": "12:50",
                 "title": "SCALABLE MICRO STRUCTURING OF GLASS FOR MICROFLUIDIC AND PHOTONIC APPLICATIONS",
@@ -2191,7 +1916,7 @@
                 "tech_requirements": "TechTalk"
               },
               {
-                "id": "sess-56-t8",
+                "id": "sess-35-t8",
                 "time_start": "12:50",
                 "time_end": "13:40",
                 "title": "Presentación de Ponencia",
@@ -2201,7 +1926,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t9",
+                "id": "sess-35-t9",
                 "time_start": "13:40",
                 "time_end": "14:00",
                 "title": "MICROFLUIDICS AND AI FOR FERTILITY",
@@ -2211,7 +1936,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t10",
+                "id": "sess-35-t10",
                 "time_start": "14:00",
                 "time_end": "14:20",
                 "title": "LABEL-FREE MICROFLUIDICS FOR ADVANCED BIO-ANALYTICS & SMART BIOPROCESSING",
@@ -2221,7 +1946,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t11",
+                "id": "sess-35-t11",
                 "time_start": "14:20",
                 "time_end": "14:40",
                 "title": "Presentación de Ponencia",
@@ -2231,7 +1956,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-56-t12",
+                "id": "sess-35-t12",
                 "time_start": "14:40",
                 "time_end": "16:10",
                 "title": "Presentations are listed by topic category with their assigned number starting on page 51.",
@@ -2241,7 +1966,7 @@
                 "tech_requirements": "Oral (- 16:40 Poster Session 3 and Exhibit Inspection)"
               },
               {
-                "id": "sess-56-t13",
+                "id": "sess-35-t13",
                 "time_start": "16:10",
                 "time_end": "16:25",
                 "title": "- 16:40 Break 40 WEDNESDAY PROGRAM",
@@ -2253,7 +1978,7 @@
             ]
           },
           {
-            "id": "sess-057",
+            "id": "sess-036",
             "room": "Auditorio García Lorca",
             "time_start": "16:40",
             "time_end": "18:05",
@@ -2263,7 +1988,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-57-t1",
+                "id": "sess-36-t1",
                 "time_start": "16:40",
                 "time_end": "17:10",
                 "title": "ORGANS-ON-CHIP WITH INTEGRATED OPTICAL SENSORS: ADVANCED MODELS FOR EVALUATION OF POTENTIAL THERAPIES",
@@ -2273,7 +1998,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-57-t2",
+                "id": "sess-36-t2",
                 "time_start": "17:10",
                 "time_end": "17:30",
                 "title": "GRAVITY-ASSISTED COPLANAR EMBEDDING FOR HIGH-THROUGHPUT HISTOLOGICAL PHENOTYPING OF 3D TISSUE MODELS",
@@ -2283,7 +2008,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-57-t3",
+                "id": "sess-36-t3",
                 "time_start": "17:30",
                 "time_end": "17:50",
                 "title": "SEMI-PASSIVE CHECK-VALVE FOR MEDIUM RECIRCULATION IN ORGAN-ON-CHIP APPLICATIONS",
@@ -2293,7 +2018,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-57-t4",
+                "id": "sess-36-t4",
                 "time_start": "17:50",
                 "time_end": "18:05",
                 "title": "ADVANCES IN 3D PRINTING BY TWO-PHOTON POLYMERIZATION FOR LIFE SCIENCE APPLICATIONS",
@@ -2305,17 +2030,17 @@
             ]
           },
           {
-            "id": "sess-058",
+            "id": "sess-037",
             "room": "Manuel de Falla",
             "time_start": "16:40",
-            "time_end": "17:00",
+            "time_end": "18:05",
             "title": "Session 3B4: Wearables and Hand-Held Devices IV:",
             "moderators": [
               "Joan Marc Cabbot, Leitat Technological Center, SPAIN"
             ],
             "sub_talks": [
               {
-                "id": "sess-58-t1",
+                "id": "sess-37-t1",
                 "time_start": "16:40",
                 "time_end": "16:45",
                 "title": "W032.B - AN AI-POWERED LONGITUDINAL URINARY MATRIX-COMPENSATED ION SENSING TOILET (LUMIS) FOR CONTINUOUS DIETARY MONITORING",
@@ -2325,7 +2050,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-58-t2",
+                "id": "sess-37-t2",
                 "time_start": "16:45",
                 "time_end": "17:00",
                 "title": "W001.E - A MICROFLUIDIC MODULAR SYSTEM FOR MENSTRUAL FLUID PROCESSING",
@@ -2333,19 +2058,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
-              }
-            ]
-          },
-          {
-            "id": "sess-059",
-            "room": "Auditorio García Lorca",
-            "time_start": "16:50",
-            "time_end": "18:05",
-            "title": "Session 3B4: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-59-t1",
+                "id": "sess-38-t1",
                 "time_start": "16:50",
                 "time_end": "17:10",
                 "title": "AUTONOMOUS MICROFLUIDIC PATCH FOR INTRADERMAL ADMINISTRATION OF MULTICOMPONENT HEPATITIS-B VACCINE",
@@ -2355,7 +2070,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-59-t2",
+                "id": "sess-38-t2",
                 "time_start": "17:10",
                 "time_end": "17:30",
                 "title": "DISSOLVABLE PHAGE-LOADED MICRONEEDLE MICROSYSTEMS FOR TARGETED TREATMENT OF ACNE-ASSOCIATED SKIN BACTERIA",
@@ -2365,7 +2080,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-59-t3",
+                "id": "sess-38-t3",
                 "time_start": "17:30",
                 "time_end": "17:50",
                 "title": "BACTERIA RESPONSIVE DNA HYDROGEL CRYOMICRONEEDLES FOR IN SITU READOUT AND ON DEMAND THERAPY OF INFECTED WOUNDS",
@@ -2375,7 +2090,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-59-t4",
+                "id": "sess-38-t4",
                 "time_start": "17:50",
                 "time_end": "18:05",
                 "title": "SOFT MICROFLUIDIC PRESSURE SENSORS WITH TUNABLE SENSING RANGES USING 3D-PRINTED MICROMOLDS FOR WEARABLE MONITORING",
@@ -2387,8 +2102,8 @@
             ]
           },
           {
-            "id": "sess-060",
-            "room": "Machuca / Albéniz",
+            "id": "sess-038",
+            "room": "Machuca",
             "time_start": "16:40",
             "time_end": "19:15",
             "title": "Session 3C4: Microfluidics as Facilitating Technology VII:",
@@ -2397,7 +2112,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-60-t1",
+                "id": "sess-38-t1",
                 "time_start": "16:40",
                 "time_end": "16:45",
                 "title": "W003.A - AN ACOUSTOFLUIDIC ACTIVE NOZZLE FOR PROGRAMMABLE 3D MATERIAL SYNTHESIS",
@@ -2407,7 +2122,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-60-t2",
+                "id": "sess-38-t2",
                 "time_start": "16:45",
                 "time_end": "16:50",
                 "title": "W003.H - A SELF-POWERED MICROFLUIDIC POINT-OF-CARE TEST FOR THE SIMULTANEOUS SCREENING OF HIV AND SYPHILIS",
@@ -2417,7 +2132,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-60-t3",
+                "id": "sess-38-t3",
                 "time_start": "16:50",
                 "time_end": "17:10",
                 "title": "AIM: AN AUTONOMOUS AND INTERPRETABLE MACHINE- LEARNING FRAMEWORK FOR NANOPARTICLE DYNAMICS AT FLUID INTERFACES",
@@ -2427,7 +2142,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-60-t4",
+                "id": "sess-38-t4",
                 "time_start": "17:10",
                 "time_end": "17:30",
                 "title": "OPTICALLY ENCODABLE MULTILAYER BEADS FOR IMAGE-DECODABLE ONE-BEAD-ONE-COMPOUND SCREENING",
@@ -2437,7 +2152,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-60-t5",
+                "id": "sess-38-t5",
                 "time_start": "17:30",
                 "time_end": "17:50",
                 "title": "SCALABLE ROBUST MICROVALVES USING ULTRATHIN METAL MEMBRANES",
@@ -2447,7 +2162,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-60-t6",
+                "id": "sess-38-t6",
                 "time_start": "17:50",
                 "time_end": "19:00",
                 "title": "ULTRAFAST HYDROGEL VALVES USING PARTIAL FIXATION PROCESS EMPOWERING HIGH-THROUGHPUT CELL MANIPULATIONS",
@@ -2457,7 +2172,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-60-t7",
+                "id": "sess-38-t7",
                 "time_start": "19:00",
                 "time_end": "19:15",
                 "title": "Presentación de Ponencia",
@@ -2475,16 +2190,16 @@
         "label": "Jueves",
         "sessions": [
           {
-            "id": "sess-061",
+            "id": "sess-039",
             "room": "Auditorio García Lorca",
-            "time_start": "09:00",
-            "time_end": "10:30",
+            "time_start": "08:20",
+            "time_end": "09:05",
             "title": "Plenary Presentation VI - 08:20",
             "moderators": [],
             "sub_talks": []
           },
           {
-            "id": "sess-062",
+            "id": "sess-040",
             "room": "Auditorio García Lorca",
             "time_start": "09:20",
             "time_end": "10:45",
@@ -2494,7 +2209,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-62-t1",
+                "id": "sess-40-t1",
                 "time_start": "09:20",
                 "time_end": "09:50",
                 "title": "TRIBOELECTRIFICATION AT SOLID-LIQUID INTERFACES: SURFACE CHEMISTRY-DRIVEN CHARGE TRANSFER FOR SELF-POWERED NANOSENSING",
@@ -2504,7 +2219,7 @@
                 "tech_requirements": "Hot Topic Keynote"
               },
               {
-                "id": "sess-62-t2",
+                "id": "sess-40-t2",
                 "time_start": "09:50",
                 "time_end": "10:10",
                 "title": "CEMENT-ON-A-CHIP: A MICROREACTOR FOR MULTIMODAL STUDIES OF SUSTAINABLE CEMENTITOUS MATERIALS",
@@ -2514,7 +2229,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-62-t3",
+                "id": "sess-40-t3",
                 "time_start": "10:10",
                 "time_end": "10:30",
                 "title": "BRINGING GEOCHEMISTRY FROM DEEP UNDERGROUND TO THE BENCHTOP: MICROFLUIDICS FOR SIMULTANEOUS OPTICAL AND CHEMICAL READOUT OF HIGH -PRESSURE, HIGH-TEMPERATURE GEOCHEMICAL REACTIONS",
@@ -2524,7 +2239,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-62-t4",
+                "id": "sess-40-t4",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "MODULAR AUTOMATED MICROFLUIDIC PLATFORM FOR AUTONOMOUS OPTIMIZATION AND GUIDED EXPLORATION OF PLASMONIC NANOPARTICLE SYNTHESIS",
@@ -2536,17 +2251,17 @@
             ]
           },
           {
-            "id": "sess-063",
+            "id": "sess-041",
             "room": "Manuel de Falla",
             "time_start": "09:20",
-            "time_end": "10:25",
+            "time_end": "10:45",
             "title": "Session 4B1: Microfluidic Technologies for Bioanalysis",
             "moderators": [
               "Huabing Yin, University of Glasgow, UK"
             ],
             "sub_talks": [
               {
-                "id": "sess-63-t1",
+                "id": "sess-41-t1",
                 "time_start": "09:20",
                 "time_end": "09:25",
                 "title": "W013.B - ADVANCED MODELING OF MICROFLUIDIC SSDNA ELECTROCHEMICAL BIOSENSORS VIA DRT ANALYSIS TO RESOLVE COMPLEX INTERFACIAL PROCESSES",
@@ -2556,7 +2271,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-63-t2",
+                "id": "sess-41-t2",
                 "time_start": "09:25",
                 "time_end": "09:30",
                 "title": "W027.B - SERSμDROP: TRACKING EV-MEDIATED CELL COMMUNICATION AT SINGLE-CELL RESOLUTION",
@@ -2566,7 +2281,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-63-t3",
+                "id": "sess-41-t3",
                 "time_start": "09:30",
                 "time_end": "09:50",
                 "title": "A TUNABLE MICROFLUIDIC CHANNEL FOR MICRO TO NANO SCALE CELL SENSING AND SINGLE CELL MECHANICAL ANALYSIS",
@@ -2576,7 +2291,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-63-t4",
+                "id": "sess-41-t4",
                 "time_start": "09:50",
                 "time_end": "10:10",
                 "title": "SINGLE EXTRACELLULAR VESICLE WEIGHING WITH SUSPENDED NANOCHANNEL RESONATOR",
@@ -2586,7 +2301,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-63-t5",
+                "id": "sess-41-t5",
                 "time_start": "10:10",
                 "time_end": "10:25",
                 "title": "CONTINUOUS ON-CHIP MULTI-SORTING OF CELL SPHEROIDS BY CONTROLLING MICROVORTEX GENERATIONS",
@@ -2594,19 +2309,9 @@
                 "affiliation": "",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-064",
-            "room": "Auditorio García Lorca",
-            "time_start": "10:30",
-            "time_end": "10:45",
-            "title": "Session 4B1: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-64-t1",
+                "id": "sess-42-t1",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "CONTINUOUS-FLOW ELECTROKINETIC APTAMER SELECTION FOR SMALL TARGETS USING A MICROFABRICATED SIEVE",
@@ -2618,8 +2323,8 @@
             ]
           },
           {
-            "id": "sess-065",
-            "room": "Machuca / Albéniz",
+            "id": "sess-042",
+            "room": "Machuca",
             "time_start": "09:20",
             "time_end": "10:45",
             "title": "Session 4C1: Microfluidic Manipulation",
@@ -2628,7 +2333,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-65-t1",
+                "id": "sess-42-t1",
                 "time_start": "09:20",
                 "time_end": "09:25",
                 "title": "M021.A - DROPLET ELECTROCHEMICAL SCREENING OF ENGINEERED YEAST",
@@ -2638,7 +2343,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Monday during Poster Session 1)"
               },
               {
-                "id": "sess-65-t2",
+                "id": "sess-42-t2",
                 "time_start": "09:25",
                 "time_end": "09:30",
                 "title": "W006.A - LOW-COST POLYMER ACOUSTOCHROMATOGRAPHY FOR RAPID EXTRACELLULAR VESICLE PROTEOME ANALYSIS FROM 1 μL BLOOD PLASMA",
@@ -2648,7 +2353,7 @@
                 "tech_requirements": "Featured Poster Presentation (This poster will be presented on Wednesday during Poster Session 3)"
               },
               {
-                "id": "sess-65-t3",
+                "id": "sess-42-t3",
                 "time_start": "09:30",
                 "time_end": "09:50",
                 "title": "MICROFLUIDIC SCULPTING OF CAGE-LIKE MICROPARTICLES VIA MULTICORE DOUBLE EMULSIONS GENERATED IN TWO-STAGE STEP-ARRAY MICROCHANNELS",
@@ -2658,7 +2363,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-65-t4",
+                "id": "sess-42-t4",
                 "time_start": "09:50",
                 "time_end": "10:10",
                 "title": "MICROFLUIDIC ASSEMBLY OF LIGHT-RESPONSIVE PLASMONIC NANO-ORGANELLES FOR PROGRAMMABLE BIOENERGETICS",
@@ -2668,7 +2373,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-65-t5",
+                "id": "sess-42-t5",
                 "time_start": "10:10",
                 "time_end": "10:30",
                 "title": "MODULAR MULTI-MATERIAL AFM BIOPROBES FOR FAST, GENTLE, AND STABLE IMAGING AND NANOMECHANICAL MAPPING OF NANOSCALE BIOLOGICAL SAMPLES IN LIQUID",
@@ -2678,7 +2383,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-65-t6",
+                "id": "sess-42-t6",
                 "time_start": "10:30",
                 "time_end": "10:45",
                 "title": "DIP-IN NANOMECHANICAL PROBES FOR NANOPARTICLE ANALYSIS IN NANOLITER DROPLETS WITH ACOUSTOFLUIDICS",
@@ -2690,7 +2395,7 @@
             ]
           },
           {
-            "id": "sess-066",
+            "id": "sess-043",
             "room": "Auditorio García Lorca",
             "time_start": "11:20",
             "time_end": "12:35",
@@ -2700,7 +2405,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-66-t1",
+                "id": "sess-43-t1",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "MOTOR-CONTROLLED NANOPORE SEQUENCING OF GLYCAN USING A DE NOVO DESIGNED CHIMERIC NANOPORE",
@@ -2710,7 +2415,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-66-t2",
+                "id": "sess-43-t2",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "CENTRIFUGAL MICROFLUIDIC CARTRIDGE FOR AUTOMATED, BUBBLE-FREE FILLING OF NANOPORE SEQUENCING FLOW CELLS",
@@ -2720,7 +2425,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-66-t3",
+                "id": "sess-43-t3",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "A FULLY-AUTOMATED INTEGRATED MICROFLUIDIC PLATFORM FOR SCREENING PEPTIDES WITH HIGH TARGET RECOGNITION SPECIFICITY VIA A MODIFIED MESSENGER RNA DISPLAY",
@@ -2730,7 +2435,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-66-t4",
+                "id": "sess-43-t4",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "CENTRIFUGAL MICROFLUIDIC DISC PLATFORM FOR AUTOMATED MULTIPLEXED URINALYSIS AND UTI DETECTION",
@@ -2742,17 +2447,17 @@
             ]
           },
           {
-            "id": "sess-067",
+            "id": "sess-044",
             "room": "Manuel de Falla",
             "time_start": "11:20",
-            "time_end": "11:55",
+            "time_end": "12:35",
             "title": "Session 4B2: Applied Microsystems",
             "moderators": [
               "Alberto Palma, University of Granada, SPAIN"
             ],
             "sub_talks": [
               {
-                "id": "sess-67-t1",
+                "id": "sess-44-t1",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "A SOFT-METAL MICROFLUIDIC COLLECTOR FOR HIGH-VELOCITY ORGANIC CAPTURE, IN SITU DISSOLUTION, AND RECOVERY FROM ENCELADUS' ICE PLUME",
@@ -2762,7 +2467,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-67-t2",
+                "id": "sess-44-t2",
                 "time_start": "11:40",
                 "time_end": "11:55",
                 "title": "'MAMMOTHFLUIDICS': AMINO ACID DATING OF FOSSIL MAMMAL TOOTH ENAMEL USING A MODULAR MICROFLUIDIC SYSTEM",
@@ -2770,19 +2475,9 @@
                 "affiliation": "2University of York, UK 48 THURSDAY PROGRAM",
                 "abstract": "",
                 "tech_requirements": "Oral"
-              }
-            ]
-          },
-          {
-            "id": "sess-068",
-            "room": "Auditorio García Lorca",
-            "time_start": "12:00",
-            "time_end": "12:35",
-            "title": "Session 4B2: (continued)",
-            "moderators": [],
-            "sub_talks": [
+              },
               {
-                "id": "sess-68-t1",
+                "id": "sess-45-t1",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "MECHANOFLUOROCHROMIC MICROFLUIDICS TOWARDS THE DETECTION OF MECHANICAL STRESS IN MICROALGAE FOR ENHANCED BIO-ENERGY RECOVERY",
@@ -2792,7 +2487,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-68-t2",
+                "id": "sess-45-t2",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "A TINY CAGE THAT SQUEEZES A BLOOD VESSEL: WIRE-DRIVEN AUXETIC METAMATERIAL FOR CONCENTRIC STENOSIS MODELING",
@@ -2804,8 +2499,8 @@
             ]
           },
           {
-            "id": "sess-069",
-            "room": "Machuca / Albéniz",
+            "id": "sess-045",
+            "room": "Machuca",
             "time_start": "11:20",
             "time_end": "12:35",
             "title": "Session 4C2: Emerging Biointerfaces",
@@ -2814,7 +2509,7 @@
             ],
             "sub_talks": [
               {
-                "id": "sess-69-t1",
+                "id": "sess-45-t1",
                 "time_start": "11:20",
                 "time_end": "11:40",
                 "title": "ENGINEERING HIGHLY CONFINED SHEAR-HORIZONTAL SURFACE ACOUSTIC WAVES WITH PHONONIC CRYSTALS FOR REAL-TIME MONITORING OF CELL DYNAMICS",
@@ -2824,7 +2519,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-69-t2",
+                "id": "sess-45-t2",
                 "time_start": "11:40",
                 "time_end": "12:00",
                 "title": "INTEGRATED PLASMONIC ELECTROCHEMICAL SENSOR IN MICROFLUIDICS FOR RAPID PHENOTYPIC ANTIBIOTIC SUSCEPTIBILITY TESTING",
@@ -2834,7 +2529,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-69-t3",
+                "id": "sess-45-t3",
                 "time_start": "12:00",
                 "time_end": "12:20",
                 "title": "SEMI-INVASIVE ELECTRODES ACHIEVING MECHANICAL COMPLIANCE THROUGH STRUCTURAL ADAPTABILITY FOR INFLAMMATION-FREE DERMAL BIOSENSING",
@@ -2844,7 +2539,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-69-t4",
+                "id": "sess-45-t4",
                 "time_start": "12:20",
                 "time_end": "12:35",
                 "title": "FASTER DROPLETS, SLOWER REACTIONS: VELOCITY-INDUCED PARTICLE ACCUMULATION IN FLOWIN DROPLETS IMPACTING KINETICS OF BIOCHEMICAL REACTIONS",
@@ -2856,15 +2551,15 @@
             ]
           },
           {
-            "id": "sess-070",
+            "id": "sess-046",
             "room": "Auditorio García Lorca",
             "time_start": "12:55",
-            "time_end": "13:10",
+            "time_end": "13:40",
             "title": "Awards Ceremony",
             "moderators": [],
             "sub_talks": [
               {
-                "id": "sess-70-t1",
+                "id": "sess-46-t1",
                 "time_start": "12:55",
                 "time_end": "13:10",
                 "title": "Presentación de Ponencia",
@@ -2876,15 +2571,15 @@
             ]
           },
           {
-            "id": "sess-071",
-            "room": "Auditorio García Lorca",
-            "time_start": "13:25",
-            "time_end": "15:15",
+            "id": "sess-047",
+            "room": "Manuel de Falla",
+            "time_start": "13:40",
+            "time_end": "14:15",
             "title": "Closing Remarks",
             "moderators": [],
             "sub_talks": [
               {
-                "id": "sess-71-t1",
+                "id": "sess-47-t1",
                 "time_start": "13:25",
                 "time_end": "15:00",
                 "title": "Presentación de Ponencia",
@@ -2894,7 +2589,7 @@
                 "tech_requirements": "Oral"
               },
               {
-                "id": "sess-71-t2",
+                "id": "sess-47-t2",
                 "time_start": "15:00",
                 "time_end": "15:15",
                 "title": "- 17:00 14:50 - 16:50 14:40 - 16:40 CLASSIFICATION (last character of poster number) A Fluidics",
@@ -2907,6 +2602,10 @@
           }
         ]
       }
-    ]
+    ],
+    "dates": {
+      "start": "2026-10-18",
+      "end": "2026-10-22"
+    }
   }
 }
