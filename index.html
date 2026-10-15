@@ -209,8 +209,8 @@
     <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-1.5 w-full">
       <!-- Lado izquierdo: Logo / Título del Evento con truncado seguro para móviles -->
       <div class="flex items-center gap-2 min-w-0 flex-1">
-        <div class="bg-white/10 p-1.5 sm:p-2 rounded-lg sm:rounded-xl backdrop-blur-sm shrink-0">
-          <i class="fa-solid fa-headset text-base sm:text-2xl text-teal-300"></i>
+        <div id="header-logo-container" class="shrink-0 flex items-center">
+          <img id="header-event-logo" src="img/logo.png" alt="Logo Evento" class="h-9 sm:h-12 w-auto max-w-[130px] sm:max-w-[180px] object-contain drop-shadow-md rounded-lg filter brightness-110">
         </div>
         <div class="min-w-0 flex-1">
           <h1 class="text-xs sm:text-lg font-extrabold tracking-tight leading-tight flex items-center gap-1.5 truncate">
@@ -218,7 +218,7 @@
             <span class="hidden sm:inline-block bg-amber-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded shadow-sm shrink-0">Panel Técnico</span>
           </h1>
           <p class="text-[10px] sm:text-xs text-teal-200 truncate flex items-center gap-1">
-            <span id="header-event-dates" class="truncate">25-10-2026 al 29-10-2026</span>
+            <span id="header-event-dates" class="truncate">16-10-2026 al 22-10-2026</span>
             <span class="text-teal-400">&bull;</span>
             <span id="clock-display" class="font-mono font-bold text-amber-300 shrink-0">00:00:00</span>
           </p>
@@ -232,6 +232,12 @@
           <i class="fa-solid fa-clipboard-list text-amber-300"></i>
           <span>Notas Técnicas</span>
           <span id="global-notes-count-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
+        </button>
+
+        <!-- Datos Técnicos de Producción y Timing -->
+        <button id="btn-production-header" onclick="openProductionModal()" class="flex bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-amber-300 font-bold px-2 py-1.5 sm:px-2.5 sm:py-1.5 rounded-lg shadow transition items-center gap-1.5 text-xs cursor-pointer border border-teal-700 shrink-0" title="Ver Datos Técnicos de Producción, Wi-Fi y Timing">
+          <i class="fa-solid fa-tower-broadcast text-amber-300 text-sm"></i>
+          <span class="hidden sm:inline">Producción</span>
         </button>
 
         <!-- Modo Sala Oscura (visible en móvil y desktop) -->
@@ -282,8 +288,26 @@
           <!-- Buscador en Tiempo Real -->
           <div class="relative w-full">
             <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-            <input type="text" id="session-search-input" onkeyup="filterBySearch()" placeholder="Buscar por ponente, título de sesión, palabra clave o sala..." 
-              class="w-full pl-8 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/50">
+            <input type="text" id="session-search-input" oninput="handleLiveSearch(this.value)" placeholder="Buscar por ponente, título de sesión, palabra clave o sala..." 
+              class="w-full pl-8 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500/50">
+            <button id="btn-clear-search" onclick="clearLiveSearch()" class="absolute right-2.5 top-2 text-slate-400 hover:text-slate-700 hidden text-xs">
+              <i class="fa-solid fa-circle-xmark"></i>
+            </button>
+          </div>
+
+          <!-- LISTA DESPLEGABLE DE RESULTADOS EN TIEMPO REAL (TODOS LOS DÍAS Y SALAS) -->
+          <div id="live-search-results-box" class="hidden bg-slate-900 text-slate-100 rounded-2xl p-3 shadow-2xl border border-slate-700 max-h-80 overflow-y-auto ios-touch-scroll custom-scrollbar space-y-2">
+            <div class="flex items-center justify-between pb-1.5 border-b border-slate-800 text-xs">
+              <span class="font-bold text-amber-400 flex items-center gap-1.5" id="live-search-counter">
+                <i class="fa-solid fa-magnifying-glass"></i> Resultados
+              </span>
+              <button onclick="clearLiveSearch()" class="text-[11px] text-slate-400 hover:text-white cursor-pointer">
+                <i class="fa-solid fa-xmark mr-0.5"></i> Cerrar
+              </button>
+            </div>
+            <div id="live-search-list" class="space-y-1.5">
+              <!-- Rellenado dinámicamente con las sesiones coincidentes -->
+            </div>
           </div>
 
           <!-- Selector de Sedes (si hay varias sedes) -->
@@ -311,10 +335,16 @@
               </div>
             </div>
 
-            <!-- Listado único de salas interactivas -->
-            <div id="rooms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 max-h-56 overflow-y-auto ios-touch-scroll custom-scrollbar p-0.5">
+            <!-- Listado único de salas interactivas (2 columnas optimizadas para móvil sin scroll horizontal) -->
+            <div id="rooms-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 w-full p-0.5">
               <!-- Generado dinámicamente con JS -->
             </div>
+
+            <!-- Botón para ver Datos de Producción & Timing desde el panel de salas -->
+            <button onclick="openProductionModal()" class="w-full mt-1 bg-white hover:bg-slate-100 text-slate-800 font-bold py-2 px-3 rounded-xl border border-slate-200 text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm transition">
+              <i class="fa-solid fa-tower-broadcast text-teal-600"></i>
+              <span>Ver Datos de Producción & Timing (Wi-Fi, Radio, Control)</span>
+            </button>
           </div>
         </div>
 
@@ -718,6 +748,111 @@
           Cancelar
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL DE DATOS TÉCNICOS DE PRODUCCIÓN Y TIMING -->
+  <div id="production-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-[65] hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-teal-500/40 max-w-lg w-full overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Cabecera -->
+      <div class="bg-teal-900 text-white p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="bg-amber-400 text-slate-950 p-2 rounded-xl shadow-sm">
+            <i class="fa-solid fa-tower-broadcast text-lg"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-black leading-tight">Datos Técnicos: Producción & Timing</h3>
+            <p class="text-[11px] text-teal-200">Credenciales Wi-Fi, canales de radio, control y notas de sala</p>
+          </div>
+        </div>
+        <button onclick="closeProductionModal()" class="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Contenido del Modal -->
+      <div class="p-4 space-y-3.5 overflow-y-auto ios-touch-scroll custom-scrollbar flex-grow">
+        
+        <!-- Tarjetas Wi-Fi -->
+        <div class="space-y-2">
+          <label class="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+            <i class="fa-solid fa-wifi text-teal-600"></i> Redes Wi-Fi del Evento:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="production-wifi-cards">
+            <!-- Rellenado dinámicamente -->
+          </div>
+        </div>
+
+        <!-- Ubicación Control Central y Radio -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <!-- Control Central -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+            <span class="text-[10.5px] font-bold text-slate-500 uppercase block mb-1">
+              <i class="fa-solid fa-location-dot text-rose-500 mr-1"></i> Control Central / Regiduría:
+            </span>
+            <p class="text-xs font-black text-slate-900" id="production-control-center">Ubicación</p>
+          </div>
+
+          <!-- Radio y Soporte -->
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-3">
+            <span class="text-[10.5px] font-bold text-slate-500 uppercase block mb-1">
+              <i class="fa-solid fa-walkie-talkie text-amber-500 mr-1"></i> Canal de Radio AV:
+            </span>
+            <p class="text-xs font-black text-slate-900" id="production-radio-channel">Canal Radio</p>
+          </div>
+        </div>
+
+        <!-- Contacto Jefe Técnico con enlace directo -->
+        <div class="bg-teal-50 border border-teal-200 rounded-xl p-3 flex items-center justify-between gap-2" id="production-contact-box">
+          <div class="min-w-0">
+            <span class="text-[10.5px] font-bold text-teal-800 uppercase block">Contacto Técnico AV:</span>
+            <p class="text-xs font-black text-teal-950 truncate" id="production-contact-name">Contacto</p>
+            <p class="text-[11px] text-teal-700 font-mono" id="production-contact-phone">Teléfono</p>
+          </div>
+          <div class="flex items-center gap-1.5 shrink-0">
+            <a id="production-btn-whatsapp" href="#" target="_blank" class="p-2 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition" title="Enviar WhatsApp">
+              <i class="fa-brands fa-whatsapp text-sm"></i>
+            </a>
+            <a id="production-btn-call" href="#" class="p-2 rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition" title="Llamar">
+              <i class="fa-solid fa-phone text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Timing y Margen de Aviso -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="fa-regular fa-clock text-amber-500 text-lg"></i>
+            <div>
+              <span class="text-xs font-bold text-slate-800 block">Margen de Aviso Previo (Timing):</span>
+              <span class="text-[11px] text-slate-500">Antelación para preparar atril y ponentes</span>
+            </div>
+          </div>
+          <span class="bg-amber-100 text-amber-900 border border-amber-300 font-black text-xs px-2.5 py-1 rounded-lg" id="production-timing-lead">
+            10 minutos
+          </span>
+        </div>
+
+        <!-- Notas de Producción y Montaje Completas -->
+        <div>
+          <label class="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5 mb-1">
+            <i class="fa-solid fa-clipboard-list text-teal-600"></i> Notas Generales de Producción:
+          </label>
+          <div class="p-3 bg-slate-900 text-slate-200 rounded-xl text-xs font-mono whitespace-pre-wrap leading-relaxed border border-slate-800" id="production-full-notes">
+            <!-- Rellenado con config.production_notes -->
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pie modal -->
+      <div class="bg-slate-50 p-3 border-t border-slate-200 flex justify-end">
+        <button onclick="closeProductionModal()" class="px-4 py-1.5 rounded-xl bg-teal-800 hover:bg-teal-700 text-white font-bold text-xs shadow cursor-pointer transition">
+          Cerrar
+        </button>
+      </div>
+
     </div>
   </div>
 

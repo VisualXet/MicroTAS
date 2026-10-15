@@ -743,11 +743,279 @@ function updateBadges() {
   if (mobNavB) mobNavB.textContent = selectedRooms.length;
 }
 
+// BÚSQUEDA GLOBAL EN TIEMPO REAL CON LISTA DETALLADA (TODOS LOS DÍAS Y SALAS)
+function handleLiveSearch(query) {
+  var term = (query || '').toLowerCase().trim();
+  currentSearchTerm = term;
+
+  var clearBtn = document.getElementById('btn-clear-search');
+  if (clearBtn) {
+    if (term) clearBtn.classList.remove('hidden');
+    else clearBtn.classList.add('hidden');
+  }
+
+  var resultsBox = document.getElementById('live-search-results-box');
+  var resultsList = document.getElementById('live-search-list');
+  var counterEl = document.getElementById('live-search-counter');
+
+  if (!term || term.length < 2) {
+    if (resultsBox) resultsBox.classList.add('hidden');
+    renderSchedule();
+    return;
+  }
+
+  var days = (eventData && eventData.schedule && eventData.schedule.days) || [];
+  var matches = [];
+
+  days.forEach(function(day, dayIdx) {
+    var dayLabel = formatDayButtonTitle(day, dayIdx);
+    (day.sessions || []).forEach(function(s) {
+      var roomName = (s.room || 'Sala').trim();
+      var sessionTitle = s.title || '';
+      var timeStr = (s.time_start || '') + (s.time_end ? ' - ' + s.time_end : '');
+
+      var matchFound = false;
+      var matchContext = '';
+
+      if (sessionTitle.toLowerCase().includes(term)) {
+        matchFound = true;
+        matchContext = sessionTitle;
+      }
+
+      if (roomName.toLowerCase().includes(term)) {
+        matchFound = true;
+        matchContext = 'Sala: ' + roomName + ' - ' + sessionTitle;
+      }
+
+      (s.speakers || []).forEach(function(sp) {
+        if (String(sp).toLowerCase().includes(term)) {
+          matchFound = true;
+          matchContext = 'Ponente: ' + sp + ' (' + sessionTitle + ')';
+        }
+      });
+      (s.moderators || []).forEach(function(m) {
+        if (String(m).toLowerCase().includes(term)) {
+          matchFound = true;
+          matchContext = 'Moderador: ' + m + ' (' + sessionTitle + ')';
+        }
+      });
+
+      (s.sub_talks || []).forEach(function(t) {
+        if ((t.title || '').toLowerCase().includes(term)) {
+          matchFound = true;
+          matchContext = 'Ponencia: ' + t.title + (t.speaker ? ' [' + t.speaker + ']' : '');
+        } else if ((t.speaker || '').toLowerCase().includes(term)) {
+          matchFound = true;
+          matchContext = 'Ponente: ' + t.speaker + ' (' + (t.title || sessionTitle) + ')';
+        }
+      });
+
+      if (matchFound) {
+        matches.push({
+          dayIdx: dayIdx,
+          dayLabel: dayLabel,
+          room: roomName,
+          time: timeStr,
+          sessionId: s.id,
+          sessionTitle: sessionTitle,
+          context: matchContext,
+          type: s.type || 'Sesión'
+        });
+      }
+    });
+  });
+
+  if (resultsBox && resultsList) {
+    resultsBox.classList.remove('hidden');
+    if (counterEl) {
+      counterEl.innerHTML = '<i class="fa-solid fa-magnifying-glass text-teal-400"></i> ' + matches.length + ' resultado(s) para "' + escapeHtml(term) + '"';
+    }
+
+    if (matches.length === 0) {
+      resultsList.innerHTML = '<div class="py-4 text-center text-xs text-slate-400">' +
+        'No se encontraron ponentes, ponencias ni salas con "' + escapeHtml(term) + '"' +
+        '</div>';
+    } else {
+      var html = '';
+      matches.slice(0, 30).forEach(function(m) {
+        html += '<div onclick="goToSearchResult(' + m.dayIdx + ', \'' + escapeJsString(m.room) + '\', \'' + m.sessionId + '\')" ' +
+          'class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700/90 active:bg-slate-700 transition cursor-pointer border border-slate-700 space-y-1">' +
+          
+          '<div class="flex items-center justify-between gap-1.5 flex-wrap">' +
+            '<span class="bg-amber-400 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-md">' + escapeHtml(m.dayLabel) + '</span>' +
+            '<span class="font-mono text-[10px] text-amber-300 font-bold bg-slate-900 px-1.5 py-0.5 rounded">' + m.time + '</span>' +
+            '<span class="text-teal-300 font-bold text-[10px] bg-teal-950/70 border border-teal-800 px-1.5 py-0.5 rounded">' + escapeHtml(m.room) + '</span>' +
+          '</div>' +
+
+          '<div class="text-xs font-bold text-white leading-snug line-clamp-2">' + escapeHtml(m.context || m.sessionTitle) + '</div>' +
+          '<div class="text-[9.5px] text-slate-400 flex items-center justify-between pt-0.5">' +
+            '<span>Sesión: ' + escapeHtml(m.sessionTitle) + '</span>' +
+            '<span class="text-teal-400 font-bold">Ver sesión &rsaquo;</span>' +
+          '</div>' +
+
+        '</div>';
+      });
+
+      if (matches.length > 30) {
+        html += '<div class="text-center text-[10px] text-slate-400 pt-1">Mostrando los primeros 30 resultados. Afina tu búsqueda.</div>';
+      }
+
+      resultsList.innerHTML = html;
+    }
+  }
+
+  renderSchedule();
+}
+
+function clearLiveSearch() {
+  var input = document.getElementById('session-search-input');
+  if (input) input.value = '';
+  currentSearchTerm = '';
+  var clearBtn = document.getElementById('btn-clear-search');
+  if (clearBtn) clearBtn.classList.add('hidden');
+  var resultsBox = document.getElementById('live-search-results-box');
+  if (resultsBox) resultsBox.classList.add('hidden');
+  renderSchedule();
+}
+
+function goToSearchResult(dayIdx, roomName, sessionId) {
+  selectedDayIdx = dayIdx;
+  renderDaysSelector();
+
+  if (!selectedRooms.includes(roomName)) {
+    selectedRooms = [roomName];
+    safeSet('event_selected_rooms_v1', selectedRooms);
+    renderRoomCards();
+  }
+
+  toggleMobileDrawer();
+  clearLiveSearch();
+
+  renderSchedule();
+  setTimeout(function() {
+    openSessionDetailModal(sessionId);
+  }, 150);
+
+  showToast('Navegando a la sesión de ' + roomName, 'fa-arrow-right text-teal-400');
+}
+
 function filterBySearch() {
   var input = document.getElementById('session-search-input');
-  if (input) {
-    currentSearchTerm = input.value.toLowerCase().trim();
-    renderSchedule();
+  if (input) handleLiveSearch(input.value);
+}
+
+// GESTIÓN DEL MODAL DE DATOS TÉCNICOS DE PRODUCCIÓN Y TIMING
+function openProductionModal() {
+  var modal = document.getElementById('production-modal');
+  if (!modal) return;
+
+  var config = (eventData && eventData.config) || {};
+  var support = config.tech_support || {};
+  var rawNotes = config.production_notes || '';
+
+  // 1. Tarjetas Wi-Fi
+  var wifiContainer = document.getElementById('production-wifi-cards');
+  if (wifiContainer) {
+    var wifiStaffSSID = 'IceIceBaby';
+    var wifiStaffPass = 'VanillaIce!@';
+    var wifiPubSSID = 'uTAS-CBMS';
+    var wifiPubPass = 'microtas26';
+
+    var lines = rawNotes.split('\n');
+    lines.forEach(function(l) {
+      if (l.toLowerCase().includes('staff') && l.includes('Pass:')) {
+        var mPass = l.match(/Pass:\s*([^\s]+)/);
+        var mSsid = l.match(/SSID:\s*([^\s\/]+)/);
+        if (mPass && mPass[1]) wifiStaffPass = mPass[1];
+        if (mSsid && mSsid[1]) wifiStaffSSID = mSsid[1];
+      }
+      if (l.toLowerCase().includes('public') && l.includes('Pass:')) {
+        var mPass = l.match(/Pass:\s*([^\s]+)/);
+        var mSsid = l.match(/SSID:\s*([^\s\/]+)/);
+        if (mPass && mPass[1]) wifiPubPass = mPass[1];
+        if (mSsid && mSsid[1]) wifiPubSSID = mSsid[1];
+      }
+    });
+
+    wifiContainer.innerHTML = 
+      '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">' +
+        '<div class="flex items-center justify-between text-xs font-bold text-slate-800 mb-1">' +
+          '<span class="flex items-center gap-1.5"><i class="fa-solid fa-lock text-amber-500"></i> Wi-Fi Staff / Técnico:</span>' +
+          '<button onclick="copyTextToClipboard(\'' + escapeJsString(wifiStaffPass) + '\', \'Contraseña Wi-Fi Staff\')" class="text-[10px] text-teal-700 hover:underline font-bold cursor-pointer">Copiar Clave</button>' +
+        '</div>' +
+        '<div class="text-[11px] font-mono text-slate-600">SSID: <strong class="text-slate-900">' + escapeHtml(wifiStaffSSID) + '</strong></div>' +
+        '<div class="text-[11px] font-mono text-slate-600">Pass: <strong class="text-slate-900 select-all">' + escapeHtml(wifiStaffPass) + '</strong></div>' +
+      '</div>' +
+
+      '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200">' +
+        '<div class="flex items-center justify-between text-xs font-bold text-slate-800 mb-1">' +
+          '<span class="flex items-center gap-1.5"><i class="fa-solid fa-wifi text-teal-600"></i> Wi-Fi Público:</span>' +
+          '<button onclick="copyTextToClipboard(\'' + escapeJsString(wifiPubPass) + '\', \'Contraseña Wi-Fi Público\')" class="text-[10px] text-teal-700 hover:underline font-bold cursor-pointer">Copiar Clave</button>' +
+        '</div>' +
+        '<div class="text-[11px] font-mono text-slate-600">SSID: <strong class="text-slate-900">' + escapeHtml(wifiPubSSID) + '</strong></div>' +
+        '<div class="text-[11px] font-mono text-slate-600">Pass: <strong class="text-slate-900 select-all">' + escapeHtml(wifiPubPass) + '</strong></div>' +
+      '</div>';
+  }
+
+  // 2. Control Central
+  var ctrlEl = document.getElementById('production-control-center');
+  if (ctrlEl) {
+    var ctrlLoc = 'Zaguán Sala Falla (Planta Baja)';
+    var lines = rawNotes.split('\n');
+    lines.forEach(function(l) {
+      if (l.toLowerCase().includes('control central')) {
+        var parts = l.split(':');
+        if (parts.length > 1) ctrlLoc = parts.slice(1).join(':').trim();
+      }
+    });
+    ctrlEl.textContent = ctrlLoc;
+  }
+
+  // 3. Canal de Radio
+  var radioEl = document.getElementById('production-radio-channel');
+  if (radioEl) {
+    radioEl.textContent = support.channel_radio || 'Canal 2 (Audio/Video)';
+  }
+
+  // 4. Contacto Jefe Técnico
+  var nameEl = document.getElementById('production-contact-name');
+  var phoneEl = document.getElementById('production-contact-phone');
+  var btnWa = document.getElementById('production-btn-whatsapp');
+  var btnCall = document.getElementById('production-btn-call');
+  if (nameEl) nameEl.textContent = support.contact_name || 'Fran Jefe Técnico AV';
+  if (phoneEl) phoneEl.textContent = support.phone_whatsapp || '+34 609442342';
+  if (support.phone_whatsapp) {
+    var clean = support.phone_whatsapp.replace(/[^0-9+]/g, '');
+    if (btnWa) btnWa.href = 'https://wa.me/' + clean.replace('+', '') + '?text=' + encodeURIComponent('Hola Fran, te escribo desde la sala:');
+    if (btnCall) btnCall.href = 'tel:' + clean;
+  }
+
+  // 5. Timing Lead
+  var leadEl = document.getElementById('production-timing-lead');
+  if (leadEl) {
+    leadEl.textContent = (config.warning_lead_time_minutes || 10) + ' minutos';
+  }
+
+  // 6. Notas de Producción
+  var notesEl = document.getElementById('production-full-notes');
+  if (notesEl) {
+    notesEl.textContent = rawNotes || 'Sin notas adicionales de producción.';
+  }
+
+  modal.classList.remove('hidden');
+}
+
+function closeProductionModal() {
+  var modal = document.getElementById('production-modal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function copyTextToClipboard(text, label) {
+  try {
+    navigator.clipboard.writeText(text);
+    showToast('Copiado: ' + label, 'fa-copy text-teal-400');
+  } catch(e) {
+    showToast('Texto: ' + text, 'fa-copy text-amber-400');
   }
 }
 
