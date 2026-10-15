@@ -458,6 +458,8 @@ function setViewMode(mode) {
 function toggleCompactMode() {
   isCompactView = !isCompactView;
   safeSet('event_compact_view_v1', isCompactView);
+  // Limpiar estados individuales para que todas las tarjetas se contraigan limpiamente
+  visibleSpeakersMap = {};
   var btnTxt = document.getElementById('txt-compact');
   var btnIcon = document.getElementById('icon-compact');
   var mobLabel = document.getElementById('mobile-compact-label');
@@ -476,7 +478,13 @@ function toggleAllSpeakers() {
 }
 
 function toggleSessionSpeakers(sessionId) {
-  visibleSpeakersMap[sessionId] = !visibleSpeakersMap[sessionId];
+  var isCurrentlyOpen;
+  if (visibleSpeakersMap[sessionId] !== undefined) {
+    isCurrentlyOpen = visibleSpeakersMap[sessionId];
+  } else {
+    isCurrentlyOpen = !isCompactView;
+  }
+  visibleSpeakersMap[sessionId] = !isCurrentlyOpen;
   renderSchedule();
 }
 
@@ -632,7 +640,13 @@ function renderCardListView(output, sessions, currentDay) {
       var isFinished = isSessionFinished(s.id);
       var noteObj = getSessionNote(s.id);
       var hasNote = !!(noteObj && noteObj.text && noteObj.text.trim());
-      var isSpeakerVisible = visibleSpeakersMap[s.id] !== undefined ? visibleSpeakersMap[s.id] : globalShowSpeakers;
+      var isSpeakerVisible;
+      if (visibleSpeakersMap[s.id] !== undefined) {
+        isSpeakerVisible = visibleSpeakersMap[s.id];
+      } else {
+        // En modo compacto está cerrado por defecto; en vista detallada está abierto por defecto
+        isSpeakerVisible = !isCompactView;
+      }
       var subtalks = s.sub_talks || [];
 
       // Extraer y unificar todos los ponentes (tanto a nivel de sesión como de sub-ponencias)
@@ -664,8 +678,8 @@ function renderCardListView(output, sessions, currentDay) {
       var hasPeopleOrTalks = (speakerNames.length > 0 || modNames.length > 0 || subtalks.length > 0);
       var sessionTime = (s.time_start && s.time_end) ? (s.time_start + ' - ' + s.time_end) : '';
 
-      html += '<div id="session-card-' + s.id + '" class="p-3 rounded-xl border transition flex flex-col justify-between ' + 
-        (isFinished ? 'bg-emerald-50/40 border-emerald-300 shadow-sm' : 'bg-white border-slate-200 shadow-sm') + '">' +
+      html += '<div id="session-card-' + s.id + '" class="session-card p-3 rounded-xl border transition flex flex-col justify-between ' + 
+        (isFinished ? 'bg-emerald-950/20 border-emerald-500/50 shadow-sm' : 'bg-slate-900 border-slate-800 shadow-sm') + '">' +
         '<div>' +
           '<div class="flex items-center justify-between gap-1 mb-1.5 flex-wrap">' +
             '<div class="flex items-center gap-1 flex-wrap">' +
@@ -679,79 +693,73 @@ function renderCardListView(output, sessions, currentDay) {
                 escapeHtml(badgeLabel) +
               '</span>' +
               (isFinished ? '<span class="text-[8.5px] font-black px-1.5 py-0.5 rounded uppercase bg-emerald-600 text-white shadow-sm flex items-center gap-0.5"><i class="fa-solid fa-check"></i>Terminada</span>' : '') +
-              '<span id="live-tag-' + s.id + '" class="text-[8.5px] font-black px-1.5 py-0.5 rounded uppercase hidden bg-rose-600 text-white animate-pulse">EN VIVO</span>' +
+              '<span id="live-tag-' + s.id + '" class="text-[8.5px] font-black px-1.5 py-0.5 rounded uppercase hidden bg-rose-600 text-white animate-pulse">EN VIVO AHORA</span>' +
             '</div>' +
-            '<button onclick="selectSingleRoom(\'' + escapeJsString(s.room || 'Sala') + '\')" title="Clic para filtrar solo esta sala" class="text-[10px] font-black truncate max-w-[140px] text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200 px-1.5 py-0.5 rounded cursor-pointer transition">' +
-              '<i class="fa-solid fa-location-dot text-teal-600 mr-0.5"></i>' + escapeHtml(s.room || 'Sala') +
+            '<button onclick="selectSingleRoom(\'' + escapeJsString(s.room || 'Sala') + '\')" title="Clic para filtrar solo esta sala" class="room-badge text-[10px] font-black truncate max-w-[140px] px-1.5 py-0.5 rounded cursor-pointer transition border border-teal-800 bg-teal-950/60 text-teal-300 hover:bg-teal-900/60">' +
+              '<i class="fa-solid fa-location-dot text-teal-400 mr-0.5"></i>' + escapeHtml(s.room || 'Sala') +
             '</button>' +
           '</div>' +
-          '<h3 class="font-extrabold text-slate-900 text-xs leading-snug mb-1 ' + (isCompactView ? 'line-clamp-2' : '') + '">' +
+          '<h3 class="font-extrabold text-slate-100 text-xs leading-snug mb-1 ' + (isCompactView ? 'line-clamp-2' : '') + '">' +
             escapeHtml(s.title) +
           '</h3>' +
-          (!isCompactView && s.details ? '<p class="text-[10px] text-slate-500 mt-1 leading-normal">' + escapeHtml(s.details) + '</p>' : '') +
+          (!isCompactView && s.details ? '<p class="text-[10px] text-slate-400 mt-1 leading-normal">' + escapeHtml(s.details) + '</p>' : '') +
           
-          // Nota técnica incrustada si existe
+          // Nota técnica incrustada si existe (modo oscuro low-lumen)
           (hasNote ? 
-            '<div onclick="openSessionNoteModal(\'' + s.id + '\')" class="mt-1.5 p-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-950 text-[10px] cursor-pointer hover:bg-amber-100 transition shadow-sm" title="Clic para ver o editar la nota">' +
-              '<div class="flex items-center justify-between text-[9px] font-bold text-amber-800 mb-0.5">' +
-                '<span><i class="fa-solid fa-note-sticky text-amber-600 mr-1"></i>Nota Técnica:</span>' +
-                '<span class="text-[8px] text-amber-600 font-normal">' + (noteObj.updatedAt || '') + '</span>' +
+            '<div onclick="openSessionNoteModal(\'' + s.id + '\')" class="mt-1.5 p-1.5 rounded-lg bg-amber-950/40 border border-amber-600/40 text-amber-200 text-[10px] cursor-pointer hover:bg-amber-900/40 transition shadow-sm" title="Clic para ver o editar la nota">' +
+              '<div class="flex items-center justify-between text-[9px] font-bold text-amber-400 mb-0.5">' +
+                '<span><i class="fa-solid fa-note-sticky text-amber-400 mr-1"></i>Nota Técnica:</span>' +
+                '<span class="text-[8px] text-amber-300 font-normal">' + (noteObj.updatedAt || '') + '</span>' +
               '</div>' +
-              '<p class="line-clamp-2 text-slate-800 font-medium">' + escapeHtml(noteObj.text) + '</p>' +
+              '<p class="line-clamp-2 text-slate-200 font-medium">' + escapeHtml(noteObj.text) + '</p>' +
             '</div>' : '') +
         '</div>' +
 
-        // Sub-ponencias / Detalles visibles cuando NO está en modo compacto
-        (!isCompactView && subtalks.length > 0 ?
-          '<div class="mt-2 pt-2 border-t border-slate-100 space-y-1.5">' +
-            '<div class="text-[9px] font-black uppercase text-teal-900 flex items-center justify-between">' +
-              '<span>' + subtalks.length + ' ' + (subtalks.length === 1 ? 'Ponencia' : 'Ponencias') + ':</span>' +
-            '</div>' +
-            subtalks.slice(0, 3).map(function(talk) {
-              return '<div class="text-[10px] text-slate-700 bg-slate-50 p-1 rounded border border-slate-100">' +
-                '<div class="font-bold truncate">' + escapeHtml(talk.title) + '</div>' +
-                (talk.speaker ? '<div class="text-[9px] text-slate-500"><i class="fa-solid fa-user-tie mr-0.5 text-teal-600"></i>' + escapeHtml(talk.speaker) + '</div>' : '') +
-              '</div>';
-            }).join('') +
-            (subtalks.length > 3 ? '<div class="text-[9px] text-slate-400 text-center">+' + (subtalks.length - 3) + ' ponencias más</div>' : '') +
+        // Bloque de Ponencias en estilo OSCURO idéntico a la parte superior de la imagen
+        (isSpeakerVisible && (subtalks.length > 0 || modNames.length > 0 || (speakerNames.length > 0 && subtalks.length === 0)) ?
+          '<div class="mt-2 pt-2 border-t border-slate-700/60 space-y-1.5">' +
+            (subtalks.length > 0 ?
+              '<div class="text-[9px] font-black uppercase text-teal-400 flex items-center justify-between">' +
+                '<span>' + subtalks.length + ' ' + (subtalks.length === 1 ? 'Ponencia' : 'Ponencias') + ':</span>' +
+              '</div>' +
+              subtalks.map(function(talk) {
+                return '<div class="subtalk-box text-[10.5px] p-2 rounded-lg border border-slate-700/60 bg-slate-800/80 text-slate-200">' +
+                  '<div class="font-bold text-slate-100">' + escapeHtml(talk.title || 'Presentación de Ponencia') + '</div>' +
+                  (talk.speaker ? '<div class="text-[9.5px] text-slate-400 mt-1 flex items-start gap-1.5"><i class="fa-solid fa-user-tie text-teal-400 mt-0.5 shrink-0"></i><span>' + escapeHtml(talk.speaker) + '</span></div>' : '') +
+                '</div>';
+              }).join('') : '') +
+
+            ((modNames.length > 0 || (speakerNames.length > 0 && subtalks.length === 0)) ?
+              '<div class="subtalk-box text-[10.5px] p-2 rounded-lg border border-slate-700/60 bg-slate-800/80 text-slate-200 space-y-1">' +
+                (modNames.length ? '<div><strong class="text-teal-400">Moderador(es):</strong> <span class="text-slate-200">' + escapeHtml(modNames.join(', ')) + '</span></div>' : '') +
+                (speakerNames.length && subtalks.length === 0 ? '<div><strong class="text-teal-400">Ponente(s):</strong> <span class="text-slate-200">' + escapeHtml(speakerNames.join('; ')) + '</span></div>' : '') +
+              '</div>' : '') +
           '</div>' : '') +
 
         // Barra inferior de la tarjeta (Ponentes + Nota + Terminar)
-        '<div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 flex-wrap gap-1">' +
+        '<div class="mt-2.5 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[10px] text-slate-400 flex-wrap gap-1">' +
           '<div>' +
             (hasPeopleOrTalks ? 
-              '<button onclick="toggleSessionSpeakers(\'' + s.id + '\')" class="text-teal-700 hover:text-teal-900 font-extrabold cursor-pointer p-0.5 flex items-center gap-1 text-[10px] underline">' +
-                (isSpeakerVisible ? 'Ocultar Ponentes' : ('Ver Ponentes' + (speakerNames.length > 0 ? ' (' + speakerNames.length + ')' : (subtalks.length > 0 ? ' (' + subtalks.length + ')' : '')))) +
-              '</button>' : '<span class="text-[9px] text-slate-400 font-medium">Sin ponentes</span>') +
+              '<button onclick="toggleSessionSpeakers(\'' + s.id + '\')" class="text-teal-400 hover:text-teal-300 font-extrabold cursor-pointer p-0.5 flex items-center gap-1 text-[10px] underline">' +
+                '<i class="fa-solid ' + (isSpeakerVisible ? 'fa-chevron-up' : 'fa-chevron-down') + ' text-[9px]"></i>' +
+                '<span>' + (isSpeakerVisible ? 'Ocultar Ponentes' : ('Ver Ponentes' + (subtalks.length ? ' (' + subtalks.length + ')' : (speakerNames.length ? ' (' + speakerNames.length + ')' : '')))) + '</span>' +
+              '</button>' : 
+              '<span class="text-[10px] font-semibold text-slate-400 truncate max-w-[170px] sm:max-w-[220px] inline-flex items-center gap-1" title="' + escapeHtml(s.title) + '">' +
+                '<i class="fa-solid fa-calendar-check text-teal-400/80 text-[9px]"></i>' +
+                '<span class="truncate">' + escapeHtml(s.title || 'Sesión General') + '</span>' +
+              '</span>') +
           '</div>' +
           '<div class="flex items-center gap-1">' +
-            '<button onclick="openSessionNoteModal(\'' + s.id + '\')" title="Ver / Añadir nota técnica" class="cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 ' + 
-              (hasNote ? 'bg-amber-100 text-amber-950 border border-amber-400 shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-amber-50 hover:text-amber-900 border border-slate-200') + '">' +
-              '<i class="fa-solid fa-note-sticky ' + (hasNote ? 'text-amber-600' : 'text-slate-400') + '"></i>' +
+            '<button onclick="openSessionNoteModal(\'' + s.id + '\')" title="Ver / Añadir nota técnica" class="tech-action-btn cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-bold transition flex items-center gap-1 bg-slate-800 text-slate-300 hover:bg-slate-700 border border-slate-700">' + 
+              '<i class="fa-solid fa-note-sticky ' + (hasNote ? 'text-amber-400' : 'text-slate-400') + '"></i>' +
               '<span>Nota</span>' +
             '</button>' +
-            '<button onclick="toggleSessionFinished(\'' + s.id + '\')" title="Marcar / desmarcar como terminada" class="cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-black transition flex items-center gap-1 ' + 
-              (isFinished ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-emerald-50 hover:text-emerald-900 border border-slate-200') + '">' +
+            '<button onclick="toggleSessionFinished(\'' + s.id + '\')" title="Marcar / desmarcar como terminada" class="tech-action-btn cursor-pointer px-2 py-0.5 rounded-lg text-[10px] font-black transition flex items-center gap-1 ' + 
+              (isFinished ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm' : 'bg-slate-800 text-slate-300 hover:bg-emerald-900/40 hover:text-emerald-300 border border-slate-700') + '">' +
               '<i class="fa-solid ' + (isFinished ? 'fa-check' : 'fa-check text-slate-400') + '"></i>' +
               '<span>' + (isFinished ? 'Terminada' : 'Terminar') + '</span>' +
             '</button>' +
           '</div>' +
-        '</div>' +
-
-        // Bloque desplegable de ponentes y detalles
-        '<div class="' + (isSpeakerVisible ? 'block' : 'hidden') + ' mt-1.5 p-2 rounded-lg bg-teal-50/80 border border-teal-100 text-[10px] text-slate-800 space-y-1">' +
-          (modNames.length ? '<div><strong class="text-teal-900">Moderadores:</strong> ' + escapeHtml(modNames.join(', ')) + '</div>' : '') +
-          (speakerNames.length ? '<div><strong class="text-teal-900">Ponentes:</strong> ' + escapeHtml(speakerNames.join('; ')) + '</div>' : '') +
-          (subtalks.length ? 
-            '<div class="pt-1 mt-1 border-t border-teal-200/60 space-y-1">' +
-              '<div class="text-[9px] font-black text-teal-950 uppercase">Detalle de Ponencias:</div>' +
-              subtalks.map(function(talk) {
-                return '<div class="bg-white/80 p-1.5 rounded border border-teal-100">' +
-                  '<div class="font-bold text-slate-900">' + escapeHtml(talk.title) + '</div>' +
-                  (talk.speaker ? '<div class="text-[9px] text-teal-800 mt-0.5 font-medium"><i class="fa-solid fa-user-tie mr-1"></i>' + escapeHtml(talk.speaker) + '</div>' : '') +
-                '</div>';
-              }).join('') +
-            '</div>' : '') +
         '</div>' +
 
       '</div>';
