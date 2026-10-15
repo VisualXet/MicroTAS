@@ -219,6 +219,51 @@ function setupRoomsAndVenues() {
   }
 }
 
+// Helper para formatear el botón del día incorporando el número de día (ej: 15 Jueves)
+function formatDayButtonTitle(d, idx) {
+  var weekday = (d.label || '').trim();
+  var dayNum = '';
+
+  if (d.date) {
+    var strDate = String(d.date).trim();
+    // Formato YYYY-MM-DD
+    var parts = strDate.split('-');
+    if (parts.length === 3 && parts[2]) {
+      var n = parseInt(parts[2], 10);
+      if (!isNaN(n)) dayNum = n;
+    }
+    // Formato DD/MM/YYYY o DD-MM-YYYY
+    if (!dayNum) {
+      var partsSlash = strDate.split(/[\/\.]/);
+      if (partsSlash.length >= 2 && !isNaN(parseInt(partsSlash[0], 10))) {
+        dayNum = parseInt(partsSlash[0], 10);
+      }
+    }
+    // Búsqueda regex de 1 o 2 dígitos
+    if (!dayNum) {
+      var m = strDate.match(/\b(\d{1,2})\b/);
+      if (m && m[1]) dayNum = parseInt(m[1], 10);
+    }
+  }
+
+  // Si la etiqueta ya contiene número (ej: "15 Jueves" o "Jueves 15"), respetarla
+  if (weekday && /\b\d{1,2}\b/.test(weekday)) {
+    return weekday;
+  }
+
+  // Si tenemos día del mes y día de la semana: "15 Jueves"
+  if (dayNum && weekday) {
+    return dayNum + ' ' + weekday;
+  }
+  if (dayNum) {
+    return 'Día ' + dayNum;
+  }
+  if (weekday) {
+    return weekday;
+  }
+  return 'Día ' + (idx + 1);
+}
+
 // RENDERIZADO DEL SELECTOR DE DÍAS (BOTONES GRANDES TIPO SEMERGEN)
 function renderDaysSelector() {
   var grid = document.getElementById('days-selector-grid');
@@ -233,7 +278,7 @@ function renderDaysSelector() {
   var html = '';
   days.forEach(function(d, idx) {
     var isSelected = (selectedDayIdx === idx);
-    var label = d.label || d.date || ('Día ' + (idx + 1));
+    var label = formatDayButtonTitle(d, idx);
     var sessionCount = (d.sessions || []).length;
 
     html += '<button onclick="selectDayByIndex(' + idx + ')" ' +
@@ -241,11 +286,11 @@ function renderDaysSelector() {
       (isSelected 
         ? 'bg-teal-800 text-white border-teal-800 shadow-md ring-2 ring-teal-500/40 font-bold' 
         : 'bg-white text-slate-700 border-slate-200 hover:border-teal-300') + '">' +
-      '<span class="text-xs font-black ' + (isSelected ? 'text-amber-300' : 'text-teal-900') + '">' +
+      '<span class="text-xs sm:text-sm font-black ' + (isSelected ? 'text-amber-300' : 'text-teal-900') + '">' +
         escapeHtml(label) +
       '</span>' +
-      '<span class="text-[10px] ' + (isSelected ? 'text-teal-100' : 'text-slate-500') + ' mt-0.5 font-medium">' +
-        sessionCount + ' sesiones' +
+      '<span class="text-[10px] ' + (isSelected ? 'text-teal-100' : 'text-slate-500') + ' mt-0.5 font-semibold">' +
+        sessionCount + ' ' + (sessionCount === 1 ? 'sesión' : 'sesiones') +
       '</span>' +
     '</button>';
   });
@@ -561,9 +606,11 @@ function renderCardListView(output, sessions, currentDay) {
     var allFinished = (slotSessions.length > 0 && finishedCount === slotSessions.length);
 
     html += '<div class="print-card bg-slate-50/80 border border-slate-200 rounded-xl p-2.5 sm:p-3">' +
-      '<div class="flex items-center gap-1.5 text-teal-950 font-black text-xs mb-2 pb-1.5 border-b border-slate-200 flex-wrap">' +
-        '<i class="fa-regular fa-clock text-teal-600"></i>' +
-        '<span>' + timeSlot + ' hs</span>' +
+      '<div class="flex items-center gap-2 mb-2 pb-2 border-b border-slate-200 flex-wrap">' +
+        '<span class="franja-time-badge inline-flex items-center gap-1.5 px-3 py-1 rounded-lg font-mono font-black text-xs sm:text-sm shadow-sm tracking-wide">' +
+          '<i class="fa-regular fa-clock text-amber-400"></i>' +
+          '<span>' + timeSlot + ' hs</span>' +
+        '</span>' +
         '<span class="text-[10px] text-slate-500 font-semibold">(' + slotSessions.length + ' ' + (slotSessions.length === 1 ? 'sesión' : 'sesiones simultáneas') + ')</span>' +
         '<div class="ml-auto flex items-center gap-1.5">' +
           '<span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ' + 
@@ -588,18 +635,53 @@ function renderCardListView(output, sessions, currentDay) {
       var isSpeakerVisible = visibleSpeakersMap[s.id] !== undefined ? visibleSpeakersMap[s.id] : globalShowSpeakers;
       var subtalks = s.sub_talks || [];
 
+      // Extraer y unificar todos los ponentes (tanto a nivel de sesión como de sub-ponencias)
+      var speakerNames = [];
+      if (s.speakers) {
+        if (Array.isArray(s.speakers)) {
+          s.speakers.forEach(function(sp) { if (sp && sp.trim()) speakerNames.push(sp.trim()); });
+        } else if (typeof s.speakers === 'string' && s.speakers.trim()) {
+          speakerNames.push(s.speakers.trim());
+        }
+      }
+      subtalks.forEach(function(talk) {
+        if (talk.speaker && talk.speaker.trim()) {
+          speakerNames.push(talk.speaker.trim());
+        }
+      });
+      speakerNames = Array.from(new Set(speakerNames));
+
+      var modNames = [];
+      if (s.moderators) {
+        if (Array.isArray(s.moderators)) {
+          s.moderators.forEach(function(m) { if (m && m.trim()) modNames.push(m.trim()); });
+        } else if (typeof s.moderators === 'string' && s.moderators.trim()) {
+          modNames.push(s.moderators.trim());
+        }
+      }
+      modNames = Array.from(new Set(modNames));
+
+      var hasPeopleOrTalks = (speakerNames.length > 0 || modNames.length > 0 || subtalks.length > 0);
+      var sessionTime = (s.time_start && s.time_end) ? (s.time_start + ' - ' + s.time_end) : '';
+
       html += '<div id="session-card-' + s.id + '" class="p-3 rounded-xl border transition flex flex-col justify-between ' + 
         (isFinished ? 'bg-emerald-50/40 border-emerald-300 shadow-sm' : 'bg-white border-slate-200 shadow-sm') + '">' +
         '<div>' +
           '<div class="flex items-center justify-between gap-1 mb-1.5 flex-wrap">' +
             '<div class="flex items-center gap-1 flex-wrap">' +
+              // BADGE HORARIO INDIVIDUAL DE ALTO CONTRASTE
+              (sessionTime ? 
+                '<span class="card-time-badge inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-mono font-black text-[9.5px] shadow-xs">' +
+                  '<i class="fa-regular fa-clock text-amber-400 text-[8.5px]"></i>' +
+                  '<span>' + sessionTime + '</span>' +
+                '</span>' : '') +
               '<span class="text-[9px] font-black px-1.5 py-0.5 rounded uppercase ' + badgeClass + '">' +
                 escapeHtml(badgeLabel) +
               '</span>' +
               (isFinished ? '<span class="text-[8.5px] font-black px-1.5 py-0.5 rounded uppercase bg-emerald-600 text-white shadow-sm flex items-center gap-0.5"><i class="fa-solid fa-check"></i>Terminada</span>' : '') +
               '<span id="live-tag-' + s.id + '" class="text-[8.5px] font-black px-1.5 py-0.5 rounded uppercase hidden bg-rose-600 text-white animate-pulse">EN VIVO</span>' +
             '</div>' +
-            '<button onclick="selectSingleRoom(\'' + escapeJsString(s.room || 'Sala') + '\')" title="Clic para filtrar solo esta sala" class="text-[10px] font-black truncate max-w-[150px] text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200 px-1.5 py-0.5 rounded cursor-pointer transition">' +
+            '<button onclick="selectSingleRoom(\'' + escapeJsString(s.room || 'Sala') + '\')" title="Clic para filtrar solo esta sala" class="text-[10px] font-black truncate max-w-[140px] text-teal-900 bg-teal-50 hover:bg-teal-100 border border-teal-200 px-1.5 py-0.5 rounded cursor-pointer transition">' +
               '<i class="fa-solid fa-location-dot text-teal-600 mr-0.5"></i>' + escapeHtml(s.room || 'Sala') +
             '</button>' +
           '</div>' +
@@ -619,16 +701,16 @@ function renderCardListView(output, sessions, currentDay) {
             '</div>' : '') +
         '</div>' +
 
-        // Sub-ponencias / Detalles
+        // Sub-ponencias / Detalles visibles cuando NO está en modo compacto
         (!isCompactView && subtalks.length > 0 ?
           '<div class="mt-2 pt-2 border-t border-slate-100 space-y-1.5">' +
             '<div class="text-[9px] font-black uppercase text-teal-900 flex items-center justify-between">' +
-              '<span>' + subtalks.length + ' Ponencias:</span>' +
+              '<span>' + subtalks.length + ' ' + (subtalks.length === 1 ? 'Ponencia' : 'Ponencias') + ':</span>' +
             '</div>' +
             subtalks.slice(0, 3).map(function(talk) {
               return '<div class="text-[10px] text-slate-700 bg-slate-50 p-1 rounded border border-slate-100">' +
                 '<div class="font-bold truncate">' + escapeHtml(talk.title) + '</div>' +
-                (talk.speaker ? '<div class="text-[9px] text-slate-500"><i class="fa-solid fa-user-tie mr-0.5"></i>' + escapeHtml(talk.speaker) + '</div>' : '') +
+                (talk.speaker ? '<div class="text-[9px] text-slate-500"><i class="fa-solid fa-user-tie mr-0.5 text-teal-600"></i>' + escapeHtml(talk.speaker) + '</div>' : '') +
               '</div>';
             }).join('') +
             (subtalks.length > 3 ? '<div class="text-[9px] text-slate-400 text-center">+' + (subtalks.length - 3) + ' ponencias más</div>' : '') +
@@ -637,9 +719,9 @@ function renderCardListView(output, sessions, currentDay) {
         // Barra inferior de la tarjeta (Ponentes + Nota + Terminar)
         '<div class="mt-2.5 pt-2 border-t border-slate-100 flex items-center justify-between text-[10px] text-slate-500 flex-wrap gap-1">' +
           '<div>' +
-            ((s.speakers || (s.moderators && s.moderators.length)) ? 
-              '<button onclick="toggleSessionSpeakers(\'' + s.id + '\')" class="text-teal-700 font-extrabold underline cursor-pointer p-0.5 hover:text-teal-900">' +
-                (isSpeakerVisible ? 'Ocultar Ponentes' : 'Ver Ponentes') +
+            (hasPeopleOrTalks ? 
+              '<button onclick="toggleSessionSpeakers(\'' + s.id + '\')" class="text-teal-700 hover:text-teal-900 font-extrabold cursor-pointer p-0.5 flex items-center gap-1 text-[10px] underline">' +
+                (isSpeakerVisible ? 'Ocultar Ponentes' : ('Ver Ponentes' + (speakerNames.length > 0 ? ' (' + speakerNames.length + ')' : (subtalks.length > 0 ? ' (' + subtalks.length + ')' : '')))) +
               '</button>' : '<span class="text-[9px] text-slate-400 font-medium">Sin ponentes</span>') +
           '</div>' +
           '<div class="flex items-center gap-1">' +
@@ -656,10 +738,20 @@ function renderCardListView(output, sessions, currentDay) {
           '</div>' +
         '</div>' +
 
-        // Bloque desplegable de ponentes
-        '<div class="' + (isSpeakerVisible ? 'block' : 'hidden') + ' mt-1.5 p-1.5 rounded bg-teal-50/70 border border-teal-100 text-[10px] text-slate-800 space-y-1">' +
-          (s.moderators && s.moderators.length ? '<div><strong class="text-teal-900">Mod:</strong> ' + escapeHtml(s.moderators.join(', ')) + '</div>' : '') +
-          (s.speakers ? '<div><strong class="text-teal-900">Pon:</strong> ' + escapeHtml(s.speakers) + '</div>' : '') +
+        // Bloque desplegable de ponentes y detalles
+        '<div class="' + (isSpeakerVisible ? 'block' : 'hidden') + ' mt-1.5 p-2 rounded-lg bg-teal-50/80 border border-teal-100 text-[10px] text-slate-800 space-y-1">' +
+          (modNames.length ? '<div><strong class="text-teal-900">Moderadores:</strong> ' + escapeHtml(modNames.join(', ')) + '</div>' : '') +
+          (speakerNames.length ? '<div><strong class="text-teal-900">Ponentes:</strong> ' + escapeHtml(speakerNames.join('; ')) + '</div>' : '') +
+          (subtalks.length ? 
+            '<div class="pt-1 mt-1 border-t border-teal-200/60 space-y-1">' +
+              '<div class="text-[9px] font-black text-teal-950 uppercase">Detalle de Ponencias:</div>' +
+              subtalks.map(function(talk) {
+                return '<div class="bg-white/80 p-1.5 rounded border border-teal-100">' +
+                  '<div class="font-bold text-slate-900">' + escapeHtml(talk.title) + '</div>' +
+                  (talk.speaker ? '<div class="text-[9px] text-teal-800 mt-0.5 font-medium"><i class="fa-solid fa-user-tie mr-1"></i>' + escapeHtml(talk.speaker) + '</div>' : '') +
+                '</div>';
+              }).join('') +
+            '</div>' : '') +
         '</div>' +
 
       '</div>';
@@ -691,17 +783,48 @@ function renderGridView(output, sessions, currentDay) {
   sessions.forEach(function(s) {
     var isFinished = isSessionFinished(s.id);
     var hasNote = !!(sessionNotesMap[s.id] && sessionNotesMap[s.id].text);
+    var subtalks = s.sub_talks || [];
+
+    var speakerNames = [];
+    if (s.speakers) {
+      if (Array.isArray(s.speakers)) {
+        s.speakers.forEach(function(sp) { if (sp && sp.trim()) speakerNames.push(sp.trim()); });
+      } else if (typeof s.speakers === 'string' && s.speakers.trim()) {
+        speakerNames.push(s.speakers.trim());
+      }
+    }
+    subtalks.forEach(function(talk) {
+      if (talk.speaker && talk.speaker.trim()) speakerNames.push(talk.speaker.trim());
+    });
+    speakerNames = Array.from(new Set(speakerNames));
+
+    var modNames = [];
+    if (s.moderators) {
+      if (Array.isArray(s.moderators)) {
+        s.moderators.forEach(function(m) { if (m && m.trim()) modNames.push(m.trim()); });
+      } else if (typeof s.moderators === 'string' && s.moderators.trim()) {
+        modNames.push(s.moderators.trim());
+      }
+    }
+    modNames = Array.from(new Set(modNames));
 
     html += '<tr class="' + (isFinished ? 'bg-emerald-50/50' : 'hover:bg-slate-50') + '">' +
-      '<td class="p-2.5 font-bold font-mono text-teal-950 whitespace-nowrap">' + s.time_start + ' - ' + s.time_end + '</td>' +
+      '<td class="p-2.5 whitespace-nowrap">' +
+        '<span class="card-time-badge inline-flex items-center gap-1 px-2 py-0.5 rounded font-mono font-black text-xs">' +
+          '<i class="fa-regular fa-clock text-amber-400 text-[10px]"></i>' +
+          '<span>' + s.time_start + ' - ' + s.time_end + '</span>' +
+        '</span>' +
+      '</td>' +
       '<td class="p-2.5 font-bold text-slate-700 whitespace-nowrap">' + escapeHtml(s.room) + '</td>' +
       '<td class="p-2.5">' +
         '<div class="font-bold text-slate-900">' + escapeHtml(s.title) + '</div>' +
         (s.type ? '<span class="text-[9px] font-black uppercase text-teal-700 bg-teal-50 px-1 py-0.2 rounded border border-teal-200">' + escapeHtml(s.type) + '</span>' : '') +
       '</td>' +
       '<td class="p-2.5 text-[11px] text-slate-600">' +
-        (s.moderators && s.moderators.length ? '<div><strong>Mod:</strong> ' + escapeHtml(s.moderators.join(', ')) + '</div>' : '') +
-        (s.speakers ? '<div><strong>Pon:</strong> ' + escapeHtml(s.speakers) + '</div>' : '') +
+        (modNames.length ? '<div><strong>Mod:</strong> ' + escapeHtml(modNames.join(', ')) + '</div>' : '') +
+        (speakerNames.length ? '<div><strong>Pon:</strong> ' + escapeHtml(speakerNames.join('; ')) + '</div>' : '') +
+        (!modNames.length && !speakerNames.length && subtalks.length ? '<div class="text-slate-500 font-medium">' + subtalks.length + ' ponencias</div>' : '') +
+        (!modNames.length && !speakerNames.length && !subtalks.length ? '<span class="text-slate-400 text-[10px]">Sin ponentes</span>' : '') +
       '</td>' +
       '<td class="p-2.5 text-center">' +
         (isFinished ? '<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-300">Terminada</span>' : '<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-600">Pendiente</span>') +

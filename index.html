@@ -37,6 +37,11 @@
       padding: 0;
     }
 
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       background-color: #f8fafc;
@@ -62,6 +67,19 @@
     .badge-oral { background-color: #ccfbf1; color: #0f766e; border: 1px solid #5eead4; }
     .badge-poster { background-color: #e0e7ff; color: #3730a3; border: 1px solid #a5b4fc; }
     .badge-default { background-color: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+
+    /* BADGES DE HORARIOS DE ALTO CONTRASTE */
+    .franja-time-badge {
+      background-color: #0f172a !important;
+      color: #fbbf24 !important;
+      border: 1px solid #334155 !important;
+    }
+
+    .card-time-badge {
+      background-color: #0f172a !important;
+      color: #fde047 !important;
+      border: 1px solid #1e293b !important;
+    }
 
     /* ========================================================
        MODO SALA OSCURA (LOW-LUMEN ANTI-GLARE PARA TÉCNICOS)
@@ -126,6 +144,18 @@
     body.dark-mode .badge-keynote { background-color: #3b0764 !important; color: #d8b4fe !important; border-color: #6b21a8 !important; }
     body.dark-mode .badge-default { background-color: #1e293b !important; color: #94a3b8 !important; border-color: #334155 !important; }
 
+    body.dark-mode .franja-time-badge {
+      background-color: #020617 !important;
+      color: #fde047 !important;
+      border-color: #0ea5e9 !important;
+    }
+
+    body.dark-mode .card-time-badge {
+      background-color: #020617 !important;
+      color: #38bdf8 !important;
+      border-color: #0284c7 !important;
+    }
+
     /* Indicador EN VIVO */
     .session-is-live {
       border: 2px solid #ef4444 !important;
@@ -141,46 +171,52 @@
 <body class="flex flex-col min-h-screen">
 
   <!-- ENCABEZADO PRINCIPAL TÉCNICO -->
-  <header class="bg-teal-900 text-white shadow-md sticky top-0 z-30 pt-safe">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between gap-2">
-      <div class="flex items-center space-x-2.5">
-        <div class="bg-white/10 p-2 rounded-xl backdrop-blur-sm">
-          <i class="fa-solid fa-headset text-lg sm:text-2xl text-teal-300"></i>
+  <header class="bg-teal-900 text-white shadow-md sticky top-0 z-30 pt-safe w-full">
+    <div class="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 py-2 flex items-center justify-between gap-1.5 w-full">
+      <!-- Lado izquierdo: Logo / Título del Evento con truncado seguro para móviles -->
+      <div class="flex items-center gap-2 min-w-0 flex-1">
+        <div class="bg-white/10 p-1.5 sm:p-2 rounded-lg sm:rounded-xl backdrop-blur-sm shrink-0">
+          <i class="fa-solid fa-headset text-base sm:text-2xl text-teal-300"></i>
         </div>
-        <div>
-          <h1 class="text-xs sm:text-lg font-extrabold tracking-tight leading-tight flex items-center gap-1.5">
-            <span id="header-event-name">MicroTAS 2026 - International Conference</span>
-            <span class="bg-amber-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded shadow-sm">Panel Técnico Oficial</span>
+        <div class="min-w-0 flex-1">
+          <h1 class="text-xs sm:text-lg font-extrabold tracking-tight leading-tight flex items-center gap-1.5 truncate">
+            <span id="header-event-name" class="truncate">MicroTAS 2026 - International Conference</span>
+            <span class="hidden sm:inline-block bg-amber-400 text-slate-900 text-[10px] font-black px-1.5 py-0.5 rounded shadow-sm shrink-0">Panel Técnico</span>
           </h1>
-          <p class="text-[10px] sm:text-xs text-teal-200">
-            <span id="header-event-dates">2026-10-25 al 2026-10-29</span> &bull; 
-            <span id="clock-display" class="font-mono font-bold text-amber-300">00:00:00</span>
+          <p class="text-[10px] sm:text-xs text-teal-200 truncate flex items-center gap-1">
+            <span id="header-event-dates" class="truncate">2026-10-25 al 2026-10-29</span>
+            <span class="text-teal-400">&bull;</span>
+            <span id="clock-display" class="font-mono font-bold text-amber-300 shrink-0">00:00:00</span>
           </p>
         </div>
       </div>
       
-      <div class="flex items-center gap-1.5">
-        <button onclick="openGlobalNotesModal()" class="bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-white font-bold px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5 text-xs cursor-pointer border border-teal-700" title="Ver registro completo de notas e incidencias">
+      <!-- Lado derecho: Acciones de Cabecera con SOS SIEMPRE VISIBLE en móvil -->
+      <div class="flex items-center gap-1 sm:gap-1.5 shrink-0">
+        <!-- Notas Técnicas (visible en pantallas medianas+, en móvil está en la barra inferior) -->
+        <button onclick="openGlobalNotesModal()" class="hidden md:flex bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-white font-bold px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition items-center gap-1.5 text-xs cursor-pointer border border-teal-700" title="Ver registro completo de notas e incidencias">
           <i class="fa-solid fa-clipboard-list text-amber-300"></i>
-          <span class="hidden sm:inline">Notas Técnicas</span>
-          <span class="sm:hidden">Notas</span>
+          <span>Notas Técnicas</span>
           <span id="global-notes-count-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
         </button>
 
-        <button id="btn-dark-mode" onclick="toggleDarkMode()" class="bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-amber-300 font-bold px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1.5 text-xs cursor-pointer border border-teal-700" title="Activar/desactivar Modo Sala Oscura">
+        <!-- Modo Sala Oscura (visible en pantallas medianas+, en móvil está en la barra inferior) -->
+        <button id="btn-dark-mode" onclick="toggleDarkMode()" class="hidden md:flex bg-teal-800 hover:bg-teal-700 active:bg-teal-600 text-amber-300 font-bold px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition items-center gap-1.5 text-xs cursor-pointer border border-teal-700" title="Activar/desactivar Modo Sala Oscura">
           <i id="theme-toggle-icon" class="fa-solid fa-moon text-amber-300"></i>
-          <span id="theme-toggle-text" class="hidden sm:inline">Modo Sala</span>
+          <span id="theme-toggle-text">Modo Sala</span>
         </button>
 
-        <button onclick="toggleMobileDrawer()" class="md:hidden bg-teal-800 active:bg-teal-700 text-white px-2.5 py-1.5 rounded-lg shadow transition flex items-center gap-1.5 text-xs font-bold cursor-pointer border border-teal-700">
+        <!-- Botón Salas para móvil si se requiere abrir modal de filtros -->
+        <button onclick="toggleMobileDrawer()" class="hidden sm:flex md:hidden bg-teal-800 active:bg-teal-700 text-white px-2 py-1.5 rounded-lg shadow transition items-center gap-1 text-xs font-bold cursor-pointer border border-teal-700">
           <i class="fa-solid fa-sliders text-amber-400"></i>
           <span>Salas</span>
-          <span id="mobile-filter-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
+          <span id="mobile-filter-badge" class="bg-amber-400 text-slate-900 text-[10px] px-1 py-0.2 rounded-full font-black">0</span>
         </button>
 
-        <a id="btn-sos-header" href="#" target="_blank" class="bg-rose-600 hover:bg-rose-700 text-white font-black px-2.5 sm:px-3 py-1.5 rounded-lg shadow transition flex items-center gap-1 text-xs cursor-pointer" title="SOS Soporte de Sala">
-          <i class="fa-solid fa-triangle-exclamation"></i>
-          <span class="hidden sm:inline">SOS</span>
+        <!-- BOTÓN SOS: SIEMPRE VISIBLE EN PANTALLA SIN DESPLAZAMIENTO HORIZONTAL -->
+        <a id="btn-sos-header" href="#" target="_blank" class="bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-black px-2.5 sm:px-3 py-1.5 rounded-lg shadow-md transition flex items-center gap-1.5 text-xs cursor-pointer shrink-0 border border-rose-500/50" title="SOS Soporte Técnico de Sala">
+          <i class="fa-solid fa-triangle-exclamation text-amber-300 animate-pulse"></i>
+          <span class="font-black tracking-wider">SOS</span>
         </a>
       </div>
     </div>
