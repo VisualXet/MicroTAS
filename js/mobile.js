@@ -335,12 +335,28 @@ function setupRoomsAndVenues() {
   }
 }
 
-// Helper para formatear el botón del día incorporando el número de día (ej: 15 Jueves)
+// Helper para formatear el botón del día incorporando el número de día (ej: 25 Domingo)
 function formatDayButtonTitle(d, idx) {
   var weekday = (d.label || '').trim();
   var dayNum = '';
 
-  if (d.date) {
+  // Verificar si las fechas de los días son idénticas o no secuenciales en los datos
+  var allDays = (eventData && eventData.schedule && eventData.schedule.days) || [];
+  var uniqueDates = new Set(allDays.map(function(item) { return item.date; }).filter(Boolean));
+  var isSameDateForAll = (uniqueDates.size <= 1 && allDays.length > 1);
+
+  if (isSameDateForAll && eventData && eventData.metadata && eventData.metadata.dates && eventData.metadata.dates.start) {
+    try {
+      var startParts = eventData.metadata.dates.start.split('-');
+      if (startParts.length === 3) {
+        var baseDate = new Date(parseInt(startParts[0], 10), parseInt(startParts[1], 10) - 1, parseInt(startParts[2], 10));
+        baseDate.setDate(baseDate.getDate() + idx);
+        dayNum = baseDate.getDate();
+      }
+    } catch(e) {}
+  }
+
+  if (!dayNum && d.date) {
     var strDate = String(d.date).trim();
     // Formato YYYY-MM-DD
     var parts = strDate.split('-');
@@ -355,19 +371,19 @@ function formatDayButtonTitle(d, idx) {
         dayNum = parseInt(partsSlash[0], 10);
       }
     }
-    // Búsqueda regex de 1 o 2 dígitos
-    if (!dayNum) {
-      var m = strDate.match(/\b(\d{1,2})\b/);
-      if (m && m[1]) dayNum = parseInt(m[1], 10);
-    }
   }
 
-  // Si la etiqueta ya contiene número (ej: "15 Jueves" o "Jueves 15"), respetarla
-  if (weekday && /\b\d{1,2}\b/.test(weekday)) {
+  // Si la etiqueta ya contiene número (ej: "25 Domingo" o "Domingo 25"), respetarla
+  if (weekday && /^\d{1,2}\s+[a-záéíóúñ]+$/i.test(weekday)) {
     return weekday;
   }
 
-  // Si tenemos día del mes y día de la semana: "15 Jueves"
+  // Limpiar si el weekday tenía un número anterior repetido (ej: "14 Domingo" -> "Domingo")
+  if (weekday && /^\d{1,2}\s+(.*)$/.test(weekday)) {
+    weekday = weekday.replace(/^\d{1,2}\s+/, '');
+  }
+
+  // Formato: "25 Domingo"
   if (dayNum && weekday) {
     return dayNum + ' ' + weekday;
   }
@@ -462,7 +478,168 @@ function filterByVenue(venueKey) {
   renderSchedule();
 }
 
-// SELECTOR ÚNICO Y LIMPIO DE SALAS (SIN DUPLICADOS NI CAJAS REDUNDANTES)
+// GESTIÓN DE CHECKLIST DE MONTAJE TÉCNICO AV POR SALA
+var currentChecklistRoom = null;
+
+var DEFAULT_CHECKLIST_TEMPLATE = [
+  '2 Micrófonos de diadema inalámbricos',
+  '3 Micrófonos de presidencia / atril',
+  'Portátil de sala / proyección (HDMI OK)',
+  'Monitor de referencia / retorno en escenario',
+  'Proyector / Pantalla LED en retro (Resolución OK)',
+  'Puntero láser y mando pasador (Pilas comprobadas)',
+  'Cableado HDMI, adaptadores USB-C y corriente',
+  'Sonorización PA y mesa de audio ecualizada',
+  'Canal de Radio AV / Walkie-talkie sincronizado'
+];
+
+function getRoomChecklist(roomName) {
+  var allChecklists = safeGet('room_checklists_v2', {});
+  if (!allChecklists[roomName]) {
+    allChecklists[roomName] = {
+      items: DEFAULT_CHECKLIST_TEMPLATE.map(function(name, i) {
+        return { id: 'chk_' + i, text: name, checked: false };
+      })
+    };
+    safeSet('room_checklists_v2', allChecklists);
+  }
+  return allChecklists[roomName];
+}
+
+function saveRoomChecklist(roomName, checklistData) {
+  var allChecklists = safeGet('room_checklists_v2', {});
+  allChecklists[roomName] = checklistData;
+  safeSet('room_checklists_v2', allChecklists);
+  renderRoomCards();
+}
+
+function isRoomChecklistComplete(roomName) {
+  var chk = getRoomChecklist(roomName);
+  var items = chk.items || [];
+  if (items.length === 0) return true;
+  return items.every(function(it) { return !!it.checked; });
+}
+
+function openRoomChecklistModal(roomName) {
+  currentChecklistRoom = roomName;
+  var modal = document.getElementById('room-checklist-modal');
+  if (!modal) return;
+
+  var titleEl = document.getElementById('checklist-room-name');
+  if (titleEl) titleEl.textContent = roomName;
+
+  renderChecklistModalContent();
+  modal.classList.remove('hidden');
+}
+
+function closeRoomChecklistModal() {
+  var modal = document.getElementById('room-checklist-modal');
+  if (modal) modal.classList.add('hidden');
+  currentChecklistRoom = null;
+}
+
+function renderChecklistModalContent() {
+  if (!currentChecklistRoom) return;
+  var chk = getRoomChecklist(currentChecklistRoom);
+  var items = chk.items || [];
+  var checkedCount = items.filter(function(it) { return it.checked; }).length;
+  var isAllDone = (items.length > 0 && checkedCount === items.length);
+
+  var badge = document.getElementById('checklist-status-badge');
+  if (badge) {
+    if (isAllDone) {
+      badge.className = 'text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-500 text-slate-950 shadow-sm';
+      badge.textContent = '✓ Montaje Completo';
+    } else {
+      badge.className = 'text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-amber-400 text-slate-950 shadow-sm';
+      badge.textContent = '⚠️ Pendiente (' + checkedCount + '/' + items.length + ')';
+    }
+  }
+
+  var counter = document.getElementById('checklist-counter');
+  if (counter) {
+    counter.innerHTML = '<i class="fa-solid fa-sliders text-teal-600"></i> Elementos verificados: ' + checkedCount + '/' + items.length;
+  }
+
+  var container = document.getElementById('checklist-items-container');
+  if (!container) return;
+
+  var html = '';
+  items.forEach(function(item) {
+    html += '<div class="flex items-center justify-between p-2 rounded-xl border transition ' +
+      (item.checked ? 'bg-emerald-50 border-emerald-300 text-slate-900' : 'bg-slate-50 border-slate-200 text-slate-700') + '">' +
+      
+      '<label class="flex items-center gap-2.5 flex-1 min-w-0 cursor-pointer select-none">' +
+        '<input type="checkbox" ' + (item.checked ? 'checked' : '') + ' onchange="toggleChecklistItem(\'' + item.id + '\', this.checked)" class="rounded w-4 h-4 text-teal-600 focus:ring-teal-500 cursor-pointer">' +
+        '<span class="text-xs font-semibold ' + (item.checked ? 'line-through text-slate-400 font-normal' : 'text-slate-800') + '">' +
+          escapeHtml(item.text) +
+        '</span>' +
+      '</label>' +
+
+      '<button onclick="deleteChecklistItem(\'' + item.id + '\')" class="p-1 text-slate-400 hover:text-rose-600 transition cursor-pointer ml-2" title="Eliminar este requisito">' +
+        '<i class="fa-regular fa-trash-can text-xs"></i>' +
+      '</button>' +
+
+    '</div>';
+  });
+
+  if (items.length === 0) {
+    html = '<div class="p-4 text-center text-xs text-slate-400">Sin elementos en el checklist. Añade uno abajo.</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+function toggleChecklistItem(itemId, isChecked) {
+  if (!currentChecklistRoom) return;
+  var chk = getRoomChecklist(currentChecklistRoom);
+  (chk.items || []).forEach(function(it) {
+    if (it.id === itemId) it.checked = isChecked;
+  });
+  saveRoomChecklist(currentChecklistRoom, chk);
+  renderChecklistModalContent();
+}
+
+function toggleAllChecklistItems(state) {
+  if (!currentChecklistRoom) return;
+  var chk = getRoomChecklist(currentChecklistRoom);
+  (chk.items || []).forEach(function(it) {
+    it.checked = state;
+  });
+  saveRoomChecklist(currentChecklistRoom, chk);
+  renderChecklistModalContent();
+  showToast(state ? 'Montaje marcado como completo' : 'Checklist desmarcado', 'fa-check text-emerald-400');
+}
+
+function addCustomChecklistItem() {
+  if (!currentChecklistRoom) return;
+  var input = document.getElementById('new-checklist-item-input');
+  if (!input) return;
+  var text = input.value.trim();
+  if (!text) return;
+
+  var chk = getRoomChecklist(currentChecklistRoom);
+  chk.items = chk.items || [];
+  chk.items.push({
+    id: 'chk_' + Date.now(),
+    text: text,
+    checked: false
+  });
+  saveRoomChecklist(currentChecklistRoom, chk);
+  input.value = '';
+  renderChecklistModalContent();
+  showToast('Elemento añadido al checklist', 'fa-plus text-teal-400');
+}
+
+function deleteChecklistItem(itemId) {
+  if (!currentChecklistRoom) return;
+  var chk = getRoomChecklist(currentChecklistRoom);
+  chk.items = (chk.items || []).filter(function(it) { return it.id !== itemId; });
+  saveRoomChecklist(currentChecklistRoom, chk);
+  renderChecklistModalContent();
+}
+
+// SELECTOR ÚNICO Y LIMPIO DE SALAS (CON CHECKLIST Y SIN CAJAS REDUNDANTES)
 function renderRoomCards() {
   var container = document.getElementById('rooms-grid');
   if (!container) return;
@@ -471,32 +648,51 @@ function renderRoomCards() {
   allRoomsList.forEach(function(room) {
     var isSelected = selectedRooms.includes(room);
     var isOnlyThis = (selectedRooms.length === 1 && selectedRooms[0] === room);
+    var chk = getRoomChecklist(room);
+    var items = chk.items || [];
+    var checkedCount = items.filter(function(it) { return it.checked; }).length;
+    var isChkDone = (items.length > 0 && checkedCount === items.length);
 
-    html += '<div class="flex items-center justify-between p-2 rounded-xl border transition cursor-pointer select-none ' +
+    html += '<div class="p-2.5 rounded-xl border transition cursor-pointer select-none space-y-2 ' +
       (isSelected 
         ? 'bg-teal-50 border-teal-400 text-teal-950 shadow-sm ring-1 ring-teal-500/20' 
         : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50') + '" ' +
       'onclick="toggleRoomSelection(\'' + escapeJsString(room) + '\')">' +
       
-      '<div class="flex items-center gap-2 min-w-0 flex-1 mr-2">' +
-        '<i class="fa-solid ' + (isSelected ? 'fa-door-open text-teal-600' : 'fa-door-closed text-slate-400') + ' text-sm shrink-0"></i>' +
-        '<span class="text-xs font-bold truncate leading-tight ' + (isSelected ? 'text-teal-950 font-black' : 'text-slate-800') + '">' +
-          escapeHtml(room) +
-        '</span>' +
+      '<div class="flex items-center justify-between gap-2">' +
+        '<div class="flex items-center gap-2 min-w-0 flex-1">' +
+          '<i class="fa-solid ' + (isSelected ? 'fa-door-open text-teal-600' : 'fa-door-closed text-slate-400') + ' text-sm shrink-0"></i>' +
+          '<span class="text-xs font-bold truncate leading-tight ' + (isSelected ? 'text-teal-950 font-black' : 'text-slate-800') + '">' +
+            escapeHtml(room) +
+          '</span>' +
+        '</div>' +
+
+        '<div class="flex items-center gap-1.5 shrink-0">' +
+          '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\'); event.stopPropagation();" title="Ver únicamente esta sala" ' +
+            'class="text-[10px] font-black uppercase px-2 py-0.5 rounded-lg transition ' +
+            (isOnlyThis 
+              ? 'bg-amber-400 text-slate-950 shadow-sm' 
+              : 'bg-slate-100 hover:bg-teal-600 hover:text-white text-slate-600') + '">' +
+            (isOnlyThis ? '★ Mi Sala' : 'Solo') +
+          '</button>' +
+          '<div class="w-5 h-5 rounded-md flex items-center justify-center ' + 
+            (isSelected ? 'bg-teal-600 text-white' : 'border border-slate-300') + '">' +
+            (isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '') +
+          '</div>' +
+        '</div>' +
       '</div>' +
 
-      '<div class="flex items-center gap-1.5 shrink-0">' +
-        '<button onclick="selectSingleRoom(\'' + escapeJsString(room) + '\'); event.stopPropagation();" title="Ver únicamente esta sala" ' +
-          'class="text-[10px] font-black uppercase px-2 py-0.5 rounded-lg transition ' +
-          (isOnlyThis 
-            ? 'bg-amber-400 text-slate-950 shadow-sm' 
-            : 'bg-slate-100 hover:bg-teal-600 hover:text-white text-slate-600') + '">' +
-          (isOnlyThis ? '★ Mi Sala' : 'Solo') +
+      // Fila de estado de Checklist de Montaje Técnico
+      '<div class="flex items-center justify-between pt-1 border-t border-slate-200/80 text-[10.5px]">' +
+        '<button onclick="openRoomChecklistModal(\'' + escapeJsString(room) + '\'); event.stopPropagation();" class="inline-flex items-center gap-1.5 font-bold transition px-2 py-0.5 rounded-lg ' +
+          (isChkDone 
+            ? 'bg-emerald-100 text-emerald-900 border border-emerald-300 hover:bg-emerald-200' 
+            : 'bg-amber-100 text-amber-900 border border-amber-300 hover:bg-amber-200') + '" title="Abrir checklist de montaje técnico AV">' +
+          '<i class="fa-solid ' + (isChkDone ? 'fa-circle-check text-emerald-600' : 'fa-clock text-amber-600') + ' text-[10px]"></i>' +
+          '<span>' + (isChkDone ? 'Montaje OK' : 'Checklist (' + checkedCount + '/' + items.length + ')') + '</span>' +
+          '<i class="fa-solid fa-pen text-[8px] opacity-60 ml-0.5"></i>' +
         '</button>' +
-        '<div class="w-5 h-5 rounded-md flex items-center justify-center ' + 
-          (isSelected ? 'bg-teal-600 text-white' : 'border border-slate-300') + '">' +
-          (isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '') +
-        '</div>' +
+        '<span class="text-[9.5px] text-slate-400 font-medium">Equipamiento AV</span>' +
       '</div>' +
 
     '</div>';
@@ -785,7 +981,7 @@ function renderCardListView(output, sessions, currentDay) {
   var html = '<div class="mb-3 pb-2 border-b border-slate-200 flex justify-between items-center">' +
     '<div>' +
       '<h2 class="text-sm sm:text-base font-black text-slate-900 flex items-center gap-2 uppercase tracking-wide">' +
-        '<span>' + escapeHtml(currentDay.label || currentDay.date || 'Jornada') + '</span>' +
+        '<span>' + escapeHtml(formatDayButtonTitle(currentDay, selectedDayIdx)) + '</span>' +
         (selectedRooms.length === 1 ? '<span class="text-[9px] font-black text-teal-900 bg-teal-100 border border-teal-300 px-2 py-0.5 rounded uppercase">Vista Exclusiva Técnico (' + escapeHtml(selectedRooms[0]) + ')</span>' : '') +
       '</h2>' +
       '<p class="text-[10px] text-slate-500 font-medium">' + sessions.length + ' sesiones en ' + selectedRooms.length + ' sala(s) activa(s)</p>' +
@@ -829,8 +1025,7 @@ function renderCardListView(output, sessions, currentDay) {
       if (visibleSpeakersMap[s.id] !== undefined) {
         isSpeakerVisible = visibleSpeakersMap[s.id];
       } else {
-        // En modo compacto está cerrado por defecto; en vista detallada está abierto por defecto
-        isSpeakerVisible = !isCompactView;
+        isSpeakerVisible = globalShowSpeakers;
       }
       var subtalks = s.sub_talks || [];
 
@@ -975,7 +1170,7 @@ function renderGridView(output, sessions, currentDay) {
     '<div class="mb-3 pb-2 border-b border-slate-700/60 flex justify-between items-center">' +
       '<div>' +
         '<h2 class="text-sm sm:text-base font-black text-slate-100 flex items-center gap-2 uppercase tracking-wide">' +
-          '<span>' + escapeHtml(currentDay.label || currentDay.date || 'Jornada') + '</span>' +
+          '<span>' + escapeHtml(formatDayButtonTitle(currentDay, selectedDayIdx)) + '</span>' +
           (isSingleRoom ? '<span class="text-[9px] font-black text-teal-300 bg-teal-950/80 border border-teal-800 px-2 py-0.5 rounded uppercase">Sala: ' + escapeHtml(selectedRooms[0]) + '</span>' : '') +
         '</h2>' +
         '<p class="text-[10px] text-slate-400 font-medium">' + sessions.length + ' sesiones &bull; Toca cualquier sesión para ver ventana completa</p>' +
@@ -1029,7 +1224,7 @@ function renderGridView(output, sessions, currentDay) {
         '<div class="flex items-center gap-1.5 text-[9.5px] text-slate-400 mt-0.5 truncate">' +
           (subtalks.length > 0 ? 
             '<span class="text-teal-400 font-bold"><i class="fa-solid fa-layer-group mr-1"></i>' + subtalks.length + ' ponencias &bull; Ver info &rsaquo;</span>' : 
-            (speakerNames.length > 0 ? 
+            (speakerNames.length > 0 && globalShowSpeakers ? 
               '<span class="truncate"><i class="fa-solid fa-user-tie text-teal-400 mr-1"></i>' + escapeHtml(speakerNames[0]) + (speakerNames.length > 1 ? ' +' + (speakerNames.length - 1) : '') + '</span>' : 
               '<span class="text-slate-500 font-medium">Actividad general</span>')) +
         '</div>' +

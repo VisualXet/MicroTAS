@@ -564,8 +564,89 @@
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- MODAL CHECKLIST DE MONTAJE TÉCNICO AV POR SALA -->
+  <div id="room-checklist-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-[65] hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl border border-teal-500/40 max-w-lg w-full overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Cabecera -->
+      <div class="bg-teal-900 text-white p-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="bg-teal-700/80 p-2 rounded-xl text-teal-200">
+            <i class="fa-solid fa-list-check text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-sm sm:text-base font-black leading-tight flex items-center gap-2">
+              <span id="checklist-room-name">Sala</span>
+              <span id="checklist-status-badge" class="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500 text-slate-950">Completo</span>
+            </h3>
+            <p class="text-[11px] text-teal-200">Checklist de Montaje Técnico y Equipamiento AV</p>
+          </div>
+        </div>
+        <button onclick="closeRoomChecklistModal()" class="text-white/80 hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition cursor-pointer">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Contenido del Checklist -->
+      <div class="p-4 space-y-3.5 overflow-y-auto ios-touch-scroll custom-scrollbar flex-grow">
+        
+        <!-- Explicación -->
+        <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-600 flex items-start gap-2">
+          <i class="fa-solid fa-info-circle text-teal-600 mt-0.5 shrink-0"></i>
+          <span>El montaje técnico se verifica habitualmente el primer día y sirve para todo el congreso. Puedes marcar elementos o añadir cambios puntuales de equipamiento.</span>
+        </div>
+
+        <!-- Acciones rápidas: Marcar todos / Limpiar -->
+        <div class="flex items-center justify-between text-xs pt-1">
+          <span class="font-bold text-slate-700 flex items-center gap-1.5" id="checklist-counter">
+            <i class="fa-solid fa-sliders text-teal-600"></i> Elementos verificados: 0/0
+          </span>
+          <div class="flex items-center gap-2">
+            <button onclick="toggleAllChecklistItems(true)" class="text-teal-700 hover:text-teal-900 font-bold hover:underline cursor-pointer">
+              Marcar Todo OK
+            </button>
+            <span class="text-slate-300">|</span>
+            <button onclick="toggleAllChecklistItems(false)" class="text-rose-600 hover:text-rose-800 font-medium hover:underline cursor-pointer">
+              Desmarcar
+            </button>
+          </div>
+        </div>
+
+        <!-- Lista de elementos del checklist con checkboxes -->
+        <div id="checklist-items-container" class="space-y-1.5">
+          <!-- Generado dinámicamente con JS -->
+        </div>
+
+        <!-- Añadir nuevo elemento personalizado -->
+        <div class="pt-2 border-t border-slate-200">
+          <label for="new-checklist-item-input" class="text-[11px] font-bold text-slate-700 block mb-1">
+            + Añadir elemento o requerimiento específico:
+          </label>
+          <div class="flex items-center gap-1.5">
+            <input type="text" id="new-checklist-item-input" placeholder="Ej: Proyector en retro, Splitter HDMI, 2ª pantalla..." class="flex-1 p-2 bg-slate-50 border border-slate-300 rounded-lg text-xs font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+            <button onclick="addCustomChecklistItem()" class="bg-teal-800 hover:bg-teal-700 active:bg-teal-900 text-white font-bold px-3 py-2 rounded-lg text-xs shadow-sm transition shrink-0 cursor-pointer">
+              Añadir
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pie modal -->
+      <div class="bg-slate-50 p-3 border-t border-slate-200 flex items-center justify-between">
+        <span class="text-[10px] text-slate-400">Cambios guardados automáticamente</span>
+        <button onclick="closeRoomChecklistModal()" class="px-4 py-1.5 rounded-xl bg-teal-800 hover:bg-teal-700 text-white font-bold text-xs shadow cursor-pointer transition">
+          Listo
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- MODAL SOS SOPORTE TÉCNICO (MENSAJE O LLAMADA CON SALA SELECCIONADA) -->
-  <div id="sos-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4">
+  <div id="sos-modal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-sm z-[70] hidden flex items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl shadow-2xl border border-rose-500/40 max-w-md w-full overflow-hidden flex flex-col max-h-[92vh]">
       
       <!-- Cabecera de Alerta SOS -->
